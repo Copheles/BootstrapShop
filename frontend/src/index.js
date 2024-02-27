@@ -6,7 +6,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import "bootswatch/dist/litera/bootstrap.min.css";
+import "bootswatch/dist/cosmo/bootstrap.min.css";
 import "./index.css";
 import { Provider } from "react-redux";
 import store from "./store";
