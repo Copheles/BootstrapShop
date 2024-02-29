@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Rating from "../components/Rating";
@@ -6,11 +6,26 @@ import { useGetProductQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { useState } from "react";
+import { addToCart } from "../slices/cartSlice";
+import { useDispatch } from "react-redux";
+import ItemCountChange from "../components/ItemCountChange";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [qty, setQty] = useState(1);
+
   const { data: product, error, isLoading } = useGetProductQuery(productId);
+
+  const addToCartHandler = (e) => {
+    e.preventDefault();
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/cart");
+  };
 
   return (
     <>
@@ -65,11 +80,27 @@ const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col>
+                        <ItemCountChange
+                          qty={qty}
+                          setQty
+                          ={setQty}
+                          item={product}
+                        />
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
                 <ListGroup.Item>
                   <Button
                     className="btn-dark"
                     type="button"
                     disabled={product.countInStock === 0}
+                    onClick={addToCartHandler}
                   >
                     Add To Cart
                   </Button>

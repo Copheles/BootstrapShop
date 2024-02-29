@@ -12,12 +12,10 @@ const HomeScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>
-          {error.data?.message || error.error}
-        </Message>
+        <Message variant="danger">{error.data?.message || error.error}</Message>
       ) : (
         <>
-          <h1>Latest Products</h1>
+          <h2>Latest Products</h2>
           <Row>
             {products.map((product) => (
               <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
