@@ -13,3 +13,11 @@ main {
   min-height: 100vh;
   margin-bottom: -72px;
 }
+
+.link-in-steps{
+  color:#343a40
+}
+
+.nav-link:hover{
+  color: #9954bb;
+}
