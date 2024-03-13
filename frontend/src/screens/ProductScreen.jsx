@@ -20,6 +20,7 @@ const ProductScreen = () => {
   const [qty, setQty] = useState(1);
 
   const { data: product, error, isLoading } = useGetProductQuery(productId);
+  console.log(product?.image);
 
   const addToCartHandler = (e) => {
     e.preventDefault();
@@ -38,10 +39,14 @@ const ProductScreen = () => {
         <Message variant="danger">{error.data?.message || error.error}</Message>
       ) : (
         <Row>
-          <Col md={5}>
-            <Image src={product.image} alt={product.name} fluid />
+          <Col lg={4} className="mb-3">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fluid
+            />
           </Col>
-          <Col md={4}>
+          <Col lg={5}>
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h3>{product.name}</h3>
@@ -59,7 +64,7 @@ const ProductScreen = () => {
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col md={3}>
+          <Col lg={3}>
             <Card>
               <ListGroup variant="flush">
                 <ListGroup.Item>
@@ -87,8 +92,7 @@ const ProductScreen = () => {
                       <Col>
                         <ItemCountChange
                           qty={qty}
-                          setQty
-                          ={setQty}
+                          setQty={setQty}
                           item={product}
                         />
                       </Col>
