@@ -127,7 +127,7 @@ const OrderScreen = () => {
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h4>Shipping</h4>
+              <h2>Shipping</h2>
               <p>
                 <strong>Name: </strong> {order.user.name}
               </p>
@@ -148,7 +148,7 @@ const OrderScreen = () => {
               )}
             </ListGroup.Item>
             <ListGroup.Item>
-              <h4>Payment Method</h4>
+              <h2>Payment Method</h2>
               <p>
                 <strong>Method: </strong>
                 {order.paymentMethod}
@@ -160,7 +160,7 @@ const OrderScreen = () => {
               )}
             </ListGroup.Item>
             <ListGroup.Item>
-              <h4>Order Items</h4>
+              <h2>Order Items</h2>
               {order.orderItems.map((item, index) => (
                 <ListGroup.Item key={index}>
                   <Row>
@@ -183,7 +183,7 @@ const OrderScreen = () => {
           <Card>
             <ListGroup>
               <ListGroup.Item>
-                <h4>Order Summary</h4>
+                <h2>Order Summary</h2>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>

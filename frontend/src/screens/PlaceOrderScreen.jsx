@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UseDispatch, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
 import CheckOutSteps from "../components/CheckOutSteps";
@@ -51,7 +51,7 @@ const PlaceOrderScreen = () => {
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h3>Shipping</h3>
+              <h2>Shipping</h2>
               <p>
                 <strong>Address: </strong>
                 {cart.shippingAddress.address}, {cart.shippingAddress.city}{" "}
@@ -60,14 +60,14 @@ const PlaceOrderScreen = () => {
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
-              <h3>Payment Method</h3>
+              <h2>Payment Method</h2>
               <p>
                 <strong>Method: </strong>
                 {cart.paymentMethod}
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
-              <h3>Order Items</h3>
+              <h2>Order Items</h2>
               {cart.cartItems.length === 0 ? (
                 <Message>Your cart is empty</Message>
               ) : (
@@ -102,7 +102,7 @@ const PlaceOrderScreen = () => {
           <Card>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h3>Order Summary</h3>
+                <h2>Order Summary</h2>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>

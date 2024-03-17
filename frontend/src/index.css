@@ -5,6 +5,11 @@ body {
   font-weight: 400;
 }
 
+h2 {
+  text-transform: capitalize;
+  font-size: 28px;
+}
+
 a {
   color: #343a40;
 }
@@ -13,10 +18,171 @@ main {
   min-height: 100vh;
 }
 
-.link-in-steps{
-  color:#343a40
+.price_text {
+  font-weight: 700;
+  opacity: 0.6; /* Adjust the opacity to your preference */
 }
 
-.nav-link:hover{
+.link-in-steps {
+  color: #343a40;
+}
+
+.nav-link:hover {
   color: #9954bb;
+}
+
+.pagination-custom .page-link {
+  color: #343a40;
+}
+
+.pagination-custom .page-link:hover {
+  color: #343a40;
+}
+
+.pagination-custom .page-item.active .page-link {
+  background-color: #343a40;
+  border-color: white;
+  color: white;
+}
+
+.carousel-caption {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: -1;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.horizontal-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden; /* Disable vertical scrolling */
+  padding: 10px;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+.horizontal-scroll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.horizontal-scroll-header h2 {
+  margin: 0;
+}
+
+.horizontal-scroll-header a {
+  color: blue; /* Customize link color */
+  text-decoration: none;
+}
+
+.scroll-item {
+  flex: 0 0 auto;
+  margin-right: 20px; /* Adjust spacing between items */
+  width: 250px; /* Set a fixed width for each card */
+  cursor: pointer; /* Set cursor to grab for dragging */
+}
+
+.link-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: blue; /* Customize link color */
+  text-decoration: none;
+}
+
+.card-with-aspect-ratio {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 15%;
+  border: 0;
+}
+
+.aspect-ratio-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding-top: 80.25%; /* 16:9 aspect ratio */
+}
+
+.card-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card-img:hover {
+  transform: scale(1.1); /* Scale up by 10% on hover */
+}
+
+.horizontal_card_title,
+.horizontal_card_text {
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 992px) {
+  .card-with-aspect-ratio {
+    width: 18%; /* Adjust width for medium screens */
+  }
+  .horizontal_card_title,
+  .horizontal_card_text {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-with-aspect-ratio {
+    width: 20; /* Adjust width for small screens */
+  }
+  .horizontal_card_title,
+  .horizontal_card_text {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-with-aspect-ratio {
+    width: 33%; /* Adjust width for extra small screens */
+  }
+  .horizontal_card_title,
+  .horizontal_card_text {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  h2 {
+    font-size: 17px;
+    text-transform: capitalize;
+  }
+}
+
+.card-body {
+  padding: 10px 4px;
 }

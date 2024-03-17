@@ -55,7 +55,7 @@ const ProfileScreen = () => {
   return (
     <Row>
       <Col md={3}>
-        <h3>User Profile</h3>
+        <h2>User Profile</h2>
         <Form onSubmit={submitHandler}>
           <FormGroup controlId="name" className="my-3">
             <Form.Label>Name</Form.Label>
@@ -105,7 +105,7 @@ const ProfileScreen = () => {
         </Form>
       </Col>
       <Col md={9}>
-        <h3>My Orders</h3>
+        <h2>My Orders</h2>
         {isLoading ? (
           <Loader />
         ) : error ? (

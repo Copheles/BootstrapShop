@@ -3,6 +3,7 @@ import { Table, Button, Row, Col, Modal, Form } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
+import Paginate from "../../components/Paginate";
 import {
   useGetProductsQuery,
   useCreateProductMutation,
@@ -10,11 +11,11 @@ import {
 } from "../../slices/productsApiSlice";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const ProductListScreen = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
-  const [imagePath, setImagePath] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
@@ -23,8 +24,10 @@ const ProductListScreen = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const { pageNumber } = useParams();
 
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { data , isLoading, error } = useGetProductsQuery({ pageNumber });
 
   const [createProduct, { isLoading: loadingCrateProduct }] =
     useCreateProductMutation();
@@ -53,7 +56,6 @@ const ProductListScreen = () => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("price", price);
-    formData.append("imagePath", imagePath);
     formData.append("brand", brand);
     formData.append("category", category);
     formData.append("countInStock", countInStock);
@@ -198,7 +200,7 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {data.products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -224,6 +226,7 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
+          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
         </>
       )}
     </>
