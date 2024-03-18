@@ -1,6 +1,6 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
-const Rating = ({ value, text }) => {
+const Rating = ({ value, text, clsName="" }) => {
   return (
     <div
       style={{
@@ -62,7 +62,7 @@ const Rating = ({ value, text }) => {
           fontSize: "16px",
         }}
       >
-        <span className="text-secondary">
+        <span className={`text-secondary ${clsName}`}>
           <strong>{text && text}</strong>
         </span>
       </div>

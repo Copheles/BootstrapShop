@@ -5,7 +5,7 @@ import Rating from "./Rating";
 const Product = ({ product }) => {
   console.log(product.image);
   return (
-    <Card className="my-3 p-3 rounded" style={{ height: "100%" }}>
+    <Card className="my-3 p-3 rounded border-0" style={{ height: "100%" }}>
       <Link to={`/products/${product._id}`}>
         <div className="aspect-ratio-wrapper">
           <Card.Img variant="top" src={product.image} className="card-img" />
@@ -15,24 +15,21 @@ const Product = ({ product }) => {
         <Link to={`/products/${product._id}`}>
           <Card.Title
             as="div"
-            style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
+            className="custom_card_title"
           >
-            <h6>{product.name}</h6>
+            {product.name}
           </Card.Title>
         </Link>
-        <Card.Text as="div">
+        <Card.Text as="div" className="custom_card_text">
           <Rating
             value={product.rating}
             text={`${product.numReviews} ${
               product.numReviews > 1 ? "reviews" : "review"
             }`}
+            clsName="custom_card_text"
           />
         </Card.Text>
-        <Card.Text as="h5">${product.price}</Card.Text>
+        <Card.Text as="h5" className="custom_card_text">${product.price}</Card.Text>
       </CardBody>
     </Card>
   );

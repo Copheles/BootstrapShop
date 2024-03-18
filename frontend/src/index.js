@@ -34,16 +34,18 @@ import ProductListScreen from "./screens/Admin/ProductListScreen";
 import ProductEditScreen from "./screens/Admin/ProductEditScreen";
 import UserListScreen from "./screens/Admin/UserListScreen";
 import UserEditScreen from "./screens/Admin/UserEditScreen";
+import ProductsScreen from "./screens/ProductsScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
-      <Route path="/search/:keyword" element={<HomeScreen />} />
-      <Route path="/page/:pageNumber" element={<HomeScreen />} />
+      <Route path="/products" element={<ProductsScreen />} />
+      <Route path="/products/search/:keyword" element={<ProductsScreen />} />
+      <Route path="/products/page/:pageNumber" element={<ProductsScreen />} />
       <Route
-        path="/search/:keyword/page/:pageNumber"
-        element={<HomeScreen />}
+        path="/products/search/:keyword/page/:pageNumber"
+        element={<ProductsScreen />}
       />
       <Route path="/products/:id" element={<ProductScreen />} />
       <Route path="/cart" element={<CartScreen />} />
@@ -76,11 +78,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <HelmetProvider>
-      <Provider store={store}>
-        <PayPalScriptProvider deferLoading={true}>
+      <PayPalScriptProvider deferLoading={true}>
+        <Provider store={store}>
           <RouterProvider router={router} />
-        </PayPalScriptProvider>
-      </Provider>
+        </Provider>
+      </PayPalScriptProvider>
     </HelmetProvider>
   </React.StrictMode>
 );

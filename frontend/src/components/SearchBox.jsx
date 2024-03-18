@@ -12,14 +12,14 @@ const SearchBox = () => {
     e.preventDefault();
     if (keyword.trim()) {
       setKeyword("");
-      navigate(`/search/${keyword}`);
+      navigate(`/products/search/${keyword}`);
     } else {
-      navigate("/");
+      navigate("/products");
     }
   };
 
   return (
-    <Form onSubmit={submitHandler} className="d-flex">
+    <Form onSubmit={submitHandler} className="d-flex mb-4">
       <Form.Control
         type="text"
         name="q"
