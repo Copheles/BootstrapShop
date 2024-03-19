@@ -8,6 +8,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useCreaetOrderMutation } from "../slices/orderApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
+import Meta from "../components/Meta";
 
 const PlaceOrderScreen = () => {
   const [createOrder, { isLoading, error }] = useCreaetOrderMutation();
@@ -46,6 +47,7 @@ const PlaceOrderScreen = () => {
 
   return (
     <>
+      <Meta title="Place Order Details" />
       <CheckOutSteps step1 step2 step3 step4 />
       <Row className="mt-2">
         <Col md={8}>
@@ -53,7 +55,8 @@ const PlaceOrderScreen = () => {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
-                <strong>Address: </strong>
+                <strong>Address:</strong>
+                {"  "}
                 {cart.shippingAddress.address}, {cart.shippingAddress.city}{" "}
                 {cart.shippingAddress.postalCode},{" "}
                 {cart.shippingAddress.country}
@@ -75,7 +78,7 @@ const PlaceOrderScreen = () => {
                   {cart.cartItems.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
-                        <Col md={1}>
+                        <Col xs={2} sm={2} md={2}>
                           <Image
                             src={item.image}
                             alt={item.name}
@@ -83,12 +86,16 @@ const PlaceOrderScreen = () => {
                             rounded
                           />
                         </Col>
-                        <Col>
-                          <Link to={`/products/${item._id}`}>{item.name}</Link>
+                        <Col xs={10} sm={10} md={6}>
+                          <Link to={`/products/${item._id}`}>
+                            <p className="custom_card_text">{item.name}</p>
+                          </Link>
                         </Col>
-                        <Col md={4}>
-                          {item.qty} <strong>x</strong> ${item.price} = $
-                          {item.qty * item.price}
+                        <Col xs={12} sm={12} md={4}>
+                          <span className="price_text">
+                            {item.qty} <strong>x</strong> ${item.price} = $
+                            {item.qty * item.price}
+                          </span>
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -105,25 +112,25 @@ const PlaceOrderScreen = () => {
                 <h2>Order Summary</h2>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
+                <Row className="order_summary_text">
                   <Col>Items: </Col>
                   <Col>${cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
+                <Row className="order_summary_text">
                   <Col>Shipping: </Col>
                   <Col>${cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
+                <Row className="order_summary_text">
                   <Col>Tax: </Col>
                   <Col>${cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
+                <Row className="text_total">
                   <Col>Total: </Col>
                   <Col>${cart.totalPrice}</Col>
                 </Row>

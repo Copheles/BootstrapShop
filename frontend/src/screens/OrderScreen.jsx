@@ -12,6 +12,7 @@ import {
   useGetPayPalClientIdQuery,
   useDeliveredOrderMutation,
 } from "../slices/orderApiSlice";
+import Meta from "../components/Meta";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -122,6 +123,7 @@ const OrderScreen = () => {
     <Message variant="danger">{error.data?.message || error.error}</Message>
   ) : (
     <>
+      <Meta title="Order Details" />
       <h2>Order {order._id}</h2>
       <Row>
         <Col md={8}>
@@ -164,14 +166,18 @@ const OrderScreen = () => {
               {order.orderItems.map((item, index) => (
                 <ListGroup.Item key={index}>
                   <Row>
-                    <Col md={1}>
+                    <Col xs={2} sm={2} md={2}>
                       <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
-                    <Col>
-                      <Link to={`/products/${item.product}`}>{item.name}</Link>
+                    <Col xs={10} sm={10} md={6}>
+                      <Link to={`/products/${item.product}`}>
+                        <p className="custom_card_text">{item.name}</p>
+                      </Link>
                     </Col>
-                    <Col md={4}>
-                      {item.qty} x ${item.price} = ${item.qty * item.price}
+                    <Col xs={12} sm={12} md={4}>
+                      <span className="price_text">
+                        {item.qty} x ${item.price} = ${item.qty * item.price}
+                      </span>
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -186,19 +192,19 @@ const OrderScreen = () => {
                 <h2>Order Summary</h2>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row>
+                <Row className="order_summary_text">
                   <Col>Items</Col>
                   <Col>${order.itemsPrice}</Col>
                 </Row>
-                <Row>
+                <Row className="order_summary_text">
                   <Col>Shipping</Col>
                   <Col>${order.shippingPrice}</Col>
                 </Row>
-                <Row>
+                <Row className="order_summary_text">
                   <Col>Tax</Col>
                   <Col>${order.taxPrice}</Col>
                 </Row>
-                <Row>
+                <Row className="text_total">
                   <Col>Total</Col>
                   <Col>${order.totalPrice}</Col>
                 </Row>

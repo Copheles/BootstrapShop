@@ -69,6 +69,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
     default: 0
+  },
+  isFeatured: {
+    type: Boolean,
+    default: false
   }
 },{
   timestamps: true

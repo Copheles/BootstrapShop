@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Bad+Script&family=Oleo+Script+Swash+Caps:wght@400;700&display=swap");
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -20,7 +20,7 @@ main {
 
 .price_text {
   font-weight: 700;
-  opacity: 0.6; /* Adjust the opacity to your preference */
+  opacity: 0.6;
 }
 
 .link-in-steps {
@@ -30,7 +30,7 @@ main {
 .nav-link:hover {
   color: #9954bb;
 }
-
+/* Pagination */
 .pagination-custom .page-link {
   color: #343a40;
 }
@@ -44,6 +44,8 @@ main {
   border-color: white;
   color: white;
 }
+
+/* Carousel */
 
 .carousel-caption {
   position: absolute;
@@ -59,6 +61,7 @@ main {
   width: 100%;
 }
 
+/* HorizontalContainer */
 .horizontal-scroll-container {
   display: flex;
   overflow-x: auto;
@@ -87,6 +90,7 @@ main {
   text-decoration: none;
 }
 
+/* Scroll Item */
 .scroll-item {
   flex: 0 0 auto;
   margin-right: 20px; /* Adjust spacing between items */
@@ -102,7 +106,7 @@ main {
   color: blue; /* Customize link color */
   text-decoration: none;
 }
-
+/* Card  */
 .card-with-aspect-ratio {
   display: flex;
   flex-direction: column;
@@ -139,6 +143,61 @@ main {
   text-overflow: ellipsis;
 }
 
+td {
+  white-space: normal;
+}
+
+td {
+  max-width: 200px; /* Adjust the maximum width as needed */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Optional: add ellipsis if text overflows */
+}
+
+td > span {
+  font-size: 14px; /* Adjust the font size as needed */
+}
+
+.dropdown-menu {
+  background-color: #343a40;
+}
+
+.dropdown-item {
+  color: white;
+}
+
+.dropdown-divider {
+  color: white;
+}
+
+.logout-menu {
+  color: rgb(217, 144, 144);
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px); /* Adjust the vertical distance as needed */
+  }
+}
+
+.icon-container {
+  display: inline-block; /* Ensures the container only takes the space necessary */
+}
+
+.bouncing-icon {
+  animation: bounce 1.5s infinite; /* Adjust the duration as needed */
+}
+
+.logo_text {
+  margin-left: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "Bad Script", cursive;
+}
+
 @media (max-width: 992px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */
@@ -157,6 +216,13 @@ main {
   .carousel-caption {
     font-size: 18px;
     height: 80px;
+  }
+  .icons {
+    font-size: 18px;
+  }
+
+  .price_text {
+    font-size: 15px;
   }
 }
 
@@ -178,6 +244,21 @@ main {
     font-size: 16px;
     height: 70px;
   }
+
+  .icons {
+    font-size: 16px;
+  }
+
+  .price_text {
+    font-size: 13px;
+  }
+
+  thead {
+    font-size: 14px;
+  }
+  tbody {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 576px) {
@@ -186,7 +267,7 @@ main {
   }
   .custom_card_title,
   .custom_card_text {
-    font-size: 11px;
+    font-size: 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -199,6 +280,39 @@ main {
   .carousel-caption {
     font-size: 11px;
     height: 54px;
+  }
+
+  .icons {
+    font-size: 11px;
+  }
+
+  .price_text {
+    font-size: 12px;
+  }
+
+  thead {
+    font-size: 11px;
+  }
+  tbody {
+    font-size: 11px;
+  }
+
+  strong {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .order_summary_text {
+    font-size: 14px;
+  }
+
+  .text_total {
+    font-size: 15px;
+    font-weight: 700;
   }
 }
 

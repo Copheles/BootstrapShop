@@ -5,7 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import SearchBox from "./SearchBox";
+
+import { GiIceCube } from "react-icons/gi";
+import { CgProfile } from "react-icons/cg";
+import { MdLogout } from "react-icons/md";
+import { GiTempleGate } from "react-icons/gi";
+import { FaUsers } from "react-icons/fa";
+import { TbTruckDelivery } from "react-icons/tb";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -31,7 +37,10 @@ const Header = () => {
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Bootstrap Shop</Navbar.Brand>
+            <Navbar.Brand className="icon-container">
+              <GiIceCube size={40} className="bouncing-icon" /> 
+              <span className="logo_text">Shopee</span>
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -49,22 +58,39 @@ const Header = () => {
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id={userInfo.name}>
                   <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <CgProfile size={22} className="mx-1 mb-1" />
+                      Profile
+                    </NavDropdown.Item>
                   </LinkContainer>
                   {userInfo && userInfo.isAdmin && (
                     <>
                       <LinkContainer to="/admin/productList">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          <GiTempleGate size={22} className="mx-1 mb-1" />
+                          Products
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/userList">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          <FaUsers size={22} className="mx-1 mb-1" />
+                          Users
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/orderList">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          <TbTruckDelivery size={22} className="mx-1 mb-1" />
+                          Orders
+                        </NavDropdown.Item>
                       </LinkContainer>
                     </>
                   )}
-                  <NavDropdown.Item onClick={logoutHandler}>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item
+                    onClick={logoutHandler}
+                    className="logout-menu"
+                  >
+                    <MdLogout size={22} className="mx-1" />
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>

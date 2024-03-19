@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Container, Form, Image, Stack } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../slices/cartSlice";
 import FormContainer from "../components/FormContainer";
 import CheckOutSteps from "../components/CheckOutSteps";
+import Meta from "../components/Meta";
+
+import shipping from "../assets/shipping.svg";
 
 const ShippingScreen = () => {
   const { shippingAddress } = useSelector((state) => state.cart);
@@ -34,9 +37,12 @@ const ShippingScreen = () => {
 
   return (
     <>
+      <Meta title="Shipping Details" />
       <CheckOutSteps step1 step2 />
+
       <FormContainer>
         <h2 className="my-4">Shipping</h2>
+        <Image src={shipping} fluid className="mb-3" />
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="address" className="my-2">
             <Form.Label>Address</Form.Label>
