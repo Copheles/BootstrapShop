@@ -31,16 +31,23 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     getMyOrders: builder.query({
-      query: () => ({
-        url: `${ORDERS_URL}/mine`
+      query: ({ pageNumber }) => ({
+        url: `${ORDERS_URL}/mine`,
+        params: {
+          pageNumber
+        }
       }),
       keepUnusedDataFor: 5
     }),
     getOrders: builder.query({
-      query: () => ({
-        url: ORDERS_URL
+      query: ({ pageNumber }) => ({
+        url: ORDERS_URL,
+        params: {
+          pageNumber
+        },
       }),
-      keepUnusedDataFor: 5
+      providesTags:["Orders"],
+      keepUnusedDataFor: 60,
     }),
     deliveredOrder: builder.mutation({
       query: (orderId) => ({

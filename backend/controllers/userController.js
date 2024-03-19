@@ -132,9 +132,15 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route GET /api/users
 // @access Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
+  const pageSize = 8;
+  const page = Number(req.query.pageNumber) || 1;
+
+  const count = await User.countDocuments();
   // const users = await User.find({ email: {$ne: process.env.ADMIN_EMAIL}});
-  const users = await User.find({})
-  res.status(200).json(users)
+  const users = await User.find({}).limit(pageSize).skip(pageSize * (page - 1)).sort({
+    createdAt: -1
+  })
+  res.status(200).json({users, page, pages: Math.ceil(count / pageSize)})
 })
 
 

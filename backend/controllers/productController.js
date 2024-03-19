@@ -66,7 +66,7 @@ const createProduct = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
 
-  const { name, price, description, brand, category, countInStock } = req.body;
+  const { name, price, description, brand, category, countInStock, isFeatured } = req.body;
 
   const product = await Product.findById(req.params.id)
 
@@ -91,6 +91,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.brand = brand;
     product.category = category;
     product.countInStock = countInStock;
+    product.isFeatured = isFeatured
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);

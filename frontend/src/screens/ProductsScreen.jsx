@@ -5,8 +5,8 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Meta from "../components/Meta";
 import { useParams } from "react-router-dom";
-import Paginate from "../components/Paginate";
 import SearchBox from "../components/SearchBox";
+import PaginationCustom from "../components/PaginationCustom";
 
 const ProductsScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -15,6 +15,8 @@ const ProductsScreen = () => {
     keyword,
     pageNumber,
   });
+
+  const link = keyword ? `/products/search/${keyword}/page` : `/products/page`;
 
   return (
     <>
@@ -33,11 +35,7 @@ const ProductsScreen = () => {
               </Col>
             ))}
           </Row>
-          <Paginate
-            pages={data.pages}
-            page={data.page}
-            keyword={keyword ? keyword : ""}
-          />
+          <PaginationCustom pages={data.pages} page={data.page} link={link} />
         </>
       )}
     </>

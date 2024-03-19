@@ -20,6 +20,7 @@ const ProductEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [isFeatured, setIsFeatured] = useState(false);
 
   const { data: product, isLoading, error } = useGetProductQuery(productId);
 
@@ -41,6 +42,7 @@ const ProductEditScreen = () => {
     formData.append("countInStock", countInStock);
     formData.append("description", description);
     formData.append("image", imageFile);
+    formData.append("isFeatured", isFeatured);
 
     try {
       console.log("id", productId);
@@ -66,20 +68,9 @@ const ProductEditScreen = () => {
       setCategory(product.category);
       setCountInStock(product.countInStock);
       setDescription(product.description);
+      setIsFeatured(product.isFeatured);
     }
   }, [product]);
-
-  // const uploadFileHandler = async (e) => {
-  //   const formData = new FormData();
-  //   formData.append('image', e.target.files[0]);
-  //   try {
-  //     const res = await uploadProductImage(formData).unwrap();
-  //     toast.success(res.message);
-  //     setImage(res.image);
-  //   } catch (err) {
-  //     toast.error(err?.data?.message || err.error);
-  //   }
-  // };
 
   return (
     <>
@@ -121,6 +112,15 @@ const ProductEditScreen = () => {
                 onChange={handleImageChange}
                 type="file"
               ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="isAdmin" className="my-3">
+              <Form.Check
+                type="checkbox"
+                label="is Featured Product"
+                checked={isFeatured}
+                onChange={(e) => setIsFeatured(e.target.checked)}
+              ></Form.Check>
             </Form.Group>
 
             <Form.Group controlId="brand" className="my-3">
@@ -165,7 +165,12 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Button type="submit" className="mb-5" variant="dark" style={{ marginTop: "1rem" }}>
+            <Button
+              type="submit"
+              className="mb-5"
+              variant="dark"
+              style={{ marginTop: "1rem" }}
+            >
               Update
             </Button>
           </Form>

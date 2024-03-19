@@ -1,4 +1,4 @@
-import { Navbar, Nav, Container, Badge, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Container, Badge, NavDropdown, Button } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,8 +12,11 @@ import { MdLogout } from "react-icons/md";
 import { GiTempleGate } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
+import { BsList, BsX } from "react-icons/bs";
+import { useState } from "react";
 
 const Header = () => {
+  const [expanded, setExpanded] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -38,16 +41,22 @@ const Header = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand className="icon-container">
-              <GiIceCube size={40} className="bouncing-icon" /> 
-              <span className="logo_text">Shopee</span>
+              {/* <GiIceCube size={30} className="bouncing-icon" /> */}
+              <span className="logo_text">BootStrap Shopee</span>
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? <BsX size={30} className="close-btn" /> : <BsList size={30} className="menu-btn" />}{" "}
+            {/* Toggle between open and close icon */}
+          </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>
-                  <FaShoppingCart />
+                  <FaShoppingCart className="cart-btn" />
                   {cartItems.length > 0 && (
                     <Badge pill bg="info" className="mx-1">
                       {cartItems.reduce((acc, item) => acc + item.qty, 0)}
@@ -97,7 +106,7 @@ const Header = () => {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <FaUser />
+                    <Button variant="outline-light" className="btn-sm">Sign In</Button>
                   </Nav.Link>
                 </LinkContainer>
               )}

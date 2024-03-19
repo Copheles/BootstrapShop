@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bad+Script&family=Oleo+Script+Swash+Caps:wght@400;700&display=swap");
+
+:root {
+  --primary-text-color: white;
+  --primary-text-hover-color: #8dddee;
+  --logout-color: rgb(251, 168, 168);
+  --btn-info-bg-color: rgba(119, 236, 249, 0.592);
+  --btn-info-bg-hover-color: rgba(11, 207, 242, 0.592);
+  --see-more-link-color: #359db4;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -16,6 +26,13 @@ a {
 
 main {
   min-height: 100vh;
+}
+
+.btn-info {
+  background-color: var(--btn-info-bg-color);
+}
+.btn-info:hover {
+  background-color: var(--btn-info-bg-hover-color);
 }
 
 .price_text {
@@ -162,15 +179,11 @@ td > span {
 }
 
 .dropdown-item {
-  color: white;
-}
-
-.dropdown-divider {
-  color: white;
+  color: var(--primary-text-color);
 }
 
 .logout-menu {
-  color: rgb(217, 144, 144);
+  color: var(--logout-color);
 }
 
 @keyframes bounce {
@@ -195,12 +208,59 @@ td > span {
   margin-left: 8px;
   font-size: 18px;
   font-weight: 700;
-  font-family: "Bad Script", cursive;
+  color: var(--primary-text-color);
+  /* font-family: "Bad Script", cursive; */
 }
 
-.active.dropdown-item{
-  background-color: white;
+.active.dropdown-item {
+  background-color: var(--primary-text-color);
   color: #343a40;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.close-btn,
+.menu-btn,
+.cart-btn {
+  color: var(--primary-text-color);
+  transition: color 0.3s;
+}
+
+.close-btn:hover,
+.menu-btn:hover,
+.cart-btn:hover {
+  color: var(--primary-text-hover-color);
+}
+
+.dropdown-toggle.nav-link {
+  color: var(--primary-text-color);
+}
+
+.dropdown-toggle.nav-link.show {
+  color: var(--primary-text-color);
+}
+
+form div label {
+  font-size: 16px;
+}
+
+.form-control {
+  font-size: 16px;
+}
+
+.form-control:focus {
+  border-color: #80bdff; /* Change border color */
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Change box shadow */
+}
+
+#see-more-link{
+  color: var(--see-more-link-color);
+}
+
+#see-more-link:hover{
+  color: var(--btn-info-bg-hover-color);
 }
 
 @media (max-width: 992px) {
@@ -318,6 +378,13 @@ td > span {
   .text_total {
     font-size: 15px;
     font-weight: 700;
+  }
+
+  form div label {
+    font-size: 12px;
+  }
+  .form-control {
+    font-size: 12px;
   }
 }
 

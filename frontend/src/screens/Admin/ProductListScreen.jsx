@@ -1,9 +1,19 @@
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Row, Col, Modal, Form } from "react-bootstrap";
+import {
+  Table,
+  Button,
+  Row,
+  Col,
+  Modal,
+  Form,
+  ButtonGroup,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { IoMdAdd } from "react-icons/io";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
-import Paginate from "../../components/Paginate";
 import {
   useGetProductsQuery,
   useCreateProductMutation,
@@ -12,6 +22,7 @@ import {
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import PaginationCustom from "../../components/PaginationCustom";
 
 const ProductListScreen = () => {
   const [name, setName] = useState("");
@@ -24,10 +35,10 @@ const ProductListScreen = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   const { pageNumber } = useParams();
 
-  const { data , isLoading, error } = useGetProductsQuery({ pageNumber });
+  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
 
   const [createProduct, { isLoading: loadingCrateProduct }] =
     useCreateProductMutation();
@@ -77,11 +88,17 @@ const ProductListScreen = () => {
     }
   };
 
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Create a product
+    </Tooltip>
+  );
+
   return (
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create Product</Modal.Title>
+          <Modal.Title as="h2">Create Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={submitHandler}>
@@ -174,9 +191,21 @@ const ProductListScreen = () => {
           <h2>Products</h2>
         </Col>
         <Col className="text-end">
-          <Button className="btn-sm m-3" onClick={handleShow}>
-            <FaEdit /> Create Product
-          </Button>
+          <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 150 }}
+            overlay={renderTooltip}
+          >
+            <Button
+              className="btn-sm m-3"
+              variant="secondary"
+              onClick={handleShow}
+            >
+              <div className=" d-flex align-items-center">
+                <IoMdAdd size={20} />
+              </div>
+            </Button>
+          </OverlayTrigger>
         </Col>
       </Row>
       {loadingCrateProduct && <Loader />}
@@ -208,25 +237,31 @@ const ProductListScreen = () => {
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
                   <td>
-                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <Button variant="light" className="btn-sm mx-2">
-                        <FaEdit />
+                    <ButtonGroup>
+                      <LinkContainer to={`/admin/product/${product._id}/edit`}>
+                        <Button variant="light" className="btn-sm mx-2">
+                          <FaEdit className="icons" />
+                        </Button>
+                      </LinkContainer>
+                      <Button
+                        variant="danger"
+                        className="btn-sm"
+                        onClick={() => deleteHandler(product._id)}
+                        disabled={loadingDeleteProduct}
+                      >
+                        <FaTrash className="icons" />
                       </Button>
-                    </LinkContainer>
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
-                      onClick={() => deleteHandler(product._id)}
-                      disabled={loadingDeleteProduct}
-                    >
-                      <FaTrash />
-                    </Button>
+                    </ButtonGroup>
                   </td>
                 </tr>
               ))}
             </tbody>
           </Table>
-          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
+          <PaginationCustom
+            pages={data.pages}
+            page={data.page}
+            link={`/admin/productList/page`}
+          />
         </>
       )}
     </>
