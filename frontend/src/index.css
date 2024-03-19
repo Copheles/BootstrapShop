@@ -198,6 +198,11 @@ td > span {
   font-family: "Bad Script", cursive;
 }
 
+.active.dropdown-item{
+  background-color: white;
+  color: #343a40;
+}
+
 @media (max-width: 992px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */
