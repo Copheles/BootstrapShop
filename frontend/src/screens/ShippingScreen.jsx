@@ -38,9 +38,9 @@ const ShippingScreen = () => {
   return (
     <>
       <Meta title="Shipping Details" />
-      <CheckOutSteps step1 step2 />
 
       <FormContainer>
+        <CheckOutSteps step1={2} step2 />
         <h2 className="my-4">Shipping</h2>
         <Image src={shipping} fluid className="mb-3" />
         <Form onSubmit={submitHandler}>

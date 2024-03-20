@@ -48,10 +48,13 @@ const PlaceOrderScreen = () => {
   return (
     <>
       <Meta title="Place Order Details" />
-      <CheckOutSteps step1 step2 step3 step4 />
+
       <Row className="mt-2">
         <Col md={8}>
           <ListGroup variant="flush">
+            <ListGroup.Item>
+              <CheckOutSteps step1 step2 step3 step4 />
+            </ListGroup.Item>
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>

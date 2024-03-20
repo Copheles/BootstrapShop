@@ -41,7 +41,8 @@ const getMyOrders = asyncHandler(async (req, res) => {
   const pageSize = 1;
   const page = Number(req.query.pageNumber) || 1;
 
-  const count = await Order.countDocuments();
+  const count = await Order.countDocuments({ user: req.user._id});
+  console.log("count: ", count)
 
   const orders = await Order.find({ user: req.user._id}).limit(pageSize).skip(pageSize * (page - 1)).sort({createdAt: -1});
   res.status(200).json({orders, page, pages: Math.ceil(count / pageSize)})

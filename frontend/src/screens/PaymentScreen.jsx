@@ -33,8 +33,9 @@ const PaymentScreen = () => {
   return (
     <>
       <Meta title="Payment Details" />
-      <CheckOutSteps step1 step2 step3 />
+
       <FormContainer>
+        <CheckOutSteps step1={1} step2={2} step3 />
         <h2 className="my-4">Payment Method</h2>
         <Row>
           <Col>
@@ -45,9 +46,10 @@ const PaymentScreen = () => {
           <Col>
             <Form onSubmit={submitHandler}>
               <Form.Group>
-                <Form.Label as="legend"><FaCcPaypal size={30} /> Select Method </Form.Label>
+                <Form.Label as="legend">
+                  <FaCcPaypal size={30} /> Select Method{" "}
+                </Form.Label>
                 <Col>
-                  
                   <Form.Check
                     type="radio"
                     className="my-2"

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import FormContainer from "../../components/FormContainer";
@@ -79,7 +79,6 @@ const ProductEditScreen = () => {
       </Link>
       <FormContainer>
         <h2 className="mb-5">Edit Product</h2>
-        {loadingUpdate && <Loader />}
         {isLoading ? (
           <Loader />
         ) : error ? (
@@ -170,8 +169,9 @@ const ProductEditScreen = () => {
               className="mb-5"
               variant="dark"
               style={{ marginTop: "1rem" }}
+              disabled={loadingUpdate}
             >
-              Update
+              {loadingUpdate ? <Spinner size="sm" /> : "Update"}
             </Button>
           </Form>
         )}

@@ -11,7 +11,7 @@ import { setCredentials } from "../slices/authSlice";
 import { useGetMyOrdersQuery } from "../slices/orderApiSlice";
 import Meta from "./../components/Meta";
 import PaginationCustom from "../components/PaginationCustom";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -29,6 +29,8 @@ const ProfileScreen = () => {
     useProfileMutation();
 
   const { data, isLoading, error } = useGetMyOrdersQuery({ pageNumber });
+
+  console.log("myorders", data);
 
   useEffect(() => {
     if (userInfo) {
@@ -121,53 +123,61 @@ const ProfileScreen = () => {
             </Message>
           ) : (
             <>
-              <Table striped hover responsive className="table-sm mt-3">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>DATE</th>
-                    <th>TOTAL</th>
-                    <th>PAID</th>
-                    <th>DELIVERED</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.orders.map((order) => (
-                    <tr key={order._id}>
-                      <td>{order._id}</td>
-                      <td>{order.createdAt.substring(0, 10)}</td>
-                      <td>{order.totalPrice} $</td>
-                      <td>
-                        {order.isPaid ? (
-                          order.paidAt.substring(0, 10)
-                        ) : (
-                          <FaTimes style={{ color: "red" }} />
-                        )}
-                      </td>
-                      <td>
-                        {order.isDelivered ? (
-                          order.deliveredAt.substring(0, 10)
-                        ) : (
-                          <FaTimes style={{ color: "red" }} />
-                        )}
-                      </td>
-                      <td>
-                        <LinkContainer to={`/order/${order._id}`}>
-                          <Button className="btn-sm" variant="info">
-                            Details
-                          </Button>
-                        </LinkContainer>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-              <PaginationCustom
-                page={data.page}
-                pages={data.pages}
-                link="/profile/orders/page"
-              />
+              {data.orders.length !== 0 ? (
+                <>
+                  <Table striped hover responsive className="table-sm mt-3">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>DATE</th>
+                        <th>TOTAL</th>
+                        <th>PAID</th>
+                        <th>DELIVERED</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.orders.map((order) => (
+                        <tr key={order._id}>
+                          <td>{order._id}</td>
+                          <td>{order.createdAt.substring(0, 10)}</td>
+                          <td>{order.totalPrice} $</td>
+                          <td>
+                            {order.isPaid ? (
+                              order.paidAt.substring(0, 10)
+                            ) : (
+                              <FaTimes style={{ color: "red" }} />
+                            )}
+                          </td>
+                          <td>
+                            {order.isDelivered ? (
+                              order.deliveredAt.substring(0, 10)
+                            ) : (
+                              <FaTimes style={{ color: "red" }} />
+                            )}
+                          </td>
+                          <td>
+                            <LinkContainer to={`/order/${order._id}`}>
+                              <Button className="btn-sm" variant="info">
+                                Details
+                              </Button>
+                            </LinkContainer>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                  <PaginationCustom
+                    page={data.page}
+                    pages={data.pages}
+                    link="/profile/orders/page"
+                  />
+                </>
+              ) : (
+                <Message>
+                  No orders yet! <Link to="/products">Go to Shopping.</Link>
+                </Message>
+              )}
             </>
           )}
         </Col>

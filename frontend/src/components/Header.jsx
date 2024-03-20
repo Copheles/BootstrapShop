@@ -1,12 +1,19 @@
-import { Navbar, Nav, Container, Badge, NavDropdown, Button } from "react-bootstrap";
-import { FaShoppingCart, FaUser } from "react-icons/fa";
+import {
+  Navbar,
+  Nav,
+  Container,
+  Badge,
+  NavDropdown,
+  Button,
+} from "react-bootstrap";
+import { FaShoppingCart } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
-import { GiIceCube } from "react-icons/gi";
+import { FaShopify } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import { GiTempleGate } from "react-icons/gi";
@@ -42,14 +49,23 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand className="icon-container">
               {/* <GiIceCube size={30} className="bouncing-icon" /> */}
-              <span className="logo_text">BootStrap Shopee</span>
+              <span className="logo_text">
+                <span className="animated-letter">
+                  <FaShopify />
+                </span>
+                <span>BShop</span>
+              </span>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             onClick={() => setExpanded(!expanded)}
           >
-            {expanded ? <BsX size={30} className="close-btn" /> : <BsList size={30} className="menu-btn" />}{" "}
+            {expanded ? (
+              <BsX size={30} className="close-btn" />
+            ) : (
+              <BsList size={30} className="menu-btn" />
+            )}{" "}
             {/* Toggle between open and close icon */}
           </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
@@ -106,7 +122,9 @@ const Header = () => {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <Button variant="outline-light" className="btn-sm">Sign In</Button>
+                    <Button variant="outline-light" className="btn-sm">
+                      Sign In
+                    </Button>
                   </Nav.Link>
                 </LinkContainer>
               )}

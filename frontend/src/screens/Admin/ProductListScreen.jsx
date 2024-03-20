@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   OverlayTrigger,
   Tooltip,
+  Spinner,
 } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
@@ -175,8 +176,9 @@ const ProductListScreen = () => {
               className="w-100"
               variant="dark"
               style={{ marginTop: "1rem" }}
+              disabled={loadingCrateProduct}
             >
-              Save
+              {loadingCrateProduct ? <Spinner size="sm" /> : "Save"}
             </Button>
           </Form>
         </Modal.Body>
@@ -208,7 +210,6 @@ const ProductListScreen = () => {
           </OverlayTrigger>
         </Col>
       </Row>
-      {loadingCrateProduct && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (

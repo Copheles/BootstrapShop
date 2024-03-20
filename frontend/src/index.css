@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Bad+Script&family=Oleo+Script+Swash+Caps:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Madimi+One&display=swap");
 
 :root {
+  --logo-text-color: rgb(213, 239, 236);
   --primary-text-color: white;
   --primary-text-hover-color: #8dddee;
   --logout-color: rgb(251, 168, 168);
@@ -186,6 +187,33 @@ td > span {
   color: var(--logout-color);
 }
 
+@keyframes colorChange {
+  0% {
+    color: #e66da1;
+  }
+  20% {
+    color: #a677e7;
+  }
+  40% {
+    color: rgb(92, 124, 205);
+  }
+  60% {
+    color: rgb(70, 191, 161);
+  }
+  80% {
+    color: #41bf4b;
+  }
+  100% {
+    color: #dfe574;
+  }
+}
+
+.animated-letter {
+  display: inline-block;
+  font-size: 25px;
+  animation: colorChange 5s infinite;
+}
+
 @keyframes bounce {
   0%,
   100% {
@@ -208,8 +236,8 @@ td > span {
   margin-left: 8px;
   font-size: 18px;
   font-weight: 700;
-  color: var(--primary-text-color);
-  /* font-family: "Bad Script", cursive; */
+  color: var(--logo-text-color);
+  font-family: "Madimi One", sans-serif;
 }
 
 .active.dropdown-item {
@@ -255,12 +283,28 @@ form div label {
   box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Change box shadow */
 }
 
-#see-more-link{
+#see-more-link {
   color: var(--see-more-link-color);
 }
 
-#see-more-link:hover{
+#see-more-link:hover {
   color: var(--btn-info-bg-hover-color);
+}
+
+.breadcrumb-text {
+  color: gray;
+  cursor: not-allowed;
+}
+
+.breadcrumb-item.active {
+  color: var(--see-more-link-color);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.text_total {
+  font-size: 18px;
+  font-weight: 700;
 }
 
 @media (max-width: 992px) {
@@ -288,6 +332,11 @@ form div label {
 
   .price_text {
     font-size: 15px;
+  }
+
+  .text_total {
+    font-size: 17px;
+    font-weight: 700;
   }
 }
 
@@ -323,6 +372,11 @@ form div label {
   }
   tbody {
     font-size: 14px;
+  }
+
+  .text_total {
+    font-size: 15px;
+    font-weight: 700;
   }
 }
 
