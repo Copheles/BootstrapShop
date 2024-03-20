@@ -1,5 +1,5 @@
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, ButtonGroup } from "react-bootstrap";
 import { FaTrash, FaTimes, FaEdit, FaCheck } from "react-icons/fa";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
@@ -8,11 +8,10 @@ import {
   useGetUsersQuery,
   useDeleteUserMutation,
 } from "../../slices/usersApiSlice";
-import PaginationCustom from '../../components/PaginationCustom';
+import PaginationCustom from "../../components/PaginationCustom";
 import { useParams } from "react-router-dom";
 
 const UserListScreen = () => {
-
   const { pageNumber } = useParams();
 
   const { data, isLoading, error } = useGetUsersQuery({ pageNumber });
@@ -70,18 +69,20 @@ const UserListScreen = () => {
                     )}
                   </td>
                   <td>
-                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                      <Button className="btn-sm" variant="light">
-                        <FaEdit />
+                    <ButtonGroup>
+                      <LinkContainer to={`/admin/user/${user._id}/edit`}>
+                        <Button className="btn-sm" variant="light">
+                          <FaEdit className="icons" />
+                        </Button>
+                      </LinkContainer>
+                      <Button
+                        variant="danger"
+                        className="btn-sm"
+                        onClick={() => deleteHandler(user._id)}
+                      >
+                        <FaTrash className="icons" />
                       </Button>
-                    </LinkContainer>
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
-                      onClick={() => deleteHandler(user._id)}
-                    >
-                      <FaTrash />
-                    </Button>
+                    </ButtonGroup>
                   </td>
                 </tr>
               ))}

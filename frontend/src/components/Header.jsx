@@ -42,6 +42,10 @@ const Header = () => {
     }
   };
 
+  const handleLinkClick = () => {
+    setExpanded(false); // Close navbar when link is clicked
+  };
+
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
@@ -72,7 +76,7 @@ const Header = () => {
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>
-                  <FaShoppingCart className="cart-btn" />
+                  <FaShoppingCart className="cart-btn" onClick={handleLinkClick} />
                   {cartItems.length > 0 && (
                     <Badge pill bg="info" className="mx-1">
                       {cartItems.reduce((acc, item) => acc + item.qty, 0)}
@@ -83,27 +87,27 @@ const Header = () => {
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id={userInfo.name}>
                   <LinkContainer to="/profile">
-                    <NavDropdown.Item>
+                    <NavDropdown.Item onClick={handleLinkClick}>
                       <CgProfile size={22} className="mx-1 mb-1" />
                       Profile
                     </NavDropdown.Item>
                   </LinkContainer>
                   {userInfo && userInfo.isAdmin && (
                     <>
-                      <LinkContainer to="/admin/productList">
-                        <NavDropdown.Item>
+                      <LinkContainer to="/admin/productList" >
+                        <NavDropdown.Item onClick={handleLinkClick}>
                           <GiTempleGate size={22} className="mx-1 mb-1" />
                           Products
                         </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/userList">
-                        <NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleLinkClick}>
                           <FaUsers size={22} className="mx-1 mb-1" />
                           Users
-                        </NavDropdown.Item>
+                        </NavDropdown.Item >
                       </LinkContainer>
                       <LinkContainer to="/admin/orderList">
-                        <NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleLinkClick}>
                           <TbTruckDelivery size={22} className="mx-1 mb-1" />
                           Orders
                         </NavDropdown.Item>

@@ -210,7 +210,7 @@ td > span {
 
 .animated-letter {
   display: inline-block;
-  font-size: 25px;
+  font-size: 27px;
   animation: colorChange 5s infinite;
 }
 
