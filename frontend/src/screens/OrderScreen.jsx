@@ -13,6 +13,7 @@ import {
   useDeliveredOrderMutation,
 } from "../slices/orderApiSlice";
 import Meta from "../components/Meta";
+import { changeTimeFormat } from "../utils/timesFormat";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -51,17 +52,6 @@ const OrderScreen = () => {
     }
   };
 
-  // const onApproveTest = async () => {
-  //   await payOrder({
-  //     orderId,
-  //     details: {
-  //       payer: {},
-  //     },
-  //   });
-  //   refetch();
-  //   toast.success("Payment successful");
-  // };
-
   const onApprove = (data, actions) => {
     return actions.order.capture().then(async function (details) {
       try {
@@ -94,6 +84,8 @@ const OrderScreen = () => {
       });
   };
 
+  console.log("time type", typeof order?.deliveredAt);
+
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPayPalScript = async () => {
@@ -124,7 +116,7 @@ const OrderScreen = () => {
   ) : (
     <>
       <Meta title="Order Details" />
-      <h2>Order {order._id}</h2>
+      <h2>Order {order._id} </h2>
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
@@ -141,9 +133,15 @@ const OrderScreen = () => {
                 {order.shippingAddress.city} {order.shippingAddress.postalCode},{" "}
                 {order.shippingAddress.country}
               </p>
+              <p>
+                <strong>Ordered At: <span className="date-text">{changeTimeFormat(order.createdAt)}</span></strong>
+              </p>
               {order.isDelivered ? (
                 <Message variant="success">
-                  Delivered on {order.deliverdAt}
+                  Delivered on{" "}
+                  <span className="date-text">
+                    {changeTimeFormat(order.deliveredAt)}
+                  </span>
                 </Message>
               ) : (
                 <Message variant="danger">Not Deliverd</Message>
@@ -156,7 +154,12 @@ const OrderScreen = () => {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <Message variant="success">Paid on {order.paidAt}</Message>
+                <Message variant="success">
+                  Paid on{" "}
+                  <span className="date-text">
+                  {changeTimeFormat(order.paidAt)}
+                  </span>
+                </Message>
               ) : (
                 <Message variant="danger">Not Paid</Message>
               )}
