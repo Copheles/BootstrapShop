@@ -76,7 +76,10 @@ const Header = () => {
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>
-                  <FaShoppingCart className="cart-btn" onClick={handleLinkClick} />
+                  <FaShoppingCart
+                    className="cart-btn"
+                    onClick={handleLinkClick}
+                  />
                   {cartItems.length > 0 && (
                     <Badge pill bg="info" className="mx-1">
                       {cartItems.reduce((acc, item) => acc + item.qty, 0)}
@@ -94,7 +97,7 @@ const Header = () => {
                   </LinkContainer>
                   {userInfo && userInfo.isAdmin && (
                     <>
-                      <LinkContainer to="/admin/productList" >
+                      <LinkContainer to="/admin/productList">
                         <NavDropdown.Item onClick={handleLinkClick}>
                           <GiTempleGate size={22} className="mx-1 mb-1" />
                           Products
@@ -104,7 +107,7 @@ const Header = () => {
                         <NavDropdown.Item onClick={handleLinkClick}>
                           <FaUsers size={22} className="mx-1 mb-1" />
                           Users
-                        </NavDropdown.Item >
+                        </NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/orderList">
                         <NavDropdown.Item onClick={handleLinkClick}>
@@ -124,7 +127,7 @@ const Header = () => {
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <LinkContainer to="/login">
+                <LinkContainer to="/login" onClick={handleLinkClick}>
                   <Nav.Link>
                     <Button variant="outline-light" className="btn-sm">
                       Sign In
