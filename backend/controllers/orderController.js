@@ -1,5 +1,6 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Order from './../models/orderModel.js';
+import Product from './../models/productModel.js'
 
 
 // @desc Create new order
@@ -70,7 +71,7 @@ const getOrderById = asyncHandler(async (req, res) => {
 const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
-  if(order){
+  if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
     order.paymentResult = {
@@ -78,15 +79,43 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       status: req.body.status,
       updated_time: req.body.update_time,
       email_address: req.body.email_address
-    }
+    };
     const updatedOrder = await order.save();
-    res.status(200).json(updatedOrder)
-  }else{
-    res.status(404)
-    throw new Error('Order not found')
+
+    await Promise.all(order.orderItems.map(async (item) => {
+      const productId = item.product;
+      const quantity = item.qty;
+
+      try {
+        const product = await Product.findById(productId);
+
+        if (product) {
+          // Update stock quantities and soldCount
+          product.stock -= quantity;
+          product.soldAmount += quantity;
+
+          console.log("Stock: ",product.stock);
+          console.log("SoldAmount: ", product.soldAmount)
+
+
+          // Save the updated product
+          await product.save();
+          console.log(`Product with ID ${productId} updated successfully.`);
+        } else {
+          console.log(`Product with ID ${productId} not found.`);
+        }
+      } catch (error) {
+        console.error(`Error updating product with ID ${productId}: ${error}`);
+      }
+    }));
+
+    console.log("Order updated successfully.");
+    res.status(200).json(updatedOrder);
+  } else {
+    console.error('Order not found');
+    res.status(404).json({ message: 'Order not found' });
   }
-  
-})
+});
 
 // @desc Update order to delivered
 // @route PUT /api/orders/:id/delivered
