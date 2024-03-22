@@ -23,6 +23,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: { ...details },
       }),
+      invalidatesTags: ["Orders"]
     }),
     getPayPalClientId: builder.query({
       query: () => ({

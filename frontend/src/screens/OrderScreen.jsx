@@ -27,8 +27,6 @@ const OrderScreen = () => {
     error,
   } = useGetOrderDetailsQuery(orderId);
 
-  console.log("order: ", order);
-
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
   const [deliverOrder, { isLoading: loadingDeliver }] =
@@ -55,9 +53,10 @@ const OrderScreen = () => {
   const onApprove = (data, actions) => {
     return actions.order.capture().then(async function (details) {
       try {
-        await payOrder({ orderId, details });
+        const res = await payOrder({ orderId, details }).unwrap();
+        console.log("res, ", res);
         refetch();
-        toast.success("Payment successful");
+        toast.success(res);
       } catch (error) {
         toast.error(error?.data.message || error.error);
       }
@@ -83,9 +82,6 @@ const OrderScreen = () => {
         return orderId;
       });
   };
-
-  console.log("time type", typeof order?.deliveredAt);
-
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPayPalScript = async () => {
@@ -134,7 +130,12 @@ const OrderScreen = () => {
                 {order.shippingAddress.country}
               </p>
               <p>
-                <strong>Ordered At: <span className="date-text">{changeTimeFormat(order.createdAt)}</span></strong>
+                <strong>
+                  Ordered At:{" "}
+                  <span className="date-text">
+                    {changeTimeFormat(order.createdAt)}
+                  </span>
+                </strong>
               </p>
               {order.isDelivered ? (
                 <Message variant="success">
@@ -157,7 +158,7 @@ const OrderScreen = () => {
                 <Message variant="success">
                   Paid on{" "}
                   <span className="date-text">
-                  {changeTimeFormat(order.paidAt)}
+                    {changeTimeFormat(order.paidAt)}
                   </span>
                 </Message>
               ) : (

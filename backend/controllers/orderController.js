@@ -3,6 +3,7 @@ import Order from './../models/orderModel.js';
 import Product from './../models/productModel.js'
 
 
+
 // @desc Create new order
 // @route POST /api/orders
 // @access Private
@@ -13,6 +14,32 @@ const addOrderItems = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('No order items')
   }else{
+    await Promise.all(orderItems.map(async (item) => {
+      const productId = item.product;
+      const quantity = item.qty;
+    
+      const product = await Product.findById(productId);
+    
+      if (product) {
+        let prevStock = product.countInStock;
+        // Update stock quantities and soldCount
+        product.countInStock = product.countInStock - quantity;
+        if(product.countInStock < 0){
+          product.countInStock = prevStock;
+          res.status(401)
+          throw new Error(`only ${prevStock} left`)
+        }
+        product.soldAmount = product.soldAmount + quantity;
+    
+        console.log("Stock: ",product.countInStock);
+        console.log("SoldAmount: ", product.soldAmount)
+        // Save the updated product
+        await product.save();
+        console.log(`Product with ID ${productId} updated successfully.`);
+      } else {
+        console.log(`Product with ID ${productId} not found.`);
+      }
+    }));
     const order = new Order({
       orderItems: orderItems.map((orderItem) => ({ 
         ...orderItem,
@@ -65,12 +92,13 @@ const getOrderById = asyncHandler(async (req, res) => {
 })
 
 
+
+
 // @desc Update order to paid
 // @route PUT /api/orders/:id/pay
 // @access Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
-
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
@@ -81,34 +109,6 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       email_address: req.body.email_address
     };
     const updatedOrder = await order.save();
-
-    await Promise.all(order.orderItems.map(async (item) => {
-      const productId = item.product;
-      const quantity = item.qty;
-
-      try {
-        const product = await Product.findById(productId);
-
-        if (product) {
-          // Update stock quantities and soldCount
-          product.stock -= quantity;
-          product.soldAmount += quantity;
-
-          console.log("Stock: ",product.stock);
-          console.log("SoldAmount: ", product.soldAmount)
-
-
-          // Save the updated product
-          await product.save();
-          console.log(`Product with ID ${productId} updated successfully.`);
-        } else {
-          console.log(`Product with ID ${productId} not found.`);
-        }
-      } catch (error) {
-        console.error(`Error updating product with ID ${productId}: ${error}`);
-      }
-    }));
-
     console.log("Order updated successfully.");
     res.status(200).json(updatedOrder);
   } else {
