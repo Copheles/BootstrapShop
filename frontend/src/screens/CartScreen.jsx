@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../slices/cartSlice";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi2";
 import Meta from "../components/Meta";
+import { useEffect } from "react";
 
 const CartScreen = () => {
   const navigate = useNavigate();
@@ -32,6 +33,10 @@ const CartScreen = () => {
   const checkOutHandler = () => {
     navigate("/login?redirect=/shipping");
   };
+
+  useEffect(() => {
+    
+  },[])
 
   return (
     <>

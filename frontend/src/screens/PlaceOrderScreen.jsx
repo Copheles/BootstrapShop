@@ -11,7 +11,7 @@ import { clearCartItems } from "../slices/cartSlice";
 import Meta from "../components/Meta";
 
 const PlaceOrderScreen = () => {
-  const [createOrder, { isLoading, error }] = useCreaetOrderMutation();
+  const [createOrder, { isLoading }] = useCreaetOrderMutation();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,10 +38,13 @@ const PlaceOrderScreen = () => {
         totalPrice: cart.totalPrice,
       }).unwrap();
 
-      dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
     } catch (error) {
-      toast.error(error);
+      console.log("error", error);
+      // Check if error exists and has a data property
+
+      toast.error(error.data.message);
+      dispatch(clearCartItems());
     }
   };
 
@@ -138,9 +141,11 @@ const PlaceOrderScreen = () => {
                   <Col>${cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
-                {error && <Message variant="danger">{error}</Message>}
-              </ListGroup.Item>
+              {/* <ListGroup.Item>
+                {error && (
+                  <Message variant="danger">{error?.data.message}</Message>
+                )}
+              </ListGroup.Item> */}
               <ListGroup.Item>
                 <Button
                   type="button"

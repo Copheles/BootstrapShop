@@ -10,12 +10,14 @@ import Product from './../models/productModel.js'
 const addOrderItems = asyncHandler(async (req, res) => {
   const {orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice} = req.body;
 
+  // console.log("OrdetItems ", orderItems)
+
   if(orderItems && orderItems.length === 0){
     res.status(400)
     throw new Error('No order items')
   }else{
     await Promise.all(orderItems.map(async (item) => {
-      const productId = item.product;
+      const productId = item._id;
       const quantity = item.qty;
     
       const product = await Product.findById(productId);
@@ -27,8 +29,9 @@ const addOrderItems = asyncHandler(async (req, res) => {
         if(product.countInStock < 0){
           product.countInStock = prevStock;
           res.status(401)
-          throw new Error(`only ${prevStock} left`)
+          throw new Error(`${prevStock === 0 ? `${product.name} is out of stock now`: `${product.name} is only ${prevStock} left` }`)
         }
+        console.log('hello')
         product.soldAmount = product.soldAmount + quantity;
     
         console.log("Stock: ",product.countInStock);
@@ -54,6 +57,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice
     })
+    console.log('order', order)
     const createdOrder = await order.save()
 
     res.status(201).json(createdOrder)
@@ -66,7 +70,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route GET /api/orders/myorders
 // @access Private
 const getMyOrders = asyncHandler(async (req, res) => {
-  const pageSize = 1;
+  const pageSize = 8;
   const page = Number(req.query.pageNumber) || 1;
 
   const count = await Order.countDocuments({ user: req.user._id});

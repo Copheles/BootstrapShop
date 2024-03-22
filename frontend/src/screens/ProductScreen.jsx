@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ItemCountChange from "../components/ItemCountChange";
 import Meta from "../components/Meta";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaStar } from "react-icons/fa";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -48,8 +48,16 @@ const ProductScreen = () => {
     navigate("/cart");
   };
 
+  const handleStarClick = (selectedRating) => {
+    setRating(selectedRating);
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (comment === "" || rating === 0) {
+      toast.error("Add Comment or go rate before submit review");
+      return;
+    }
     try {
       await createReview({
         productId,
@@ -187,35 +195,44 @@ const ProductScreen = () => {
                   {loadingProductReview && <Loader />}
                   {userInfo ? (
                     <Form onSubmit={submitHandler}>
-                      <Form.Group controllId="rating" className="my-3">
+                      <Form.Group controlid="rating" className="my-3">
                         <Form.Label>Rating</Form.Label>
-                        <Form.Control
-                          as="select"
-                          value={rating}
-                          onChange={(e) => setRating(Number(e.target.value))}
-                        >
-                          <option value="">Select...</option>
-                          <option value="1">1 - Poor</option>
-                          <option value="2">2 - Fair</option>
-                          <option value="3">3 - Good</option>
-                          <option value="4">4 - Very Good</option>
-                          <option value="5">5 - Excellent</option>
-                        </Form.Control>
+                        <div>
+                          {[...Array(5)].map((star, i) => {
+                            const ratingValue = i + 1;
+                            return (
+                              <label key={i}>
+                                <input
+                                  type="radio"
+                                  name="rating"
+                                  style={{ display: "none" }}
+                                  value={ratingValue}
+                                  onClick={() => handleStarClick(ratingValue)}
+                                />
+                                <FaStar
+                                  color={
+                                    ratingValue <= rating
+                                      ? "#ffc107"
+                                      : "#e4e5e9"
+                                  }
+                                  className="star"
+                                  size={24}
+                                />
+                              </label>
+                            );
+                          })}
+                        </div>
                       </Form.Group>
-                      <Form.Group controllId="comment" className="my-3">
+                      <Form.Group controlId="comment" className="my-3">
                         <Form.Label>Comment</Form.Label>
                         <Form.Control
                           as="textarea"
                           rows={3}
                           value={comment}
                           onChange={(e) => setComment(e.target.value)}
-                        ></Form.Control>
+                        />
                       </Form.Group>
-                      <Button
-                        disabled={loadingProductReview}
-                        type="submit"
-                        variant="dark"
-                      >
+                      <Button type="submit" variant="dark">
                         Submit
                       </Button>
                     </Form>
