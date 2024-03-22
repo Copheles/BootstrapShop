@@ -32,6 +32,17 @@ export const productApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Products"],
     }),
+    imageUpload: builder.mutation({
+      query: ({ data, id}) => ({
+        url: `${PRODUCTS_URL}/image/upload/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      headers: {
+        "Content-Type": "multipart/form-data", // For FormData
+      },
+      invalidatesTags: ["Product"]
+    }),
     updateProduct: builder.mutation({
       query: ({ data, id }) => {
         return {
@@ -39,9 +50,6 @@ export const productApiSlice = apiSlice.injectEndpoints({
           method: "PUT",
           body: data,
         };
-      },
-      headers: {
-        "Content-Type": "multipart/form-data", // For FormData
       },
       invalidatesTags: ["Products", "Product"],
     }),
@@ -76,5 +84,6 @@ export const {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useCreateReviewMutation,
-  useGetTopProductsQuery
+  useGetTopProductsQuery,
+  useImageUploadMutation
 } = productApiSlice;

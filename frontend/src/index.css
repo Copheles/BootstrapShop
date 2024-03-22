@@ -307,12 +307,18 @@ form div label {
   font-weight: 700;
 }
 
-.date-text{
+.date-text {
   color: rgb(104, 99, 99);
   font-weight: 600;
   margin-left: 5px;
 }
 
+.product-text {
+  color: rgb(40, 38, 38);
+  font-weight: 500;
+  margin-left: 5px;
+  line-height: 1.8;
+}
 
 @media (max-width: 992px) {
   .card-with-aspect-ratio {
@@ -425,7 +431,15 @@ form div label {
 
   strong {
     font-size: 14px;
+    font-weight: 800;
+  }
+
+  .product-text {
+    color: rgb(40, 38, 38);
     font-weight: 500;
+    margin-left: 5px;
+    line-height: 1.8;
+    font-size: 14px;
   }
 
   p {

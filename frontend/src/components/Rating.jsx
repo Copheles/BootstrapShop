@@ -63,7 +63,7 @@ const Rating = ({ value, text, clsName="" }) => {
         }}
       >
         <span className={`text-secondary ${clsName}`}>
-          <strong>{text && text}</strong>
+          {text && text}
         </span>
       </div>
     </div>

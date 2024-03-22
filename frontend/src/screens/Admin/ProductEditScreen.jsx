@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Form, Button, Spinner } from "react-bootstrap";
+import { Form, Button, Spinner, Image } from "react-bootstrap";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import FormContainer from "../../components/FormContainer";
 import { toast } from "react-toastify";
 import {
   useGetProductQuery,
+  useImageUploadMutation,
   useUpdateProductMutation,
 } from "../../slices/productsApiSlice";
 
@@ -16,10 +17,10 @@ const ProductEditScreen = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [brand, setBrand] = useState("");
+  const [image, setImage] = useState("");
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
-  const [imageFile, setImageFile] = useState(null);
   const [isFeatured, setIsFeatured] = useState(false);
 
   const { data: product, isLoading, error } = useGetProductQuery(productId);
@@ -29,26 +30,40 @@ const ProductEditScreen = () => {
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
+  const [uploadUpdateImage, { isLoading: loadingImage }] =
+    useImageUploadMutation();
+
   const navigate = useNavigate();
+
+  const imageUpload = async (e) => {
+    const formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    try {
+      const res = await uploadUpdateImage({
+        data: formData,
+        id: productId,
+      }).unwrap();
+      setImage(res.image);
+      toast.success("Image updated");
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+    }
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-
-    formData.append("name", name);
-    formData.append("price", price);
-    formData.append("brand", brand);
-    formData.append("category", category);
-    formData.append("countInStock", countInStock);
-    formData.append("description", description);
-    formData.append("image", imageFile);
-    formData.append("isFeatured", isFeatured);
+    const data = {
+      name,
+      price,
+      description,
+      brand,
+      category,
+      countInStock,
+      isFeatured,
+    };
 
     try {
-      console.log("id", productId);
-      console.log("imageFile", imageFile);
-
-      await updateProduct({ data: formData, id: productId }).unwrap(); // Pass formData and productId separately
+      await updateProduct({ data, id: productId }).unwrap(); // Pass formData and productId separately
       toast.success("Product updated");
       navigate("/admin/productlist");
     } catch (err) {
@@ -56,15 +71,12 @@ const ProductEditScreen = () => {
     }
   };
 
-  const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
-  };
-
   useEffect(() => {
     if (product) {
       setName(product.name);
       setPrice(product.price);
       setBrand(product.brand);
+      setImage(product.image);
       setCategory(product.category);
       setCountInStock(product.countInStock);
       setDescription(product.description);
@@ -105,10 +117,14 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
+            <Form.Group controlId="Image" className="my-3">
+              {loadingImage ? <Loader /> : <Image src={product.image} fluid />}
+            </Form.Group>
+
             <Form.Group controlId="image" className="my-3">
               <Form.Control
                 label="Choose File"
-                onChange={handleImageChange}
+                onChange={imageUpload}
                 type="file"
               ></Form.Control>
             </Form.Group>

@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ItemCountChange from "../components/ItemCountChange";
 import Meta from "../components/Meta";
+import { FaEdit } from "react-icons/fa";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -68,9 +69,17 @@ const ProductScreen = () => {
   return (
     <>
       <Meta title={product?.name} />
-      <Link className="btn btn-light my-3" to="/">
-        <MdOutlineKeyboardBackspace size={30} />
-      </Link>
+      <div className="d-flex align-items-center justify-content-between">
+        <Link className="btn btn-light my-3" to="/">
+          <MdOutlineKeyboardBackspace size={30} />
+        </Link>
+        {userInfo && userInfo.isAdmin && (
+          <Link to={`/admin/product/${product?._id}/edit`}>
+            <FaEdit />
+          </Link>
+        )}
+      </div>
+
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -92,10 +101,20 @@ const ProductScreen = () => {
                     text={`${product.numReviews} ${
                       product.numReviews > 1 ? "reviews" : "review"
                     }`}
+                    clsName="date-text"
                   />
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Description: </strong> {product.description}
+                  <strong>Brand: </strong>{" "}
+                  <span className="product-text">{product.brand}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Category: </strong>{" "}
+                  <span className="product-text">{product.category}</span>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Description: </strong>{" "}
+                  <span className="product-text">{product.description}</span>
                 </ListGroup.Item>
               </ListGroup>
             </Col>

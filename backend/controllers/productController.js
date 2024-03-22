@@ -61,6 +61,28 @@ const createProduct = asyncHandler(async (req, res) => {
   res.status(201).json(createdProduct);
 });
 
+const imageUpload = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id)
+  let filePath;
+  if(req.file){
+
+    const imagePath = product.image;
+    fs.unlinkSync(imagePath.substring(1));
+
+    filePath = "/" + req.file.path.replace(/\\/g, '/');
+  }
+
+  if(product){
+    product.image = req.file ? filePath : product.image ;
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  }else{
+    res.status(404);
+    throw new Error('Resource not found')
+  }
+})
+
 // @desc Update a product
 // @route PUT /api/products/:id
 // @access Private/Admin
@@ -68,26 +90,13 @@ const updateProduct = asyncHandler(async (req, res) => {
 
   const { name, price, description, brand, category, countInStock, isFeatured } = req.body;
 
+  console.log(req.body)
+
   const product = await Product.findById(req.params.id)
-
-  
-
-  let filePath;
-  if(req.file){
-    // Delete the image file from the file system before updating
-    const imagePath = product.image;
-    fs.unlinkSync(imagePath.substring(1));
-
-    filePath = "/" + req.file.path.replace(/\\/g, '/');
-  }
-  
-
-
   if(product){
     product.name = name;
     product.price = price;
     product.description = description;
-    product.image = req.file ? filePath : product.image ;
     product.brand = brand;
     product.category = category;
     product.countInStock = countInStock;
@@ -178,4 +187,4 @@ const getTopProducts = asyncHandler(async (req, res) => {
 
 
 
-export { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct, createProductReview ,getTopProducts}
+export { getAllProducts, getProductById, createProduct,imageUpload, updateProduct, deleteProduct, createProductReview ,getTopProducts}
