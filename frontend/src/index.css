@@ -6,9 +6,11 @@
   --primary-text-color: white;
   --primary-text-hover-color: #8dddee;
   --logout-color: rgb(251, 168, 168);
-  --btn-info-bg-color: rgba(119, 236, 249, 0.592);
-  --btn-info-bg-hover-color: rgba(11, 207, 242, 0.592);
+  --btn-info-bg-color: rgba(96, 222, 236, 0.592);
+  --btn-info-bg-hover-color: rgba(18, 186, 216, 0.592);
   --see-more-link-color: #2fa1bb;
+  --see-more-link-hover-color: #67c2d7;
+  --light-gray-color: rgb(55, 53, 53);
 }
 
 body {
@@ -19,6 +21,7 @@ body {
 h2 {
   text-transform: capitalize;
   font-size: 28px;
+  color: #47494a;
 }
 
 a {
@@ -272,6 +275,8 @@ td > span {
 
 form div label {
   font-size: 16px;
+  font-weight: 500;
+  color: var(--light-gray-color);
 }
 
 .form-control {
@@ -289,7 +294,7 @@ form div label {
 }
 
 #see-more-link:hover {
-  color: var(--btn-info-bg-hover-color);
+  color: var(--see-more-link-hover-color);
 }
 
 .breadcrumb-text {
@@ -304,7 +309,7 @@ form div label {
 }
 
 .text_total {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -323,6 +328,15 @@ form div label {
 
 .cart-1 {
   display: none;
+}
+
+.add-more-items {
+  font-weight: 500;
+  color: var(--see-more-link-color);
+}
+
+.add-more-items:hover {
+  color: var(--see-more-link-hover-color);
 }
 
 @media (max-width: 991px) {
@@ -353,7 +367,7 @@ form div label {
   }
 
   .text_total {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 700;
   }
 
@@ -361,12 +375,21 @@ form div label {
     font-size: 16px;
   }
 
-  .cart-1{
+  .cart-1 {
     display: block;
   }
 
-  .cart-2{
+  .cart-2 {
     display: none;
+  }
+
+  .add-more-items {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .btn {
+    font-size: 16px;
   }
 }
 
@@ -405,7 +428,7 @@ form div label {
   }
 
   .text_total {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
   }
 
@@ -413,12 +436,21 @@ form div label {
     font-size: 14px;
   }
 
-  .cart-1{
+  .cart-1 {
     display: block;
   }
 
-  .cart-2{
+  .cart-2 {
     display: none;
+  }
+
+  .add-more-items {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .btn {
+    font-size: 14px;
   }
 }
 
@@ -480,7 +512,7 @@ form div label {
   }
 
   .text_total {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
   }
 
@@ -497,6 +529,15 @@ form div label {
 
   .cart-2 {
     display: none;
+  }
+
+  .add-more-items {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .btn {
+    font-size: 12px;
   }
 }
 

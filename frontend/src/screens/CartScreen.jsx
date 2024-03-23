@@ -8,7 +8,7 @@ import {
   Card,
   ButtonGroup,
 } from "react-bootstrap";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPlus } from "react-icons/fa";
 import Message from "../components/Message";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../slices/cartSlice";
@@ -34,9 +34,7 @@ const CartScreen = () => {
     navigate("/login?redirect=/shipping");
   };
 
-  useEffect(() => {
-    
-  },[])
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -80,10 +78,15 @@ const CartScreen = () => {
                             })
                           }
                         >
-                          <HiOutlineMinus className="icons"/>
+                          <HiOutlineMinus className="icons" />
                         </Button>
-                        <Button variant="light" className="custom_card_text" disabled color="primary">
-                        {cartItem.qty}
+                        <Button
+                          variant="light"
+                          className="custom_card_text"
+                          disabled
+                          color="primary"
+                        >
+                          {cartItem.qty}
                         </Button>
                         <Button
                           variant="light"
@@ -111,6 +114,11 @@ const CartScreen = () => {
                   </Row>
                 </ListGroup.Item>
               ))}
+              <ListGroup.Item>
+                <Link to="/products" className="add-more-items">
+                  <FaPlus className="icons" /> Add more items
+                </Link>
+              </ListGroup.Item>
             </ListGroup>
           )}
         </Col>

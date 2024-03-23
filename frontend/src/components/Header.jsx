@@ -56,7 +56,7 @@ const Header = () => {
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-          <LinkContainer to="/">
+          <LinkContainer to="/" onClick={handleLinkClick}>
             <Navbar.Brand className="icon-container">
               <span className="logo_text">
                 <span className="animated-letter">
@@ -66,7 +66,7 @@ const Header = () => {
               </span>
             </Navbar.Brand>
           </LinkContainer>
-          <div className="d-flex align-items-center gap-4">
+          <div className="d-flex align-items-center gap-3">
             <LinkContainer to="/cart" className="cart-1">
               <Nav.Link>
                 <FaShoppingCart
