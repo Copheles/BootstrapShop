@@ -14,13 +14,12 @@ const Product = ({ product }) => {
       <CardBody>
         <Link to={`/products/${product._id}`}>
           <Card.Title
-            as="div"
             className="custom_card_title"
           >
             {product.name}
           </Card.Title>
         </Link>
-        <Card.Text as="div" className="custom_card_text">
+        <Card.Text className="custom_card_text">
           <Rating
             value={product.rating}
             text={`${product.numReviews} ${

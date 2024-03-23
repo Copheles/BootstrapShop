@@ -1,7 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { FaLongArrowAltRight } from "react-icons/fa";
 
 const HorizontalScrollList = ({ data, listTitle, seeMore }) => {
   const navigate = useNavigate();
@@ -15,7 +14,7 @@ const HorizontalScrollList = ({ data, listTitle, seeMore }) => {
       <div className="horizontal-scroll-header">
         <h2>{listTitle}</h2>
         <Link to={seeMore.link} id="see-more-link">
-          {seeMore.title} <FaLongArrowAltRight />
+          {seeMore.title}
         </Link>
       </div>
       <div className="horizontal-scroll-container">

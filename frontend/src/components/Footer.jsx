@@ -11,8 +11,8 @@ const Footer = () => {
           <Col className="text-center py-3">
             <p>
               BootStrap Shopee &copy;{" "}
-              <Link to="https://github.com/Copheles">copheles</Link>{" "}
-              <strong> {currentYear}</strong>
+              <strong><Link to="https://github.com/Copheles">copheles</Link></strong>{" "}
+             {currentYear}
             </p>
           </Col>
         </Row>

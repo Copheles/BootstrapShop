@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
-
 import { FaShopify } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
@@ -46,13 +45,19 @@ const Header = () => {
     setExpanded(false); // Close navbar when link is clicked
   };
 
+  const handleDropdownSelect = (eventKey, event) => {
+    if (eventKey === "logout") {
+      logoutHandler();
+      setExpanded(false); // Close navbar after logging out
+    }
+  };
+
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand className="icon-container">
-              {/* <GiIceCube size={30} className="bouncing-icon" /> */}
               <span className="logo_text">
                 <span className="animated-letter">
                   <FaShopify />
@@ -61,41 +66,59 @@ const Header = () => {
               </span>
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle
-            aria-controls="basic-navbar-nav"
-            onClick={() => setExpanded(!expanded)}
-          >
-            {expanded ? (
-              <BsX size={30} className="close-btn" />
-            ) : (
-              <BsList size={30} className="menu-btn" />
-            )}{" "}
-            {/* Toggle between open and close icon */}
-          </Navbar.Toggle>
-          <Navbar.Collapse id="basic-navbar-nav">
+          <div className="d-flex align-items-center gap-4">
+            <LinkContainer to="/cart" className="cart-1">
+              <Nav.Link>
+                <FaShoppingCart
+                  className="cart-btn"
+                  onClick={handleLinkClick}
+                />
+                {cartItems.length > 0 && (
+                  <Badge pill bg="info" className="mx-auto">
+                    {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+                  </Badge>
+                )}
+              </Nav.Link>
+            </LinkContainer>
+            <Navbar.Toggle
+              aria-controls="basic-navbar-nav"
+              onClick={() => setExpanded(!expanded)}
+            >
+              {expanded ? (
+                <BsX size={30} className="close-btn" />
+              ) : (
+                <BsList size={30} className="menu-btn" />
+              )}
+            </Navbar.Toggle>
+          </div>
+          <Navbar.Collapse id="basic-navbar-nav" in={expanded}>
             <Nav className="ms-auto">
-              <LinkContainer to="/cart">
+              <LinkContainer to="/cart" className="cart-2">
                 <Nav.Link>
                   <FaShoppingCart
                     className="cart-btn"
                     onClick={handleLinkClick}
                   />
                   {cartItems.length > 0 && (
-                    <Badge pill bg="info" className="mx-1">
+                    <Badge pill bg="info" className="mx-auto">
                       {cartItems.reduce((acc, item) => acc + item.qty, 0)}
                     </Badge>
                   )}
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id={userInfo.name}>
+                <NavDropdown
+                  title={userInfo.name}
+                  id={userInfo.name}
+                  onSelect={handleDropdownSelect}
+                >
                   <LinkContainer to="/profile">
                     <NavDropdown.Item onClick={handleLinkClick}>
                       <CgProfile size={22} className="mx-1 mb-1" />
                       Profile
                     </NavDropdown.Item>
                   </LinkContainer>
-                  {userInfo && userInfo.isAdmin && (
+                  {userInfo.isAdmin && (
                     <>
                       <LinkContainer to="/admin/productList">
                         <NavDropdown.Item onClick={handleLinkClick}>
@@ -118,10 +141,7 @@ const Header = () => {
                     </>
                   )}
                   <NavDropdown.Divider />
-                  <NavDropdown.Item
-                    onClick={logoutHandler}
-                    className="logout-menu"
-                  >
+                  <NavDropdown.Item eventKey="logout" className="logout-menu">
                     <MdLogout size={22} className="mx-1" />
                     Logout
                   </NavDropdown.Item>

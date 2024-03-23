@@ -8,7 +8,7 @@
   --logout-color: rgb(251, 168, 168);
   --btn-info-bg-color: rgba(119, 236, 249, 0.592);
   --btn-info-bg-hover-color: rgba(11, 207, 242, 0.592);
-  --see-more-link-color: #359db4;
+  --see-more-link-color: #2fa1bb;
 }
 
 body {
@@ -285,6 +285,7 @@ form div label {
 
 #see-more-link {
   color: var(--see-more-link-color);
+  text-decoration: underline;
 }
 
 #see-more-link:hover {
@@ -320,7 +321,11 @@ form div label {
   line-height: 1.8;
 }
 
-@media (max-width: 992px) {
+.cart-1 {
+  display: none;
+}
+
+@media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */
   }
@@ -350,6 +355,18 @@ form div label {
   .text_total {
     font-size: 17px;
     font-weight: 700;
+  }
+
+  #see-more-link {
+    font-size: 16px;
+  }
+
+  .cart-1{
+    display: block;
+  }
+
+  .cart-2{
+    display: none;
   }
 }
 
@@ -390,6 +407,18 @@ form div label {
   .text_total {
     font-size: 15px;
     font-weight: 700;
+  }
+
+  #see-more-link {
+    font-size: 14px;
+  }
+
+  .cart-1{
+    display: block;
+  }
+
+  .cart-2{
+    display: none;
   }
 }
 
@@ -460,6 +489,14 @@ form div label {
   }
   .form-control {
     font-size: 12px;
+  }
+
+  #see-more-link {
+    font-size: 12px;
+  }
+
+  .cart-2 {
+    display: none;
   }
 }
 
