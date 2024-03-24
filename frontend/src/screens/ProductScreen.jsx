@@ -231,7 +231,7 @@ const ProductScreen = () => {
                     <Form onSubmit={submitHandler}>
                       <Form.Group controlid="rating" className="my-3">
                         <Form.Label>Rating</Form.Label>
-                        <div className="d-flex align-items-center">
+                        <div className="d-flex align-items-center" style={{ height: '36px'}}>
                           <>
                             {[...Array(5)].map((star, i) => {
                               const ratingValue = i + 1;
