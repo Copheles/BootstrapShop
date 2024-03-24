@@ -344,7 +344,7 @@ form div label {
 }
 
 .card {
-  --bs-card-border-color: rgb(189, 231, 241);
+  --bs-card-border-color: rgb(253, 253, 253);
   padding: 15px 10px;
 }
 
