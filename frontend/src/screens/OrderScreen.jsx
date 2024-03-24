@@ -119,7 +119,8 @@ const OrderScreen = () => {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p className="mt-3">
-                <strong>Order id: </strong> {order._id}<CopyButton textToCopy={order._id} />
+                <strong>Order id: </strong> {order._id}
+                <CopyButton textToCopy={order._id} />
               </p>
               <p>
                 <strong>Name: </strong> {order.user.name}

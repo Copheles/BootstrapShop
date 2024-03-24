@@ -339,6 +339,19 @@ form div label {
   color: var(--see-more-link-hover-color);
 }
 
+.list-group {
+  --bs-list-group-border-color: white;
+}
+
+.card {
+  --bs-card-border-color: rgb(228, 245, 244);
+  padding: 15px 10px;
+}
+
+.list-group-flush > .list-group-item {
+  border-width: 0;
+}
+
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */
