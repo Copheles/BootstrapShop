@@ -14,6 +14,7 @@ import {
 } from "../slices/orderApiSlice";
 import Meta from "../components/Meta";
 import { changeTimeFormat } from "../utils/timesFormat";
+import CopyButton from "../components/CopyButton";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -112,12 +113,14 @@ const OrderScreen = () => {
   ) : (
     <>
       <Meta title="Order Details" />
-      <h2>Order {order._id} </h2>
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Shipping</h2>
+              <p className="mt-3">
+                <strong>Order id: </strong> {order._id}<CopyButton textToCopy={order._id} />
+              </p>
               <p>
                 <strong>Name: </strong> {order.user.name}
               </p>

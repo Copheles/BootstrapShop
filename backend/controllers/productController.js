@@ -1,5 +1,4 @@
 import fs from 'fs';
-import sharp from 'sharp'
 import asyncHandler from '../middleware/asyncHandler.js';
 import Product from '../models/productModel.js';
 
