@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -15,9 +15,11 @@ import {
 import Meta from "../components/Meta";
 import { changeTimeFormat } from "../utils/timesFormat";
 import CopyButton from "../components/CopyButton";
+import io from "socket.io-client";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
+  const [socket, setSocket] = useState(null);
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -83,6 +85,18 @@ const OrderScreen = () => {
         return orderId;
       });
   };
+  console.log(socket);
+  useEffect(() => {
+    try {
+      const newSocket = io("http://localhost:5000");
+      console.log(newSocket);
+      // const newSocket = io("http://localhost:4000");
+      setSocket(newSocket);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userInfo]);
+
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPayPalScript = async () => {

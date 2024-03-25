@@ -23,8 +23,12 @@ connectDB() // Connect to MongoDb
 const port = process.env.PORT || 5000;
 
 const app = express();
-const server = http.createServer(app)
-const io = new Server(server)
+const httpServer = http.createServer(app)
+global.io = new Server(httpServer,{
+  cors: {
+    origin: ['http://localhost:3000'],
+  }
+})
 
 // Body Parser
 app.use(express.json())
@@ -73,4 +77,4 @@ app.use(notFound);
 app.use(errorHandler)
 
 
-app.listen(port, () => console.log(`Server running on port:${port}`))
+httpServer.listen(port, () => console.log(`Server running on port:${port}`))

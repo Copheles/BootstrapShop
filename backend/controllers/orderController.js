@@ -31,16 +31,16 @@ const addOrderItems = asyncHandler(async (req, res) => {
           res.status(401)
           throw new Error(`${prevStock === 0 ? `${product.name} is out of stock now`: `${product.name} is only ${prevStock} left` }`)
         }
-        console.log('hello')
+        // console.log('hello')
         product.soldAmount = product.soldAmount + quantity;
     
-        console.log("Stock: ",product.countInStock);
-        console.log("SoldAmount: ", product.soldAmount)
+        // console.log("Stock: ",product.countInStock);
+        // console.log("SoldAmount: ", product.soldAmount)
         // Save the updated product
         await product.save();
-        console.log(`Product with ID ${productId} updated successfully.`);
+        // console.log(`Product with ID ${productId} updated successfully.`);
       } else {
-        console.log(`Product with ID ${productId} not found.`);
+        // console.log(`Product with ID ${productId} not found.`);
       }
     }));
     const order = new Order({
