@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
   // Handle events here
   socket.on('hi', (data) => {
     console.log(data.name)
+    socket.emit('Welcome', 'Welcome from scoket')
   });
 });
 

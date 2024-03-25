@@ -1,4 +1,3 @@
-
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import ProductCarousel from "../components/ProductCarousel";
 import Meta from "../components/Meta";

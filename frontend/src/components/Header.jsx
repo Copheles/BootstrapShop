@@ -20,6 +20,7 @@ import { FaUsers } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BsList, BsX } from "react-icons/bs";
 import { useState } from "react";
+import { resetCart } from "../slices/cartSlice";
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
@@ -35,6 +36,7 @@ const Header = () => {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
+      dispatch(resetCart());
       navigate("/login");
     } catch (error) {
       console.log(error);
