@@ -15,11 +15,11 @@ import {
 import Meta from "../components/Meta";
 import { changeTimeFormat } from "../utils/timesFormat";
 import CopyButton from "../components/CopyButton";
-import io from "socket.io-client";
+import { useSocket } from "../hooks/useSocket";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
-  const [socket, setSocket] = useState(null);
+  const socket = useSocket()
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -86,16 +86,11 @@ const OrderScreen = () => {
       });
   };
   console.log(socket);
+
   useEffect(() => {
-    try {
-      const newSocket = io("http://localhost:5000");
-      console.log(newSocket);
-      // const newSocket = io("http://localhost:4000");
-      setSocket(newSocket);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [userInfo]);
+    if(socket === null) return;
+    socket.emit('hi', {name: userInfo.name});
+  }, [socket, userInfo.name])
 
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {

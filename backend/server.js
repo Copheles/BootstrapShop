@@ -40,8 +40,8 @@ io.on('connection', (socket) => {
   console.log('New socket connection:', socket.id);
 
   // Handle events here
-  socket.on('eventName', (data) => {
-    // Handle event data
+  socket.on('hi', (data) => {
+    console.log(data.name)
   });
 });
 
