@@ -349,6 +349,17 @@ form div label {
 
 .items-count{
   color: black;
+.list-group {
+  --bs-list-group-border-color: white;
+}
+
+.card {
+  --bs-card-border-color: rgb(253, 253, 253);
+  padding: 15px 10px;
+}
+
+.list-group-flush > .list-group-item {
+  border-width: 0;
 }
 
 @media (max-width: 991px) {

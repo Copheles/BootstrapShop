@@ -23,7 +23,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ItemCountChange from "../components/ItemCountChange";
 import Meta from "../components/Meta";
-import { FaEdit, FaStar } from "react-icons/fa";
+import {
+  FaEdit,
+  FaStar,
+  FaRegFrown,
+  FaFrown,
+  FaMeh,
+  FaSmile,
+  FaRegSmile,
+} from "react-icons/fa";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -41,6 +49,32 @@ const ProductScreen = () => {
     useCreateReviewMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
+
+  let icon;
+  switch (rating) {
+    case 1:
+      icon = <FaRegFrown color="#ffc107" size={36} />;
+
+      break;
+    case 2:
+      icon = <FaFrown color="#ffc107" size={36} />;
+
+      break;
+    case 3:
+      icon = <FaMeh color="#ffc107" size={36} />;;
+      break;
+    case 4:
+      icon = <FaRegSmile color="#ffc107" size={36} />;
+  
+      break;
+    case 5:
+      icon = <FaSmile color="#ffc107" size={36} />;
+
+      break;
+    default:
+      icon = null;
+      break;
+  }
 
   const addToCartHandler = (e) => {
     e.preventDefault();
@@ -207,30 +241,39 @@ const ProductScreen = () => {
                     <Form onSubmit={submitHandler}>
                       <Form.Group controlid="rating" className="my-3">
                         <Form.Label>Rating</Form.Label>
-                        <div>
-                          {[...Array(5)].map((star, i) => {
-                            const ratingValue = i + 1;
-                            return (
-                              <label key={i}>
-                                <input
-                                  type="radio"
-                                  name="rating"
-                                  style={{ display: "none" }}
-                                  value={ratingValue}
-                                  onClick={() => handleStarClick(ratingValue)}
-                                />
-                                <FaStar
-                                  color={
-                                    ratingValue <= rating
-                                      ? "#ffc107"
-                                      : "#e4e5e9"
-                                  }
-                                  className="star"
-                                  size={24}
-                                />
-                              </label>
-                            );
-                          })}
+                        <div className="d-flex align-items-center" style={{ height: '36px'}}>
+                          <>
+                            {[...Array(5)].map((star, i) => {
+                              const ratingValue = i + 1;
+                              return (
+                                <label key={i}>
+                                  <input
+                                    type="radio"
+                                    name="rating"
+                                    style={{ display: "none" }}
+                                    value={ratingValue}
+                                    onClick={() => handleStarClick(ratingValue)}
+                                  />
+                                  <FaStar
+                                    color={
+                                      ratingValue <= rating
+                                        ? "#ffc107"
+                                        : "#e4e5e9"
+                                    }
+                                    className="star"
+                                    size={24}
+                                  />
+                                </label>
+                              );
+                            })}
+                          </>
+                          <div>
+                            {icon && (
+                              <div className="mx-3">
+                                {icon}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </Form.Group>
                       <Form.Group controlId="comment" className="my-3">

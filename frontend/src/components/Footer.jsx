@@ -11,8 +11,10 @@ const Footer = () => {
           <Col className="text-center py-3">
             <p>
               BootStrap Shopee &copy;{" "}
-              <strong><Link to="https://github.com/Copheles">copheles</Link></strong>{" "}
-             {currentYear}
+              <i>
+                <Link to="https://github.com/Copheles">copheles</Link>
+              </i>{" "}
+              {currentYear}
             </p>
           </Col>
         </Row>

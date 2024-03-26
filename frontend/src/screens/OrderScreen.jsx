@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -14,9 +14,12 @@ import {
 } from "../slices/orderApiSlice";
 import Meta from "../components/Meta";
 import { changeTimeFormat } from "../utils/timesFormat";
+import CopyButton from "../components/CopyButton";
+import { useSocket } from "../hooks/useSocket";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
+  const socket = useSocket()
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -82,6 +85,13 @@ const OrderScreen = () => {
         return orderId;
       });
   };
+  console.log(socket);
+
+  useEffect(() => {
+    if(socket === null) return;
+    socket.emit('hi', {name: userInfo.name});
+  }, [socket, userInfo.name])
+
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPayPalScript = async () => {
@@ -112,12 +122,15 @@ const OrderScreen = () => {
   ) : (
     <>
       <Meta title="Order Details" />
-      <h2>Order {order._id} </h2>
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Shipping</h2>
+              <p className="mt-3">
+                <strong>Order id: </strong> {order._id}
+                <CopyButton textToCopy={order._id} />
+              </p>
               <p>
                 <strong>Name: </strong> {order.user.name}
               </p>

@@ -1,5 +1,4 @@
 import fs from 'fs';
-import sharp from 'sharp'
 import asyncHandler from '../middleware/asyncHandler.js';
 import Product from '../models/productModel.js';
 
@@ -18,7 +17,8 @@ const getAllProducts = asyncHandler(async (req, res) => {
   res.json({
     products,
     page,
-    pages: Math.ceil(count / pageSize)
+    pages: Math.ceil(count / pageSize),
+    total: count
   })
 })
 
