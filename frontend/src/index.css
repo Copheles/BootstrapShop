@@ -339,16 +339,18 @@ form div label {
   color: var(--see-more-link-hover-color);
 }
 
-.instock-text{
+.instock-text {
   color: #09ad16;
 }
 
-.outofstock-text{
+.outofstock-text {
   color: rgb(190, 19, 19);
 }
 
-.items-count{
+.items-count {
   color: black;
+}
+
 .list-group {
   --bs-list-group-border-color: white;
 }
