@@ -74,7 +74,7 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  isNew: {
+  isNewProduct: {
     type: Boolean,
     required: true,
     default: false
@@ -85,8 +85,21 @@ const productSchema = new mongoose.Schema({
     default: 0
   }
 },{
-  timestamps: true
+  timestamps: true,
 })
+
+
+productSchema.statics.fetchUniqueProductBrandsAndCategories = async function() {
+  try {
+    const brands = await this.distinct('brand');
+    const categories = await this.distinct('category');
+    return { brands, categories};
+  } catch (error) {
+    console.error("Error fetching unique product brands:", error);
+    throw error;
+  }
+};
+
 
 const Product = mongoose.model("Product", productSchema)
 

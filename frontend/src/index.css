@@ -356,7 +356,7 @@ form div label {
 }
 
 .card {
-  --bs-card-border-color: rgb(253, 253, 253);
+  --bs-card-border-color: rgb(216, 213, 213);
   padding: 15px 10px;
 }
 
@@ -364,6 +364,9 @@ form div label {
   border-width: 0;
 }
 
+.autocomplete-badge {
+  cursor: pointer;
+}
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */

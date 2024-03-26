@@ -6,7 +6,6 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import { Server } from 'socket.io'; 
 
-
 // Routes
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js'

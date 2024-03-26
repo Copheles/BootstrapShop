@@ -19,11 +19,13 @@ import {
   useGetProductsQuery,
   useCreateProductMutation,
   useDeleteProductMutation,
+  useGetBrandsAndCategoriesQuery,
 } from "../../slices/productsApiSlice";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import PaginationCustom from "../../components/PaginationCustom";
+import AutoComplete from "../../components/AutoComplete";
 
 const ProductListScreen = () => {
   const [name, setName] = useState("");
@@ -40,6 +42,14 @@ const ProductListScreen = () => {
   const { pageNumber } = useParams();
 
   const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
+
+  const {
+    data: brandsAndCategories,
+    isLoading: brandsAndCategoriesLoading,
+    error: brandsAndCategoriesError,
+  } = useGetBrandsAndCategoriesQuery();
+
+  console.log(brandsAndCategories);
 
   const [createProduct, { isLoading: loadingCrateProduct }] =
     useCreateProductMutation();
@@ -131,15 +141,14 @@ const ProductListScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="brand" className="my-3">
-              <Form.Label>Brand</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter brand"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+            <AutoComplete
+              item={brand}
+              setItem={setBrand}
+              data={brandsAndCategories?.brands}
+              label="Brand"
+              controllIdText="brand"
+              placeholder="Enter Brand"
+            />
 
             <Form.Group controlId="countInStock" className="my-3">
               <Form.Label>Count In Stock</Form.Label>
@@ -151,15 +160,14 @@ const ProductListScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="category" className="my-3">
-              <Form.Label>Category</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+            <AutoComplete
+              item={category}
+              setItem={setCategory}
+              label="Category"
+              data={brandsAndCategories?.categories}
+              controllIdText="category"
+              placeholder="Enter Category"
+            />
 
             <Form.Group controlId="description" className="my-3">
               <Form.Label>Description</Form.Label>

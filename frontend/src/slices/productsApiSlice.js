@@ -33,7 +33,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Products"],
     }),
     imageUpload: builder.mutation({
-      query: ({ data, id}) => ({
+      query: ({ data, id }) => ({
         url: `${PRODUCTS_URL}/image/upload/${id}`,
         method: "PUT",
         body: data,
@@ -41,7 +41,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
       headers: {
         "Content-Type": "multipart/form-data", // For FormData
       },
-      invalidatesTags: ["Product"]
+      invalidatesTags: ["Product"],
     }),
     updateProduct: builder.mutation({
       query: ({ data, id }) => {
@@ -70,10 +70,16 @@ export const productApiSlice = apiSlice.injectEndpoints({
     }),
     getTopProducts: builder.query({
       query: () => ({
-        url: `${PRODUCTS_URL}/top`
+        url: `${PRODUCTS_URL}/top`,
       }),
-      keepUnusedDataFor: 5
-    })
+      keepUnusedDataFor: 5,
+    }),
+    getBrandsAndCategories: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/brandsAndCategories`,
+      }),
+      keepUnusedDataFor: 20,
+    }),
   }),
 });
 
@@ -85,5 +91,6 @@ export const {
   useDeleteProductMutation,
   useCreateReviewMutation,
   useGetTopProductsQuery,
-  useImageUploadMutation
+  useImageUploadMutation,
+  useGetBrandsAndCategoriesQuery,
 } = productApiSlice;

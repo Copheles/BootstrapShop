@@ -46,7 +46,7 @@ const createProduct = asyncHandler(async (req, res) => {
   const { name, price,  brand, category, countInStock, description } = req.body;
   const filePath = "/" + req.file.path.replace(/\\/g, '/');
 
-  const product = new Product({
+  const createdProduct = await Product.create({
     name,
     price,
     user: req.user._id,
@@ -57,7 +57,6 @@ const createProduct = asyncHandler(async (req, res) => {
     description,
   });
 
-  const createdProduct = await product.save();
   res.status(201).json(createdProduct);
 });
 
@@ -184,7 +183,13 @@ const getTopProducts = asyncHandler(async (req, res) => {
 
 })
 
+const getBrandsAndCategories = asyncHandler(async(req, res) => {
+  
+  const data = await Product.fetchUniqueProductBrandsAndCategories();
+  res.status(200).json({...data})
+})
 
 
 
-export { getAllProducts, getProductById, createProduct,imageUpload, updateProduct, deleteProduct, createProductReview ,getTopProducts}
+
+export { getAllProducts, getProductById, createProduct,imageUpload, updateProduct, deleteProduct, createProductReview ,getTopProducts, getBrandsAndCategories}
