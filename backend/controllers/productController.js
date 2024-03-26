@@ -17,7 +17,8 @@ const getAllProducts = asyncHandler(async (req, res) => {
   res.json({
     products,
     page,
-    pages: Math.ceil(count / pageSize)
+    pages: Math.ceil(count / pageSize),
+    total: count
   })
 })
 

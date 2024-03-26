@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
 const Product = ({ product }) => {
-  console.log(product.image);
   return (
     <Card className="my-3 p-3 rounded border-0" style={{ height: "100%" }}>
       <Link to={`/products/${product._id}`}>

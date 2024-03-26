@@ -57,7 +57,10 @@ const router = createBrowserRouter(
         <Route path="/placeorder" element={<PlaceOrderScreen />} />
         <Route path="/order/:id" element={<OrderScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/profile/orders/page/:pageNumber" element={<ProfileScreen />} />
+        <Route
+          path="/profile/orders/page/:pageNumber"
+          element={<ProfileScreen />}
+        />
       </Route>
 
       <Route path="" element={<AdminRoute />}>
@@ -73,7 +76,10 @@ const router = createBrowserRouter(
         />
         <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
         <Route path="/admin/userList" element={<UserListScreen />} />
-        <Route path="/admin/userList/page/:pageNumber" element={<UserListScreen />} />
+        <Route
+          path="/admin/userList/page/:pageNumber"
+          element={<UserListScreen />}
+        />
         <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
       </Route>
     </Route>
@@ -82,15 +88,13 @@ const router = createBrowserRouter(
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <PayPalScriptProvider deferLoading={true}>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </PayPalScriptProvider>
-    </HelmetProvider>
-  </React.StrictMode>
+  <HelmetProvider>
+    <PayPalScriptProvider deferLoading={true}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </PayPalScriptProvider>
+  </HelmetProvider>
 );
 
 reportWebVitals();
