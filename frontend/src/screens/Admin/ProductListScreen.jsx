@@ -45,8 +45,6 @@ const ProductListScreen = () => {
 
   const {
     data: brandsAndCategories,
-    isLoading: brandsAndCategoriesLoading,
-    error: brandsAndCategoriesError,
   } = useGetBrandsAndCategoriesQuery();
 
   console.log(brandsAndCategories);

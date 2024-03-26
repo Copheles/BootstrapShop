@@ -28,33 +28,35 @@ const ProductsScreen = () => {
     );
   }
 
-  if (data && data.products && data.products.length === 0) {
+  // Check if there are no products found
+  if (!data || (data.products && data.products.length === 0)) {
     return (
       <>
         <SearchBox />
         <Meta />
-        {keyword !== "" ? (
+        {keyword && (
           <Message variant="warning">
-            There are no products with name: "{keyword}"{" "}
-            <Link to="/products"> Go Back</Link>
+            There are no products with the name: "{keyword}"{" "}
+            <Link to="/products">Go Back</Link>
           </Message>
-        ) : (
-          <Message variant="info">No results found.</Message>
         )}
+        {!keyword && <Message variant="info">No results found.</Message>}
       </>
     );
   }
 
+  // Render search results if available
   return (
     <>
       <SearchBox />
       <Meta />
-      <p>
-        {keyword &&
-          `${data.total} ${
+      {keyword && (
+        <p>
+          {`${data.total} ${
             data.total === 1 ? "result" : "results"
           } for ${keyword}`}
-      </p>
+        </p>
+      )}
 
       <Row>
         {data.products.map((product) => (

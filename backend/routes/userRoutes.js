@@ -10,10 +10,12 @@ import { authUser,
   updateUser } from '../controllers/userController.js';
 import { protect,
   admin} from '../middleware/authMiddleware.js'
+import advancedFilter from '../middleware/advancedFilter.js';
+import User from '../models/userModel.js';
 
 const router = express.Router()
 
-router.route('/').post(registerUser).get(protect, admin, getUsers);
+router.route('/').post(registerUser).get(protect, admin, advancedFilter(User), getUsers);
 router.post('/logout', logoutUser);
 router.post('/auth', authUser);
 router.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile);
