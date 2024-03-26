@@ -74,6 +74,11 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  isNew: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   soldAmount: {
     type: Number,
     required: true,

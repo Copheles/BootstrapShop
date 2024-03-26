@@ -339,6 +339,18 @@ form div label {
   color: var(--see-more-link-hover-color);
 }
 
+.instock-text{
+  color: #09ad16;
+}
+
+.outofstock-text{
+  color: rgb(190, 19, 19);
+}
+
+.items-count{
+  color: black;
+}
+
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */

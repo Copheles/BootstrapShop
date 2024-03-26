@@ -114,8 +114,8 @@ const CartScreen = () => {
                   </Row>
                 </ListGroup.Item>
               ))}
-              <ListGroup.Item>
-                <Link to="/products" className="add-more-items">
+              <ListGroup.Item className="mb-3">
+                <Link to="/products" className="add-more-items ">
                   <FaPlus className="icons" /> Add more items
                 </Link>
               </ListGroup.Item>
