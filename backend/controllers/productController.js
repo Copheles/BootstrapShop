@@ -8,10 +8,11 @@ import Product from '../models/productModel.js';
 const getAllProducts = asyncHandler(async (req, res) => {
   const { data, total, page, pages} = res.advancedResults;
   res.status(200).json({
-    products: data,
     total,
     page,
-    pages
+    pages,
+    products: data,
+    
   })
 })
 

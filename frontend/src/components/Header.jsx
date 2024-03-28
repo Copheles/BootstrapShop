@@ -21,6 +21,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { BsList, BsX } from "react-icons/bs";
 import { useState } from "react";
 import { resetCart } from "../slices/cartSlice";
+import SearchBox from "./SearchBox";
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
@@ -68,7 +69,7 @@ const Header = () => {
               </span>
             </Navbar.Brand>
           </LinkContainer>
-          <div className="d-flex align-items-center gap-3">
+          <div className="d-flex align-items-center gap-2">
             <LinkContainer to="/cart" className="cart-1">
               <Nav.Link>
                 <FaShoppingCart

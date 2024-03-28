@@ -3,9 +3,10 @@ const advancedFilter = (model, populate, selectFields) => async (req, res, next)
   let queryObj;
 
   const reqQuery = { ...req.query };
+  console.log('The whole req.query', req.query)
 
   // Fields to exclude
-  const removeFields = ['select', 'sort', 'page', 'limit', 'keyword'];
+  const removeFields = ['select', 'sort', 'pageNumber', 'limit', 'keyword', 'rating', 'brand'];
   removeFields.forEach((param) => delete reqQuery[param]);
 
   // Convert query object to string and create operators for $gt, $gte, etc.
@@ -18,6 +19,18 @@ const advancedFilter = (model, populate, selectFields) => async (req, res, next)
   // Merge query criteria with keyword
   queryObj = { ...JSON.parse(queryStr), ...keyword };
 
+  if(req.query.rating && req.query.rating !== ""){
+    queryObj["rating"] = req.query.rating;
+  }
+
+  if(req.query.brand && req.query.brand !== ""){
+    const brands = req.query.brand.split(',')
+    queryObj['brand'] = brands
+  }
+
+
+
+  console.log(queryObj)
   // Construct the query
   query = model.find(queryObj);
 
@@ -48,6 +61,7 @@ const advancedFilter = (model, populate, selectFields) => async (req, res, next)
   // Pagination
   const page = Number(req.query.pageNumber) || 1;
   const pageSize = 8;
+
 
   // Count total documents matching the query criteria, including keyword search
   const total = await model.countDocuments(queryObj);
