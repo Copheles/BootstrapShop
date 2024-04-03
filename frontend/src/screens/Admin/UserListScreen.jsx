@@ -9,10 +9,10 @@ import {
   useDeleteUserMutation,
 } from "../../slices/usersApiSlice";
 import PaginationCustom from "../../components/PaginationCustom";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const UserListScreen = () => {
-  const { pageNumber } = useParams();
+  const { pageNumber } = useSelector((state) => state.filter);
 
   const { data, isLoading, error } = useGetUsersQuery({ pageNumber });
 

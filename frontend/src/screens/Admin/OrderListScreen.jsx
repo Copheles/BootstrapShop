@@ -5,10 +5,10 @@ import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import { useGetOrdersQuery } from "../../slices/orderApiSlice";
 import PaginationCustom from "../../components/PaginationCustom";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const OrderListScreen = () => {
-  const { pageNumber } = useParams();
+  const { pageNumber } = useSelector((state) => state.filter);
 
   const { data, isLoading, error } = useGetOrdersQuery({ pageNumber });
 

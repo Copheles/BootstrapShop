@@ -7,7 +7,7 @@ import SelectBrand from "./SelectBrand";
 
 const FilteringBox = () => {
   const dispatch = useDispatch();
-  const { rating, brands } = useSelector((state) => state.filter);
+  const { rating } = useSelector((state) => state.filter);
 
   const { data } = useGetBrandsAndCategoriesQuery();
 

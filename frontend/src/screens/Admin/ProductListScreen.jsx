@@ -23,9 +23,9 @@ import {
 } from "../../slices/productsApiSlice";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import PaginationCustom from "../../components/PaginationCustom";
 import AutoComplete from "../../components/AutoComplete";
+import { useSelector } from "react-redux";
 
 const ProductListScreen = () => {
   const [name, setName] = useState("");
@@ -39,13 +39,11 @@ const ProductListScreen = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { pageNumber } = useParams();
+  const { pageNumber } = useSelector((state) => state.filter);
 
   const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
 
-  const {
-    data: brandsAndCategories,
-  } = useGetBrandsAndCategoriesQuery();
+  const { data: brandsAndCategories } = useGetBrandsAndCategoriesQuery();
 
   console.log(brandsAndCategories);
 
@@ -264,11 +262,7 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          <PaginationCustom
-            pages={data.pages}
-            page={data.page}
-            link={`/admin/productList/page`}
-          />
+          <PaginationCustom pages={data.pages} page={data.page} />
         </>
       )}
     </>
