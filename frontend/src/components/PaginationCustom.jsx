@@ -1,50 +1,71 @@
 import { Pagination } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setPageNumber } from "../slices/filterSlice";
 
-const PaginationCustom = ({
-  pages,
-  page,
-  link,
-  maxPages = 5, // Maximum number of pages to show in pagination
-}) => {
-  const [displayPages, setDisplayPages] = useState([]);
+const PaginationCustom = ({ pages, page }) => {
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const totalPages = Math.ceil(pages);
-    const startPage = Math.max(
-      1,
-      Math.min(page - Math.floor(maxPages / 2), totalPages - maxPages + 1)
-    );
-    const endPage = Math.min(totalPages, startPage + maxPages - 1);
+  const handlePageClick = (pageNumber) => {
+    dispatch(setPageNumber(pageNumber));
+  };
 
-    const pagesArray = [];
-    for (let i = startPage; i <= endPage; i++) {
-      pagesArray.push(i);
+  const renderPaginationItems = () => {
+    const pageRange = 3; // Number of pagination items to show around the current page
+
+    const paginationItems = [];
+
+    // Calculate start and end page numbers
+    let startPage = Math.max(1, page - pageRange);
+    let endPage = Math.min(pages, page + pageRange);
+
+    // Adjust start and end page numbers if near the beginning or end of the range
+    if (page - startPage < pageRange) {
+      endPage = Math.min(pages, startPage + 2 * pageRange);
     }
-    setDisplayPages(pagesArray);
-  }, [page, pages, maxPages]);
+    if (endPage - page < pageRange) {
+      startPage = Math.max(1, endPage - 2 * pageRange);
+    }
+
+    // Add First, Previous, Next, and Last buttons
+    if (page > 1) {
+      paginationItems.push(
+        <Pagination.First key="first" onClick={() => handlePageClick(1)} />,
+        <Pagination.Prev key="prev" onClick={() => handlePageClick(page - 1)} />
+      );
+    }
+
+    // Add pagination items
+    for (let i = startPage; i <= endPage; i++) {
+      paginationItems.push(
+        <Pagination.Item
+          key={i}
+          active={i === page}
+          onClick={() => handlePageClick(i)}
+        >
+          {i}
+        </Pagination.Item>
+      );
+    }
+
+    // Add Next and Last buttons
+    if (page < pages) {
+      paginationItems.push(
+        <Pagination.Next
+          key="next"
+          onClick={() => handlePageClick(page + 1)}
+        />,
+        <Pagination.Last key="last" onClick={() => handlePageClick(pages)} />
+      );
+    }
+
+    return paginationItems;
+  };
 
   return (
     pages > 1 && (
       <Pagination className="mt-5 pagination-custom">
-        <LinkContainer to={`${link}/${1}`}>
-          <Pagination.First disabled={page === 1} />
-        </LinkContainer>
-        <LinkContainer to={`${link}/${Math.max(1, page - 1)}`}>
-          <Pagination.Prev disabled={page === 1} />
-        </LinkContainer>
-        {displayPages.map((p) => (
-          <LinkContainer key={p} to={`${link}/${p}`}>
-            <Pagination.Item active={p === page}>{p}</Pagination.Item>
-          </LinkContainer>
-        ))}
-        <LinkContainer to={`${link}/${Math.min(pages, page + 1)}`}>
-          <Pagination.Next disabled={page === pages} />
-        </LinkContainer>
-        <LinkContainer to={`${link}/${pages}`}>
-          <Pagination.Last disabled={page === pages} />
-        </LinkContainer>
+        {/* Render pagination items */}
+        {renderPaginationItems()}
       </Pagination>
     )
   );

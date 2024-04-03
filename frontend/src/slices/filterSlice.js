@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  rating: null,
+  rating: "",
   brands: "",// Apple,Amamzon,Google
   soldAmount: "",
   countInStock: "",
   category: [],
+  pageNumber: "",
+  keyword: ""
 };
 
 const filterSlice = createSlice({
@@ -14,6 +16,14 @@ const filterSlice = createSlice({
   reducers: {
     setRating: (state, action) => {
       state.rating = action.payload;
+      state.pageNumber = 1
+    },
+    setPageNumber: (state, action) => {
+      state.pageNumber = action.payload
+    },
+    setKeyword: (state, action) => {
+      state.keyword = action.payload
+      state.pageNumber = 1
     },
     setBrands: (state, action) => {
       if (state.brands.length === 0) {
@@ -28,14 +38,16 @@ const filterSlice = createSlice({
         }
         state.brands = brands.join(",")
       }
+      state.pageNumber = 1
     },
     clearAll: (state) => {
       state.brands = "";
-      state.rating = 0;
+      state.rating = "";
+      state.keyword = ""
     },
   },
 });
 
-export const { setRating, setBrands, clearAll } = filterSlice.actions;
+export const { setRating, setBrands, setKeyword, setPageNumber, clearAll } = filterSlice.actions;
 
 export default filterSlice.reducer;

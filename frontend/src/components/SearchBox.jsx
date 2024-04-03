@@ -1,24 +1,26 @@
 import { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
-import { useParams, useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setKeyword } from "../slices/filterSlice";
 
 const SearchBox = () => {
-  const { keyword: urlKeyword } = useParams();
-  const navigate = useNavigate();
 
-  const [keyword, setKeyword] = useState(urlKeyword || "");
+  const [ searchText, setSearchText] = useState("");
+
+  const { keyword } = useSelector((state) => state.filter)
+
+  const dispatch = useDispatch();
+
+  const handleChangeSearch = (e) => {
+    setSearchText(e.target.value)
+  }
+
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(setKeyword(searchText))
 
-    if (keyword) {
-      navigate(`/products/search/${keyword}`);
-      // setRating(0);
-    } else {
-      navigate("/products");
-    }
   };
 
   return (
@@ -28,7 +30,7 @@ const SearchBox = () => {
           <Form.Control
             type="text"
             name="q"
-            onChange={(e) => setKeyword(e.target.value)}
+            onChange={handleChangeSearch}
             value={keyword}
             placeholder="Search Products..."
             className="mr-sm-2 ml-sm-5"

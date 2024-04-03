@@ -1,58 +1,20 @@
 import SelectRating from "./SelectRating";
 import { Accordion, Button } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setRating, clearAll } from "../slices/filterSlice";
 import { useGetBrandsAndCategoriesQuery } from "../slices/productsApiSlice";
 import SelectBrand from "./SelectBrand";
 
 const FilteringBox = () => {
-  const { keyword } = useParams();
-
-  const { rating, brands } = useSelector((state) => state.filter);
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { rating, brands } = useSelector((state) => state.filter);
 
   const { data } = useGetBrandsAndCategoriesQuery();
 
-  const filterClickHandler = (e) => {
-    e.preventDefault();
-    if (rating > 0 && brands.length === 0) {
-      if (keyword) {
-        navigate(`/products/search/${keyword}?rating=${rating ? rating : ""}`);
-      } else {
-        navigate(`/products?rating=${rating ? rating : ""}`);
-      }
-    } else if (rating > 0 && brands.length > 0) {
-      if (keyword) {
-        navigate(
-          `/products/search/${keyword}?rating=${
-            rating ? rating : ""
-          }&brands=${brands}`
-        );
-      } else {
-        navigate(`/products?rating=${rating ? rating : ""}&brands=${brands}`);
-      }
-    } else if (rating === null && brands.length > 0) {
-      if (keyword) {
-        navigate(`products/search/${keyword}?brands=${brands}`);
-      } else {
-        navigate(`/products?brands=${brands}`);
-      }
-    } else {
-      if (keyword) {
-        navigate(`products/search/${keyword}`);
-      } else {
-        navigate("/products");
-      }
-    }
-  };
 
   const clearClickHandler = (e) => {
     e.preventDefault();
     dispatch(clearAll());
-    navigate(keyword ? `/products/search/${keyword}` : `/products`);
   };
 
   return (
@@ -77,14 +39,6 @@ const FilteringBox = () => {
       </Accordion>
 
       <div className="w-100 py-2 d-flex gap-2">
-        <Button
-          type="submit"
-          variant="dark"
-          className="btn-sm"
-          onClick={filterClickHandler}
-        >
-          Filter
-        </Button>
         <Button
           type="submit"
           variant="danger"
