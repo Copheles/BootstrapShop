@@ -371,6 +371,12 @@ form div label {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.accordion-button{
+  padding: 10px 20px;
+}
+
+
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */
