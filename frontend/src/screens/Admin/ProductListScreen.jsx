@@ -26,6 +26,7 @@ import { useState } from "react";
 import PaginationCustom from "../../components/PaginationCustom";
 import AutoComplete from "../../components/AutoComplete";
 import { useSelector } from "react-redux";
+import EmptyRows from "../../components/EmptyRows";
 
 const ProductListScreen = () => {
   const [name, setName] = useState("");
@@ -260,6 +261,10 @@ const ProductListScreen = () => {
                   </td>
                 </tr>
               ))}
+              {/* Render empty rows if the number of orders is less than 8 */}
+              {data.products.length < 8 && (
+                <EmptyRows count={8 - data.products.length} colSpan={7} />
+              )}
             </tbody>
           </Table>
           <PaginationCustom pages={data.pages} page={data.page} />

@@ -372,10 +372,14 @@ form div label {
   cursor: pointer;
 }
 
-.accordion-button{
+.accordion-button {
   padding: 10px 20px;
 }
 
+td {
+  height: 40px;
+  white-space: nowrap;
+}
 
 @media (max-width: 991px) {
   .card-with-aspect-ratio {

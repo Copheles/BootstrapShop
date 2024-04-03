@@ -1,3 +1,4 @@
+import React from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
 import { FaTimes } from "react-icons/fa";
@@ -6,6 +7,7 @@ import Loader from "../../components/Loader";
 import { useGetOrdersQuery } from "../../slices/orderApiSlice";
 import PaginationCustom from "../../components/PaginationCustom";
 import { useSelector } from "react-redux";
+import EmptyRows from "../../components/EmptyRows";
 
 const OrderListScreen = () => {
   const { pageNumber } = useSelector((state) => state.filter);
@@ -36,6 +38,7 @@ const OrderListScreen = () => {
               </tr>
             </thead>
             <tbody>
+              {/* Render orders data */}
               {data.orders.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>
@@ -65,8 +68,13 @@ const OrderListScreen = () => {
                   </td>
                 </tr>
               ))}
+              {/* Render empty rows if the number of orders is less than 8 */}
+              {data.orders.length < 8 && (
+                <EmptyRows count={8 - data.orders.length}  colSpan={7}/>
+              )}
             </tbody>
           </Table>
+          {/* Render pagination with total pages */}
           <PaginationCustom
             pages={data.pages}
             page={data.page}
