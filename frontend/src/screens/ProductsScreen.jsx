@@ -11,8 +11,6 @@ import { useSelector } from "react-redux";
 import { IoFilterOutline } from "react-icons/io5";
 import SelectData from "../components/SelectData";
 import { useState } from "react";
-import { FaShopify } from "react-icons/fa";
-import { black } from "colors";
 
 const ProductsScreen = () => {
   const [show, setShow] = useState(false);
@@ -51,12 +49,10 @@ const ProductsScreen = () => {
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
-            <span className="logo_text">
-              <span className="animated-letter">
-                <FaShopify />
-              </span>
-              <span>BShop</span>
-            </span>
+            <h2>
+              {" "}
+              {`${data.total} ${data.total <= 1 ? "result" : "results"}`}
+            </h2>
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>

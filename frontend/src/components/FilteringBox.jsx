@@ -68,7 +68,7 @@ const FilteringBox = () => {
           )}
       </Accordion>
 
-      <div className="w-100 py-2 d-flex gap-2">
+      <div className="w-100 py-5 d-flex gap-2">
         <Button
           type="submit"
           variant="danger"

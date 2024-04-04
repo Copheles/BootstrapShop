@@ -430,6 +430,12 @@ td {
   opacity: 0.9;
 }
 
+.offcanvas.offcanvas-start {
+  width: 300px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */
