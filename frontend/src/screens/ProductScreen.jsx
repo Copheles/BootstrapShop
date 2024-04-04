@@ -61,11 +61,11 @@ const ProductScreen = () => {
 
       break;
     case 3:
-      icon = <FaMeh color="#ffc107" size={36} />;;
+      icon = <FaMeh color="#ffc107" size={36} />;
       break;
     case 4:
       icon = <FaRegSmile color="#ffc107" size={36} />;
-  
+
       break;
     case 5:
       icon = <FaSmile color="#ffc107" size={36} />;
@@ -177,13 +177,16 @@ const ProductScreen = () => {
                       <Col>
                         <strong>
                           {product.countInStock > 0 ? (
-                            <span className="instock-text">
-                              In Stock <span className="items-count">(
-                              {product.countInStock >= 20
-                                ? "20+"
-                                : product.countInStock}
-                              )</span>
-                            </span>
+                            <>
+                              <span className="instock-text">In Stock</span>
+                              <span className="items-count">
+                                (
+                                {product.countInStock >= 20
+                                  ? "20+"
+                                  : product.countInStock}
+                                )
+                              </span>
+                            </>
                           ) : (
                             <span className="outofstock-text">
                               Out Of Stock
@@ -241,7 +244,10 @@ const ProductScreen = () => {
                     <Form onSubmit={submitHandler}>
                       <Form.Group controlid="rating" className="my-3">
                         <Form.Label>Rating</Form.Label>
-                        <div className="d-flex align-items-center" style={{ height: '36px'}}>
+                        <div
+                          className="d-flex align-items-center"
+                          style={{ height: "36px" }}
+                        >
                           <>
                             {[...Array(5)].map((star, i) => {
                               const ratingValue = i + 1;
@@ -268,11 +274,7 @@ const ProductScreen = () => {
                             })}
                           </>
                           <div>
-                            {icon && (
-                              <div className="mx-3">
-                                {icon}
-                              </div>
-                            )}
+                            {icon && <div className="mx-3">{icon}</div>}
                           </div>
                         </div>
                       </Form.Group>

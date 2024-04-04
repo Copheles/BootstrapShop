@@ -340,11 +340,17 @@ form div label {
 }
 
 .instock-text {
-  color: #09ad16;
+  background-color: #8dd693;
+  border-radius: 3px;
+  padding: 4px 6px;
+  font-weight: 500;
 }
 
 .outofstock-text {
-  color: rgb(190, 19, 19);
+  background-color: rgb(216, 108, 108);
+  border-radius: 3px;
+  padding: 4px 6px;
+  font-weight: 500;
 }
 
 .items-count {

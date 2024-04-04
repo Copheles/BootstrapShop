@@ -18,6 +18,7 @@ const filterSlice = createSlice({
   reducers: {
     setSort: (state, action) => {
       state.sort = action.payload;
+      state.pageNumber = 1;
     },
     setRating: (state, action) => {
       state.rating = action.payload;
