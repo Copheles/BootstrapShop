@@ -1,16 +1,24 @@
 import SelectRating from "./SelectRating";
 import { Accordion, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { setRating, clearAll } from "../slices/filterSlice";
+import {
+  setRating,
+  clearAll,
+  setBrands,
+  setCategories,
+} from "../slices/filterSlice";
 import { useGetBrandsAndCategoriesQuery } from "../slices/productsApiSlice";
-import SelectBrand from "./SelectBrand";
+import SelectMultipleData from "./SelectMultipleData";
 
 const FilteringBox = () => {
   const dispatch = useDispatch();
-  const { rating } = useSelector((state) => state.filter);
+  const {
+    rating: stateRating,
+    brands: stateBrands,
+    category: stateCategory,
+  } = useSelector((state) => state.filter);
 
   const { data } = useGetBrandsAndCategoriesQuery();
-
 
   const clearClickHandler = (e) => {
     e.preventDefault();
@@ -24,18 +32,40 @@ const FilteringBox = () => {
           <Accordion.Header>Rating</Accordion.Header>
           <Accordion.Body>
             <SelectRating
-              rating={rating}
+              rating={stateRating}
               setRating={setRating}
               dispatch={dispatch}
             />
           </Accordion.Body>
         </Accordion.Item>
-        <Accordion.Item eventKey="2">
-          <Accordion.Header>Brands</Accordion.Header>
-          <Accordion.Body>
-            <SelectBrand dispatch={dispatch} brands={data?.brands} />
-          </Accordion.Body>
-        </Accordion.Item>
+        {data &&
+          data.brands &&
+          data.categories && (
+            <>
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>Brands</Accordion.Header>
+                <Accordion.Body>
+                  <SelectMultipleData
+                    items={data.brands}
+                    dispatch={dispatch}
+                    stateItem={stateBrands}
+                    setData={setBrands}
+                  />
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="3">
+                <Accordion.Header>Categories</Accordion.Header>
+                <Accordion.Body>
+                  <SelectMultipleData
+                    items={data.categories}
+                    dispatch={dispatch}
+                    stateItem={stateCategory}
+                    setData={setCategories}
+                  />
+                </Accordion.Body>
+              </Accordion.Item>
+            </>
+          )}
       </Accordion>
 
       <div className="w-100 py-2 d-flex gap-2">

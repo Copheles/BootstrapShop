@@ -6,7 +6,7 @@ const advancedFilter = (model, populate, selectFields) => async (req, res, next)
   console.log('The whole req.query', req.query)
 
   // Fields to exclude
-  const removeFields = ['select', 'sort', 'pageNumber', 'limit', 'keyword', 'rating', 'brand'];
+  const removeFields = ['select', 'sort', 'pageNumber', 'limit', 'keyword', 'rating', 'brand', 'category'];
   removeFields.forEach((param) => delete reqQuery[param]);
 
   // Convert query object to string and create operators for $gt, $gte, etc.
@@ -26,6 +26,11 @@ const advancedFilter = (model, populate, selectFields) => async (req, res, next)
   if(req.query.brand && req.query.brand !== ""){
     const brands = req.query.brand.split(',')
     queryObj['brand'] = brands
+  }
+
+  if(req.query.category && req.query.category !== ""){
+    const categories = req.query.category.split(',')
+    queryObj['category'] = categories
   }
 
 

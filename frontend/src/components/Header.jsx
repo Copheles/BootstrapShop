@@ -21,7 +21,6 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { BsList, BsX } from "react-icons/bs";
 import { useState } from "react";
 import { resetCart } from "../slices/cartSlice";
-import SearchBox from "./SearchBox";
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);

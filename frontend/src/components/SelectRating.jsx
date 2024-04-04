@@ -2,11 +2,23 @@ import { ListGroup } from "react-bootstrap";
 import { FaStar, FaRegStar } from "react-icons/fa";
 
 const SelectRating = ({ rating, setRating, dispatch }) => {
+  const handleChangeClick = (num) => {
+    if (rating === "") {
+      dispatch(setRating(num));
+    } 
+    else if(rating === num){
+      dispatch(setRating(""))
+    }
+    else {
+      dispatch(setRating(num));
+    }
+  };
+
   return (
     <div>
       <ListGroup>
         <ListGroup.Item
-          onClick={() => dispatch(setRating(5))}
+          onClick={() => handleChangeClick(5)}
           className={`cursor-pointer ${rating === 5 ? "text-warning" : null}`}
         >
           <FaStar className="icons" />
@@ -16,7 +28,7 @@ const SelectRating = ({ rating, setRating, dispatch }) => {
           <FaStar className="icons" />
         </ListGroup.Item>
         <ListGroup.Item
-          onClick={() => dispatch(setRating(4))}
+          onClick={() => handleChangeClick(4)}
           className={`cursor-pointer ${rating === 4 ? "text-warning" : null}`}
         >
           <FaStar className="icons" />
@@ -26,7 +38,7 @@ const SelectRating = ({ rating, setRating, dispatch }) => {
           <FaRegStar className="icons" />
         </ListGroup.Item>
         <ListGroup.Item
-          onClick={() => dispatch(setRating(3))}
+          onClick={() => handleChangeClick(3)}
           className={`cursor-pointer ${rating === 3 ? "text-warning" : null}`}
         >
           <FaStar className="icons" />
@@ -36,7 +48,7 @@ const SelectRating = ({ rating, setRating, dispatch }) => {
           <FaRegStar className="icons" />
         </ListGroup.Item>
         <ListGroup.Item
-          onClick={() => dispatch(setRating(2))}
+          onClick={() => handleChangeClick(2)}
           className={`cursor-pointer ${rating === 2 ? "text-warning" : null}`}
         >
           <FaStar className="icons" />
@@ -46,7 +58,7 @@ const SelectRating = ({ rating, setRating, dispatch }) => {
           <FaRegStar className="icons" />
         </ListGroup.Item>
         <ListGroup.Item
-          onClick={() => dispatch(setRating(1))}
+          onClick={() => handleChangeClick(1)}
           className={`cursor-pointer ${rating === 1 ? "text-warning" : null}`}
         >
           <FaStar className="icons" />
