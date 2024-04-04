@@ -430,6 +430,10 @@ td {
   opacity: 0.9;
 }
 
+.see-more-selectItems{
+  background-color: white;
+}
+
 .offcanvas.offcanvas-start {
   width: 300px;
   border-top-right-radius: 10px;
