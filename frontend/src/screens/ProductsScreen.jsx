@@ -7,10 +7,11 @@ import Meta from "../components/Meta";
 import SearchBox from "../components/SearchBox";
 import PaginationCustom from "../components/PaginationCustom";
 import FilteringBox from "../components/FilteringBox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoFilterOutline } from "react-icons/io5";
 import SelectData from "../components/SelectData";
 import { useState } from "react";
+import { clearAll } from "../slices/filterSlice";
 
 const ProductsScreen = () => {
   const [show, setShow] = useState(false);
@@ -21,6 +22,10 @@ const ProductsScreen = () => {
   const { keyword, pageNumber, rating, brands, category, sort } = useSelector(
     (state) => state.filter
   );
+
+  const dispatch = useDispatch();
+
+  const showClearFiler = !(keyword || rating || brands) && true;
 
   const { data, error, isLoading } = useGetProductsQuery({
     keyword,
@@ -69,17 +74,27 @@ const ProductsScreen = () => {
         <Col lg={9}>
           <SearchBox />
           <div className="filter-container">
-            <div className="top-box">
-              <Button
-                variant="outline-dark"
-                onClick={handleShow}
-                className="filter-button btn-sm"
-              >
-                <IoFilterOutline />
-              </Button>
-              <div className="bottom-box">
-                <SelectData />
+            <div className="wrapper">
+              <div className="top-box">
+                <Button
+                  variant="outline-dark"
+                  onClick={handleShow}
+                  className="filter-button btn-sm"
+                >
+                  <IoFilterOutline />
+                </Button>
+                <div className="bottom-box">
+                  <SelectData />
+                </div>
               </div>
+              {!showClearFiler && (
+                <button
+                  className="filter-btn"
+                  onClick={() => dispatch(clearAll())}
+                >
+                  Clear filters
+                </button>
+              )}
             </div>
             {data && (
               <p className="results-text">{`${data.total} ${

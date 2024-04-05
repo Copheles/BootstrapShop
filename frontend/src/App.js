@@ -23,7 +23,7 @@ function App() {
     // Check if the URL contains the query parameter 'redirect=/products'
     const isExcludedRoute =
       location.pathname === "/products" ||
-      location.search.includes("redirect=/products");
+      location.search.includes("redirect=/products") || location.search.includes("redirect=/brand");
 
     // Dispatch action to update Redux state with the current route
     if (!isExcludedRoute) {

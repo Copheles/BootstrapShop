@@ -29,7 +29,7 @@ a {
 }
 
 main {
-  min-height: 100vh;
+  min-height: calc(100vh - 67px);
 }
 
 .btn-info {
@@ -81,6 +81,19 @@ main {
 .carousel-item {
   width: 100%;
 }
+/* Horizontal Scroll */
+.horizontal-scroll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.horizontal-scroll-header h2 {
+  margin: 0;
+}
+.horizontal-scroll-header > a {
+  text-decoration: none;
+}
 
 /* HorizontalContainer */
 .horizontal-scroll-container {
@@ -96,27 +109,40 @@ main {
   display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
 }
 
-.horizontal-scroll-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.horizontal-scroll-header h2 {
-  margin: 0;
-}
-
-.horizontal-scroll-header a {
-  color: blue; /* Customize link color */
-  text-decoration: none;
-}
-
 /* Scroll Item */
 .scroll-item {
   flex: 0 0 auto;
   margin-right: 20px; /* Adjust spacing between items */
   width: 250px; /* Set a fixed width for each card */
   cursor: pointer; /* Set cursor to grab for dragging */
+}
+
+.bullet-box {
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.bullet-item {
+  color: rgba(11, 11, 11, 0.962);
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 18px;
+  padding: 3px 13px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.bullet-item:first-child {
+  color: white;
+  background-color: black;
+}
+
+.bullet-item:hover {
+  color: white;
+  background-color: black;
+  transform: scale(1.02);
 }
 
 .link-item {
@@ -356,7 +382,6 @@ form div label {
   font-style: italic;
 }
 
-
 .items-count {
   color: black;
 }
@@ -435,9 +460,14 @@ td {
   display: none;
 }
 
+.wrapper {
+  height: 100px;
+}
+
 .results-text {
   font-weight: 500;
   opacity: 0.9;
+  margin-bottom: 32px;
 }
 
 .see-more-selectItems {
@@ -450,26 +480,41 @@ td {
   border-bottom-right-radius: 10px;
 }
 
-.review-name{
+.review-name {
   text-transform: capitalize;
 }
 
-.rating-box{
+.rating-box {
   display: flex;
   align-items: center;
 }
 
-.review-date-text{
+.review-date-text {
   font-size: 14px;
   font-style: italic;
 }
 
-.review-comment{
+.review-comment {
   font-weight: 500;
   color: #323030;
   margin-top: 5px;
 }
 
+.filter-btn {
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: white;
+  color: red;
+  border: 0;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.filter-btn:hover {
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+}
 
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
@@ -535,11 +580,17 @@ td {
   .filter-button {
     display: block;
   }
+
+  .bullet-item {
+    border-radius: 18px;
+    padding: 3px 13px;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 768px) {
   .card-with-aspect-ratio {
-    width: 20; /* Adjust width for small screens */
+    width: 23%; /* Adjust width for small screens */
   }
   .custom_card_title,
   .custom_card_text {
@@ -599,6 +650,12 @@ td {
 
   .btn {
     font-size: 14px;
+  }
+
+  .bullet-item {
+    border-radius: 18px;
+    padding: 3px 13px;
+    font-size: 12px;
   }
 }
 
@@ -684,12 +741,18 @@ td {
     font-weight: 600;
   }
 
-  .review-date-text{
+  .review-date-text {
     font-size: 12px;
   }
 
   .btn {
     font-size: 14px;
+  }
+
+  .bullet-item {
+    border-radius: 18px;
+    padding: 3px 13px;
+    font-size: 11px;
   }
 }
 
