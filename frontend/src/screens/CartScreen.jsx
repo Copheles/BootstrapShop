@@ -60,7 +60,7 @@ const CartScreen = () => {
                       />
                     </Col>
                     <Col xs={10} sm={10} md={6}>
-                      <Link to={`/product/${cartItem._id}`}>
+                      <Link to={`/products/${cartItem._id}?redirect=/cart`}>
                         <p className="custom_card_text">{cartItem.name}</p>
                       </Link>
                     </Col>
