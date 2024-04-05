@@ -46,6 +46,8 @@ const filterSlice = createSlice({
       state.brands = "";
       state.rating = "";
       state.keyword = "";
+      state.pageNumber = 1;
+      state.category = ""
     },
   },
 });

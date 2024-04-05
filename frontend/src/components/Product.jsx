@@ -5,13 +5,13 @@ import Rating from "./Rating";
 const Product = ({ product }) => {
   return (
     <Card className="my-3 p-3 rounded border-0" style={{ height: "100%" }}>
-      <Link to={`/products/${product._id}`}>
+      <Link to={`/products/${product._id}?redirect=/products`}>
         <div className="aspect-ratio-wrapper">
           <Card.Img variant="top" src={product.image} className="card-img" />
         </div>
       </Link>
       <CardBody>
-        <Link to={`/products/${product._id}`}>
+        <Link to={`/products/${product._id}?redirect=/products`}>
           <Card.Title
             className="custom_card_title"
           >

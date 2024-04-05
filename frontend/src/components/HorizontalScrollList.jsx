@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const HorizontalScrollList = ({ data, listTitle, seeMore }) => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const HorizontalScrollList = ({ data, listTitle, seeMore }) => {
         <h2>{listTitle}</h2>
         <Link to={seeMore.link} id="see-more-link">
           {seeMore.title}
+          <MdKeyboardDoubleArrowRight className="see-more-icon"/>
         </Link>
       </div>
       <div className="horizontal-scroll-container">

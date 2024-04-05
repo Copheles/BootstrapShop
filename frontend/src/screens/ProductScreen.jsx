@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
   Row,
@@ -54,27 +54,31 @@ const ProductScreen = () => {
   switch (rating) {
     case 1:
       icon = <FaRegFrown color="#ffc107" size={36} />;
-
       break;
     case 2:
       icon = <FaFrown color="#ffc107" size={36} />;
-
       break;
     case 3:
       icon = <FaMeh color="#ffc107" size={36} />;
       break;
     case 4:
       icon = <FaRegSmile color="#ffc107" size={36} />;
-
       break;
     case 5:
       icon = <FaSmile color="#ffc107" size={36} />;
-
       break;
     default:
       icon = null;
       break;
   }
+
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+
+  const backHandler = () => {
+    navigate(redirect);
+  };
 
   const addToCartHandler = (e) => {
     e.preventDefault();
@@ -112,9 +116,9 @@ const ProductScreen = () => {
     <>
       <Meta title={product?.name} />
       <div className="d-flex align-items-center justify-content-between">
-        <Link className="btn btn-light my-3" to="/">
+        <Button className="btn btn-light my-3" onClick={backHandler}>
           <MdOutlineKeyboardBackspace size={30} />
-        </Link>
+        </Button>
         {userInfo && userInfo.isAdmin && (
           <Link to={`/admin/product/${product?._id}/edit`}>
             <FaEdit />
@@ -189,7 +193,7 @@ const ProductScreen = () => {
                             </>
                           ) : (
                             <span className="outofstock-text">
-                              Out Of Stock
+                              Sorry we're temporarily out of stock!
                             </span>
                           )}
                         </strong>
@@ -231,10 +235,12 @@ const ProductScreen = () => {
               <ListGroup variant="flush">
                 {product.reviews.map((review) => (
                   <ListGroup.Item key={review._id}>
-                    <strong>{review.name}</strong>
-                    <Rating value={review.rating} />
-                    <p>{review.createdAt.substring(0, 10)}</p>
-                    <p>{review.comment}</p>
+                    <strong className="review-name">{review.name}</strong>
+                    <div className="rating-box">
+                      <Rating value={review.rating} />
+                      <span className="review-date-text">{review.createdAt.substring(0, 10)}</span>
+                    </div>
+                    <p className="review-comment">{review.comment}</p>
                   </ListGroup.Item>
                 ))}
                 <ListGroup.Item>

@@ -290,7 +290,10 @@ form div label {
 
 #see-more-link {
   color: var(--see-more-link-color);
-  text-decoration: underline;
+}
+
+.see-more-icon {
+  font-size: 20px;
 }
 
 #see-more-link:hover {
@@ -342,16 +345,17 @@ form div label {
 .instock-text {
   background-color: #8dd693;
   border-radius: 3px;
+  font-style: italic;
   padding: 4px 6px;
   font-weight: 500;
 }
 
 .outofstock-text {
-  background-color: rgb(216, 108, 108);
-  border-radius: 3px;
-  padding: 4px 6px;
+  color: rgb(216, 108, 108);
   font-weight: 500;
+  font-style: italic;
 }
+
 
 .items-count {
   color: black;
@@ -436,7 +440,7 @@ td {
   opacity: 0.9;
 }
 
-.see-more-selectItems{
+.see-more-selectItems {
   background-color: white;
 }
 
@@ -445,6 +449,27 @@ td {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+.review-name{
+  text-transform: capitalize;
+}
+
+.rating-box{
+  display: flex;
+  align-items: center;
+}
+
+.review-date-text{
+  font-size: 14px;
+  font-style: italic;
+}
+
+.review-comment{
+  font-weight: 500;
+  color: #323030;
+  margin-top: 5px;
+}
+
 
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
@@ -480,6 +505,10 @@ td {
 
   #see-more-link {
     font-size: 16px;
+  }
+
+  .see-more-icon {
+    font-size: 18px;
   }
 
   .cart-1 {
@@ -549,6 +578,10 @@ td {
 
   #see-more-link {
     font-size: 14px;
+  }
+
+  .see-more-icon {
+    font-size: 16px;
   }
 
   .cart-1 {
@@ -649,6 +682,10 @@ td {
   .add-more-items {
     font-size: 12px;
     font-weight: 600;
+  }
+
+  .review-date-text{
+    font-size: 12px;
   }
 
   .btn {

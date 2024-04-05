@@ -20,6 +20,8 @@ const FilteringBox = () => {
 
   const { data } = useGetBrandsAndCategoriesQuery();
 
+  console.log(data);
+
   const clearClickHandler = (e) => {
     e.preventDefault();
     dispatch(clearAll());
@@ -28,56 +30,56 @@ const FilteringBox = () => {
   return (
     <>
       <Accordion defaultActiveKey={["1", "2"]} alwaysOpen>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>Rating</Accordion.Header>
-          <Accordion.Body>
-            <SelectRating
-              rating={stateRating}
-              setRating={setRating}
-              dispatch={dispatch}
-            />
-          </Accordion.Body>
-        </Accordion.Item>
-        {data &&
-          data.brands &&
-          data.categories && (
-            <>
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>Brands</Accordion.Header>
-                <Accordion.Body>
-                  <SelectMultipleData
-                    items={data.brands}
-                    dispatch={dispatch}
-                    stateItem={stateBrands}
-                    setData={setBrands}
-                  />
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>Categories</Accordion.Header>
-                <Accordion.Body>
-                  <SelectMultipleData
-                    items={data.categories}
-                    dispatch={dispatch}
-                    stateItem={stateCategory}
-                    setData={setCategories}
-                  />
-                </Accordion.Body>
-              </Accordion.Item>
-            </>
-          )}
+        {data && data.brands && data.categories && (
+          <>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>Rating</Accordion.Header>
+              <Accordion.Body>
+                <SelectRating
+                  rating={stateRating}
+                  setRating={setRating}
+                  dispatch={dispatch}
+                />
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>Brands</Accordion.Header>
+              <Accordion.Body>
+                <SelectMultipleData
+                  items={data.brands}
+                  dispatch={dispatch}
+                  stateItem={stateBrands}
+                  setData={setBrands}
+                />
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>Categories</Accordion.Header>
+              <Accordion.Body>
+                <SelectMultipleData
+                  items={data.categories}
+                  dispatch={dispatch}
+                  stateItem={stateCategory}
+                  setData={setCategories}
+                />
+              </Accordion.Body>
+            </Accordion.Item>
+          </>
+        )}
       </Accordion>
 
-      <div className="w-100 py-5 d-flex gap-2">
-        <Button
-          type="submit"
-          variant="danger"
-          className="btn-sm"
-          onClick={clearClickHandler}
-        >
-          Clear
-        </Button>
-      </div>
+      {data && (
+        <div className="w-100 py-5 d-flex gap-2">
+          <Button
+            type="submit"
+            variant="danger"
+            className="btn-sm"
+            onClick={clearClickHandler}
+          >
+            Clear
+          </Button>
+        </div>
+      )}
     </>
   );
 };

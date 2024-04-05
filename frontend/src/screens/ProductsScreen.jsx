@@ -31,6 +31,8 @@ const ProductsScreen = () => {
     sort,
   });
 
+  console.log(data);
+
   if (isLoading) {
     return <Loader />;
   }

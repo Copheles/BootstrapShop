@@ -23,10 +23,12 @@ const SearchBox = () => {
   };
 
   useEffect(() => {
-    if(keyword === ""){
+    if (keyword === "") {
       setSearchText("");
+    } else {
+      setSearchText(keyword);
     }
-  }, [keyword])
+  }, [keyword]);
 
   return (
     <>

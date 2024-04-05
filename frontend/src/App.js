@@ -20,14 +20,22 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
+    // Check if the URL contains the query parameter 'redirect=/products'
+    const isExcludedRoute =
+      location.pathname === "/products" ||
+      location.search.includes("redirect=/products");
+
     // Dispatch action to update Redux state with the current route
-    dispatch(setPageNumber(1));
-    dispatch(setSort("-createdAt"));
-    dispatch(setRating(""));
-    dispatch(setBrands(""));
-    dispatch(setKeyword(""));
-    dispatch(setCategories(""));
-  }, [location.pathname, dispatch]);
+    if (!isExcludedRoute) {
+      dispatch(setPageNumber(1));
+      dispatch(setSort("-createdAt"));
+      dispatch(setRating(""));
+      dispatch(setBrands(""));
+      dispatch(setKeyword(""));
+      dispatch(setCategories(""));
+    }
+  }, [location.pathname, dispatch, location.search]);
+
   return (
     <>
       <Header />
