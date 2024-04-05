@@ -516,6 +516,10 @@ td {
   border: 1px solid red;
 }
 
+.hover-line-effect:hover{
+  text-decoration: underline;
+}
+
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */

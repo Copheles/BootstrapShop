@@ -19,7 +19,7 @@ import { useSocket } from "../hooks/useSocket";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
-  const socket = useSocket()
+  const socket = useSocket();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -88,9 +88,9 @@ const OrderScreen = () => {
   console.log(socket);
 
   useEffect(() => {
-    if(socket === null) return;
-    socket.emit('hi', {name: userInfo.name});
-  }, [socket, userInfo.name])
+    if (socket === null) return;
+    socket.emit("hi", { name: userInfo.name });
+  }, [socket, userInfo.name]);
 
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
@@ -187,7 +187,9 @@ const OrderScreen = () => {
                       <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
                     <Col xs={10} sm={10} md={6}>
-                      <Link to={`/products/${item.product}`}>
+                      <Link
+                        to={`/products/${item.product}?redirect=/order/${orderId}`}
+                      >
                         <p className="custom_card_text">{item.name}</p>
                       </Link>
                     </Col>

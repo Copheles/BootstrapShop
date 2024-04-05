@@ -32,6 +32,7 @@ import {
   FaSmile,
   FaRegSmile,
 } from "react-icons/fa";
+import { setBrands, setCategories } from "../slices/filterSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -88,6 +89,16 @@ const ProductScreen = () => {
 
   const handleStarClick = (selectedRating) => {
     setRating(selectedRating);
+  };
+
+  const handleBrandClick = (brand) => {
+    dispatch(setBrands(brand));
+    navigate("/products");
+  };
+
+  const handleCategoryClick = (category) => {
+    dispatch(setCategories(category));
+    navigate("/products");
   };
 
   const submitHandler = async (e) => {
@@ -150,13 +161,17 @@ const ProductScreen = () => {
                     clsName="date-text"
                   />
                 </ListGroup.Item>
-                <ListGroup.Item>
+                <ListGroup.Item onClick={() => handleBrandClick(product.brand)}>
                   <strong>Brand: </strong>{" "}
-                  <span className="product-text">{product.brand}</span>
+                  <span className="product-text cursor-pointer hover-line-effect">
+                    {product.brand}
+                  </span>
                 </ListGroup.Item>
-                <ListGroup.Item>
+                <ListGroup.Item
+                  onClick={() => handleCategoryClick(product.category)}
+                >
                   <strong>Category: </strong>{" "}
-                  <span className="product-text">{product.category}</span>
+                  <span className="product-text cursor-pointer hover-line-effect">{product.category}</span>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Description: </strong>{" "}
@@ -238,7 +253,9 @@ const ProductScreen = () => {
                     <strong className="review-name">{review.name}</strong>
                     <div className="rating-box">
                       <Rating value={review.rating} />
-                      <span className="review-date-text">{review.createdAt.substring(0, 10)}</span>
+                      <span className="review-date-text">
+                        {review.createdAt.substring(0, 10)}
+                      </span>
                     </div>
                     <p className="review-comment">{review.comment}</p>
                   </ListGroup.Item>
