@@ -25,7 +25,7 @@ const ProductsScreen = () => {
 
   const dispatch = useDispatch();
 
-  const showClearFiler = !(keyword || rating || brands) && true;
+  const showClearFiler = !(keyword || rating || brands || category) && true;
 
   const { data, error, isLoading } = useGetProductsQuery({
     keyword,

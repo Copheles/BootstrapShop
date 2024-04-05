@@ -35,12 +35,18 @@ const filterSlice = createSlice({
       state.brands = formatMultipleSelectInput(state.brands, action.payload);
       state.pageNumber = 1;
     },
+    setBrand: (state, action ) => {
+      state.brands = action.payload
+    },
     setCategories: (state, action) => {
       state.category = formatMultipleSelectInput(
         state.category,
         action.payload
       );
       state.pageNumber = 1;
+    },
+    setCategory: (state, action) => {
+      state.category = action.payload
     },
     clearAll: (state) => {
       state.brands = "";
@@ -56,7 +62,9 @@ export const {
   setSort,
   setRating,
   setBrands,
+  setBrand,
   setCategories,
+  setCategory,
   setKeyword,
   setPageNumber,
   clearAll,

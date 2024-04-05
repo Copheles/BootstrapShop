@@ -32,7 +32,7 @@ import {
   FaSmile,
   FaRegSmile,
 } from "react-icons/fa";
-import { setBrands, setCategories } from "../slices/filterSlice";
+import { setBrand, setCategory } from "../slices/filterSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -92,12 +92,12 @@ const ProductScreen = () => {
   };
 
   const handleBrandClick = (brand) => {
-    dispatch(setBrands(brand));
+    dispatch(setBrand(brand));
     navigate("/products");
   };
 
   const handleCategoryClick = (category) => {
-    dispatch(setCategories(category));
+    dispatch(setCategory(category));
     navigate("/products");
   };
 
@@ -171,7 +171,9 @@ const ProductScreen = () => {
                   onClick={() => handleCategoryClick(product.category)}
                 >
                   <strong>Category: </strong>{" "}
-                  <span className="product-text cursor-pointer hover-line-effect">{product.category}</span>
+                  <span className="product-text cursor-pointer hover-line-effect">
+                    {product.category}
+                  </span>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Description: </strong>{" "}
