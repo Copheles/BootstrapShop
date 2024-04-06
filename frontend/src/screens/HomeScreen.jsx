@@ -40,6 +40,7 @@ const HomeScreen = () => {
         listTitle="latest products"
         seeMore={{ title: "see more", link: "/products" }}
       />
+      <TopPickProduct />
       <HorizontalScrollList
         data={PopularProducts?.products}
         listTitle="Most Popular"

@@ -460,7 +460,6 @@ td {
   font-weight: 500;
 }
 
-
 .wrapper {
   height: 100px;
 }
@@ -522,7 +521,7 @@ td {
 }
 
 .filter-amount-box {
-  display:none;
+  display: none;
 }
 
 .filter-amount {
@@ -541,8 +540,71 @@ td {
   background-color: rgb(201, 71, 71);
 }
 
-.questionmark-badge{
+.questionmark-badge {
   font-size: 12px;
+}
+
+.toppick-container {
+  display: flex;
+  border: 1px solid rgb(208, 202, 202);
+  padding-bottom: 20px;
+  padding-top: 20px;
+  border-radius: 20px;
+  max-width: 1296px;
+  margin: 30px 0px;
+  gap: 20px;
+  transition: box-shadow 0.5s ease;
+}
+
+.toppick-container:hover {
+  box-shadow: 0px 0px 15px 0px rgba(84, 205, 235, 0.5);
+}
+
+.toppick-leftbox {
+  flex: 1;
+  width: 100%;
+}
+
+.toppick-rightbox {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.toppick-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.toppick-wrapper > span {
+  font-style: italic;
+  font-weight: 400;
+  transform: skewX(
+    10deg);
+  background-color: rgb(228, 171, 151);
+  padding: 4px 8px;
+}
+
+.toppick-wrapper > p {
+  font-weight: 500;
+  color: rgb(87, 83, 83);
+}
+
+@media (max-width: 1199px) {
+  .toppick-leftbox {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .toppick-img {
+    width: 70%;
+  }
 }
 
 @media (max-width: 991px) {
@@ -619,8 +681,21 @@ td {
     font-size: 14px;
   }
 
-  .questionmark-badge{
+  .questionmark-badge {
     font-size: 12px;
+  }
+
+  .toppick-container {
+    flex-direction: column;
+  }
+
+  .toppick-leftbox {
+    width: 100%;
+    height: 100%;
+  }
+
+  .toppick-rightbox {
+    padding: 0px 10px;
   }
 }
 
@@ -693,8 +768,12 @@ td {
     padding: 3px 13px;
     font-size: 12px;
   }
-  .questionmark-badge{
+  .questionmark-badge {
     font-size: 11px;
+  }
+
+  .toppick-rightbox {
+    padding: 0px 15px;
   }
 }
 
@@ -793,11 +872,18 @@ td {
     border-radius: 18px;
     padding: 3px 13px;
     font-size: 11px;
-
   }
 
-  .questionmark-badge{
+  .questionmark-badge {
     font-size: 10px;
+  }
+
+  .toppick-container{
+    padding-top: 0;
+  }
+
+  .toppick-rightbox {
+    padding: 0px 30px;
   }
 }
 
