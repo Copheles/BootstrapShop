@@ -18,6 +18,7 @@ const SelectData = () => {
       >
         <option value="-createdAt">Newest</option>
         <option value="createdAt">Oldest</option>
+        <option value="-soldAmount">Most Popular</option>
         <option value="-rating">Highest Rated</option>
         <option value="-numReviews">Most Reviewed</option>
         <option value="price">Price Low to High</option>

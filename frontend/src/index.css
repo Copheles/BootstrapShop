@@ -20,12 +20,13 @@ body {
 
 h2 {
   text-transform: capitalize;
-  font-size: 28px;
+  font-size: 25px;
   color: #47494a;
 }
 
 a {
   color: #343a40;
+  text-decoration: none;
 }
 
 main {
@@ -318,6 +319,7 @@ form div label {
 
 #see-more-link {
   color: var(--see-more-link-color);
+  font-weight: 500;
 }
 
 .see-more-icon {
@@ -539,6 +541,10 @@ td {
   background-color: rgb(201, 71, 71);
 }
 
+.questionmark-badge{
+  font-size: 12px;
+}
+
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */
@@ -612,6 +618,10 @@ td {
     padding: 3px 13px;
     font-size: 14px;
   }
+
+  .questionmark-badge{
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -682,6 +692,9 @@ td {
     border-radius: 18px;
     padding: 3px 13px;
     font-size: 12px;
+  }
+  .questionmark-badge{
+    font-size: 11px;
   }
 }
 
@@ -779,6 +792,11 @@ td {
     border-radius: 18px;
     padding: 3px 13px;
     font-size: 11px;
+
+  }
+
+  .questionmark-badge{
+    font-size: 10px;
   }
 }
 
