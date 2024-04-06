@@ -160,9 +160,11 @@ main {
 .card-with-aspect-ratio {
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
   height: 100%;
   width: 15%;
   border: 0;
+  box-shadow: 0px 0px 4px 0px rgba(84, 205, 235, 0.5);
 }
 
 .aspect-ratio-wrapper {
