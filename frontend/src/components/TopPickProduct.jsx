@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import Rating from "./Rating";
 
 const product = {
   _id: "65d73e2d2a043e0d654f6724",
@@ -28,8 +29,8 @@ const TopPickProduct = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/products/${product._id}`)
-  }
+    navigate(`/products/${product._id}`);
+  };
 
   return (
     <>
@@ -41,9 +42,10 @@ const TopPickProduct = () => {
         <div className="toppick-rightbox">
           <div className="toppick-wrapper">
             <span>Exclusively Avaliable on Store</span>
-            <h2>{product.name}</h2>
+            <h2>{product.name}</h2>            
+            <Rating value={product.rating} text={`$ ${product.price}`} clsName="price_text" />
             <p>{product.description}</p>
-            <Button  variant="dark" onClick={handleClick}>
+            <Button variant="dark" onClick={handleClick}>
               Buy Now <FaLongArrowAltRight />
             </Button>
           </div>
