@@ -704,7 +704,8 @@ td {
   }
   .custom_card_title,
   .custom_card_text {
-    font-size: 12px;
+    font-size: 10px;
+    font-weight: 400;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

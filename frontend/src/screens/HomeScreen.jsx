@@ -6,6 +6,7 @@ import ProductCarousel from "../components/ProductCarousel";
 import Meta from "../components/Meta";
 import HorizontalScrollList from "../components/HorizontalScrollList";
 import HorizontalScrollBulletList from "../components/HorizontalScrollBulletList";
+import TopPickProduct from "../components/TopPickProduct";
 
 const HomeScreen = () => {
   const { data: LatestProducts } = useGetProductsQuery({
@@ -15,7 +16,6 @@ const HomeScreen = () => {
   const { data: PopularProducts } = useGetProductsQuery({
     sort: "-soldAmount",
   });
-
 
   const recentlyViewedProducts = JSON.parse(
     localStorage.getItem("recentlyViewed")
@@ -40,7 +40,6 @@ const HomeScreen = () => {
         listTitle="latest products"
         seeMore={{ title: "see more", link: "/products" }}
       />
-
       <HorizontalScrollList
         data={PopularProducts?.products}
         listTitle="Most Popular"
