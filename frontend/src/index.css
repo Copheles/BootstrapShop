@@ -886,6 +886,10 @@ td {
   .toppick-rightbox {
     padding: 0px 30px;
   }
+
+  .toppick-wrapper{
+    gap: 8px;
+  }
 }
 
 .card-body {
