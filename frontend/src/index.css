@@ -68,8 +68,6 @@ main {
 
 /* Carousel */
 
-
-
 .carousel-caption {
   position: absolute;
   width: 100%;
@@ -460,9 +458,6 @@ td {
   font-weight: 500;
 }
 
-.filter-button {
-  display: none;
-}
 
 .wrapper {
   height: 100px;
@@ -520,8 +515,28 @@ td {
   border: 1px solid red;
 }
 
-.hover-line-effect:hover{
+.hover-line-effect:hover {
   text-decoration: underline;
+}
+
+.filter-amount-box {
+  display:none;
+}
+
+.filter-amount {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgb(201, 71, 71);
 }
 
 @media (max-width: 991px) {
@@ -585,8 +600,11 @@ td {
     display: none;
   }
 
-  .filter-button {
-    display: block;
+  .filter-amount-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 3px;
   }
 
   .bullet-item {

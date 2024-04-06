@@ -1,4 +1,4 @@
-import { Button, Col, Row, Offcanvas } from "react-bootstrap";
+import { Button, Col, Row, Offcanvas, Badge } from "react-bootstrap";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
@@ -12,6 +12,7 @@ import { IoFilterOutline } from "react-icons/io5";
 import SelectData from "../components/SelectData";
 import { useState } from "react";
 import { clearAll } from "../slices/filterSlice";
+import getFilterListAmount from "../utils/getFIlterListAmount";
 
 const ProductsScreen = () => {
   const [show, setShow] = useState(false);
@@ -22,6 +23,13 @@ const ProductsScreen = () => {
   const { keyword, pageNumber, rating, brands, category, sort } = useSelector(
     (state) => state.filter
   );
+
+  const filterAmount = getFilterListAmount({
+    keyword,
+    rating,
+    brands,
+    category,
+  });
 
   const dispatch = useDispatch();
 
@@ -76,13 +84,20 @@ const ProductsScreen = () => {
           <div className="filter-container">
             <div className="wrapper">
               <div className="top-box">
-                <Button
-                  variant="outline-dark"
-                  onClick={handleShow}
-                  className="filter-button btn-sm"
-                >
-                  <IoFilterOutline />
-                </Button>
+                <div className="filter-amount-box">
+                  <Button
+                    variant="outline-dark"
+                    onClick={handleShow}
+                    className="filter-button btn-sm"
+                  >
+                    <IoFilterOutline />
+                  </Button>
+                  {filterAmount > 0 && (
+                    <div className="filter-amount">
+                      <span>{filterAmount > 9 ? "9+": filterAmount}</span>
+                    </div>
+                  )}
+                </div>
                 <div className="bottom-box">
                   <SelectData />
                 </div>

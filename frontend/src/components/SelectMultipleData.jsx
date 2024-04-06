@@ -23,7 +23,7 @@ const SelectMultipleData = ({ items, dispatch, stateItem, setData }) => {
             checked={stateItem.includes(item)}
             onChange={() => dispatch(setData(item))}
           />
-          <label htmlFor={item} className="form-check-label">
+          <label htmlFor={item} className="form-check-label order_summary_text">
             {item}
           </label>
         </div>
