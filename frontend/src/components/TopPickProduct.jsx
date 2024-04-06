@@ -12,7 +12,7 @@ const product = {
   brand: "Amazon",
   category: "Electronics",
   description:
-    "Meet Echo Dot - Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space",
+    "Our most popular smart speaker with a fabric design. It is our most compact smart speaker that fits perfectly into small space",
   rating: 4,
   numReviews: 12,
   price: 29.99,
