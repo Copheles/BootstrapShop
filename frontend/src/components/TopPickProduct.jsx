@@ -34,7 +34,7 @@ const TopPickProduct = () => {
 
   return (
     <>
-      <h2>Top Pick's for Today</h2>
+      <h2 className="mt-2">Top Pick's for Today</h2>
       <div className="toppick-container">
         <div className="toppick-leftbox">
           <img className="toppick-img" src={product.image} alt={product.name} />
