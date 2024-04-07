@@ -177,13 +177,29 @@ const getTopProducts = asyncHandler(async (req, res) => {
 
 })
 
+// @desc GET brands and categories
+// @route GET /api/products/brandsAndCategories
+// @access Public
+
 const getBrandsAndCategories = asyncHandler(async(req, res) => {
-  
   const data = await Product.fetchUniqueProductBrandsAndCategories();
   res.status(200).json({...data})
 })
 
 
+// @desc GET brands and categories
+// @route GET /api/products/brandsAndCategories
+// @access Public
+const getFeaturedProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findOne({ isFeatured : true});
+
+  if(product){
+    res.status(200).json(product);
+  }else{
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
 
 
-export { getAllProducts, getProductById, createProduct,imageUpload, updateProduct, deleteProduct, createProductReview ,getTopProducts, getBrandsAndCategories}
+export { getAllProducts, getProductById, createProduct,imageUpload, updateProduct, deleteProduct, createProductReview ,getTopProducts, getBrandsAndCategories, getFeaturedProduct}

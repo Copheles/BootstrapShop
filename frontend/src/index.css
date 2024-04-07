@@ -585,8 +585,7 @@ td {
 .toppick-wrapper > span {
   font-style: italic;
   font-weight: 400;
-  transform: skewX(
-    10deg);
+  transform: skewX(10deg);
   background-color: rgb(228, 171, 151);
   padding: 4px 8px;
 }
@@ -594,6 +593,40 @@ td {
 .toppick-wrapper > p {
   font-weight: 500;
   color: rgb(87, 83, 83);
+}
+
+.hireme-container {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  overflow: hidden; /* Hides overflow of moving text */
+}
+
+.command-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.typed-text {
+  color: #209120; /* Green color */
+  font-weight: 700;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
+}
+
+.cursor {
+  color: #209120; /* Green color */
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  animation: blinkCursor 0.5s infinite;
+}
+
+@keyframes blinkCursor {
+  50% {
+    opacity: 0;
+  }
 }
 
 @media (max-width: 1199px) {
@@ -604,7 +637,7 @@ td {
     align-items: center;
   }
   .toppick-img {
-    width: 70%;
+    width: 60%;
   }
 }
 
@@ -785,7 +818,7 @@ td {
   .custom_card_title,
   .custom_card_text {
     font-size: 10px;
-    font-weight: 400;
+    font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -879,15 +912,15 @@ td {
     font-size: 10px;
   }
 
-  .toppick-container{
+  .toppick-container {
     padding-top: 0;
   }
 
   .toppick-rightbox {
-    padding: 0px 30px;
+    padding: 0px 40px;
   }
 
-  .toppick-wrapper{
+  .toppick-wrapper {
     gap: 10px;
   }
 }

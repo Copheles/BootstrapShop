@@ -1,5 +1,6 @@
 import {
   useGetBrandsAndCategoriesQuery,
+  useGetFeaturedProductQuery,
   useGetProductsQuery,
 } from "../slices/productsApiSlice";
 import ProductCarousel from "../components/ProductCarousel";
@@ -7,6 +8,8 @@ import Meta from "../components/Meta";
 import HorizontalScrollList from "../components/HorizontalScrollList";
 import HorizontalScrollBulletList from "../components/HorizontalScrollBulletList";
 import TopPickProduct from "../components/TopPickProduct";
+import BottomText from "../components/BottomText";
+
 
 const HomeScreen = () => {
   const { data: LatestProducts } = useGetProductsQuery({
@@ -17,6 +20,9 @@ const HomeScreen = () => {
     sort: "-soldAmount",
   });
 
+  const { data: FeaturedProduct} = useGetFeaturedProductQuery()
+
+  console.log(FeaturedProduct);
   const recentlyViewedProducts = JSON.parse(
     localStorage.getItem("recentlyViewed")
   );
@@ -40,7 +46,11 @@ const HomeScreen = () => {
         listTitle="latest products"
         seeMore={{ title: "see more", link: "/products" }}
       />
-      <TopPickProduct />
+      {
+        FeaturedProduct && (
+          <TopPickProduct product={FeaturedProduct} />
+        )
+      }
       <HorizontalScrollList
         data={PopularProducts?.products}
         listTitle="Most Popular"
@@ -48,6 +58,7 @@ const HomeScreen = () => {
         onClickData="-soldAmount"
         toolTipText="Our 'Most Popular' products are the items that have sold the most."
       />
+      <BottomText />
 
       <Meta />
     </>

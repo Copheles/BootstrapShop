@@ -84,6 +84,12 @@ export const productApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 20,
     }),
+    getFeaturedProduct: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/getFeaturedProduct`
+      }),
+      keepUnusedDataFor: 60
+    })
   }),
 });
 
@@ -97,4 +103,5 @@ export const {
   useGetTopProductsQuery,
   useImageUploadMutation,
   useGetBrandsAndCategoriesQuery,
+  useGetFeaturedProductQuery
 } = productApiSlice;
