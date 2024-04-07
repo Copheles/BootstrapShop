@@ -11,7 +11,7 @@ router.route('/').get(advancedFilter(Product), getAllProducts).post(protect, adm
 router.route('/image/upload/:id').put(protect, admin, upload.single('image'), imageUpload)
 router.route('/top').get(getTopProducts)
 router.route('/brandsAndCategories').get( getBrandsAndCategories)
-router.route('/getFeaturedProduct').get(protect, admin, getFeaturedProduct)
+router.route('/getFeaturedProduct').get(getFeaturedProduct)
 router.route('/:id').get(getProductById).put(protect, admin,updateProduct).delete(protect, admin, deleteProduct);
 router.route('/:id/reviews').post(protect, createProductReview)
 
