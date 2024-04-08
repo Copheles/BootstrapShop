@@ -58,7 +58,6 @@ const HomeScreen = () => {
         onClickData="-soldAmount"
         toolTipText="Our 'Most Popular' products are the items that have sold the most."
       />
-      <BottomText />
 
       <Meta />
     </>

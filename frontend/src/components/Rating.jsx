@@ -7,8 +7,9 @@ const Rating = ({ value, text, clsName="" }) => {
         display: "flex",
         alignItems: "center",
       }}
+      className="my-1"
     >
-      <div>
+      <div className={clsName}>
         <span className="text-warning">
           {value >= 1 ? (
             <FaStar />

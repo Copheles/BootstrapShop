@@ -8,7 +8,7 @@ import recentlyViewedToLocalStorage from "../utils/recentlyViewedToLocalStorage"
 const TopPickProduct = ({ product }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    recentlyViewedToLocalStorage(product)
+    recentlyViewedToLocalStorage(product);
     navigate(`/products/${product?._id}`);
   };
 
@@ -17,17 +17,31 @@ const TopPickProduct = ({ product }) => {
       <h2 className="mt-2">Top Pick's for Today</h2>
       <div className="toppick-container cursor-pointer" onClick={handleClick}>
         <div className="toppick-leftbox">
-          <img className="toppick-img" src={product?.image} alt={product?.name} />
+          <img
+            className="toppick-img"
+            src={product?.image}
+            alt={product?.name}
+          />
         </div>
         <div className="toppick-rightbox">
           <div className="toppick-wrapper">
             <span className="mb-2">Exclusively Avaliable on Store</span>
-            <h2 className="mb-0">{product?.name}</h2>            
-            <Rating value={product?.rating} text={`$ ${product?.price}`} clsName="price_text" />
+            <h2 className="mb-0">{product?.name}</h2>
+            <Rating
+
+              value={product?.rating}
+              text={`$ ${product?.price}`}
+              clsName="price_text"
+            />
+
             <p>{product?.description}</p>
-            <Button variant="dark" onClick={handleClick} className="btn-sm">
+            <button
+              variant="dark"
+              onClick={handleClick}
+              className="btn-buy-now"
+            >
               Buy Now <FaLongArrowAltRight />
-            </Button>
+            </button>
           </div>
         </div>
       </div>
