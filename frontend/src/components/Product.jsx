@@ -2,9 +2,13 @@ import { Card, CardBody } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
 import recentlyViewedToLocalStorage from "../utils/recentlyViewedToLocalStorage";
+import { useDispatch } from 'react-redux';
+import { setPageNumber } from "../slices/filterSlice";
 
 const Product = ({ product }) => {
+  const dispatch = useDispatch()
   const handleClick = (item) => {
+    dispatch(setPageNumber(1))
     recentlyViewedToLocalStorage(item)
   };
 
