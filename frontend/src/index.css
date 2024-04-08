@@ -589,7 +589,11 @@ td {
 }
 
 .toppick-wrapper > span {
+  display: flex;
+  align-items: center;
   font-style: italic;
+  width: max-content;
+  transform: skewX(10deg);
   font-weight: 400;
   background-color: #e4ab97;
   color: black;
@@ -600,13 +604,6 @@ td {
   color: #333;
   margin-top: 10px;
   font-size: 20px;
-}
-
-.toppick-wrapper > p {
-  margin-top: 10px;
-  font-weight: 500;
-  color: rgb(72, 71, 71);
-  font-size: 14px;
 }
 
 .btn-buy-now {
@@ -830,9 +827,6 @@ td {
     font-size: 12px;
   }
 
-  .toppick-wrapper > p {
-    display: none;
-  }
 
   .toppick-wrapper > h2 {
     font-size: 15px;

@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 import recentlyViewedToLocalStorage from "../utils/recentlyViewedToLocalStorage";
+import { IoMdPricetags } from "react-icons/io";
 
 const TopPickProduct = ({ product }) => {
   const navigate = useNavigate();
@@ -25,17 +25,13 @@ const TopPickProduct = ({ product }) => {
         </div>
         <div className="toppick-rightbox">
           <div className="toppick-wrapper">
-            <span className="mb-2" style={{
-
-            }}>Exclusively Avaliable on Store</span>
+            <span>Exclusively Avaliable on Store</span>
             <h2 className="mb-0">{product?.name}</h2>
             <Rating
               value={product?.rating}
               text={`$ ${product?.price}`}
               clsName="price_text"
             />
-
-            <p>{product?.description}</p>
             <button
               variant="dark"
               onClick={handleClick}
