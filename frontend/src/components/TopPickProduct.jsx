@@ -25,10 +25,11 @@ const TopPickProduct = ({ product }) => {
         </div>
         <div className="toppick-rightbox">
           <div className="toppick-wrapper">
-            <span className="mb-2">Exclusively Avaliable on Store</span>
+            <span className="mb-2" style={{
+
+            }}>Exclusively Avaliable on Store</span>
             <h2 className="mb-0">{product?.name}</h2>
             <Rating
-
               value={product?.rating}
               text={`$ ${product?.price}`}
               clsName="price_text"

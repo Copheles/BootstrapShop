@@ -562,6 +562,11 @@ td {
 .toppick-leftbox,
 .toppick-rightbox {
   flex: 1;
+
+}
+
+.toppick-leftbox{
+  display: flex;
 }
 
 .toppick-leftbox img {
