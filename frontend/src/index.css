@@ -814,7 +814,7 @@ td {
   .toppick-leftbox img {
     display: block;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
     height: auto;
     border-radius: 20px 0 0 20px;
   }
@@ -953,7 +953,7 @@ td {
   }
 
   .toppick-rightbox{
-    flex: 3;
+    flex: 2;
   }
 
   .toppick-wrapper > h2{
