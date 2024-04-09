@@ -1,4 +1,4 @@
-import { Button, Col, Row, Offcanvas, Badge } from "react-bootstrap";
+import { Button, Col, Row, Offcanvas } from "react-bootstrap";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";

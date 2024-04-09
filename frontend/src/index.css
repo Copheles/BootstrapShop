@@ -814,7 +814,7 @@ td {
   .toppick-leftbox img {
     display: block;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     height: auto;
     border-radius: 20px 0 0 20px;
   }

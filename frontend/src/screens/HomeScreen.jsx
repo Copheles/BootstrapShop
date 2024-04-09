@@ -8,8 +8,6 @@ import Meta from "../components/Meta";
 import HorizontalScrollList from "../components/HorizontalScrollList";
 import HorizontalScrollBulletList from "../components/HorizontalScrollBulletList";
 import TopPickProduct from "../components/TopPickProduct";
-import BottomText from "../components/BottomText";
-
 
 const HomeScreen = () => {
   const { data: LatestProducts } = useGetProductsQuery({

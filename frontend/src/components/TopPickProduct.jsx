@@ -3,7 +3,6 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 import recentlyViewedToLocalStorage from "../utils/recentlyViewedToLocalStorage";
-import { IoMdPricetags } from "react-icons/io";
 
 const TopPickProduct = ({ product }) => {
   const navigate = useNavigate();
