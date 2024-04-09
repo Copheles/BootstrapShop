@@ -949,11 +949,11 @@ td {
   }
 
   .toppick-leftbox{
-    flex: 4;
+    flex: 1;
   }
 
   .toppick-rightbox{
-    flex: 5;
+    flex: 1;
   }
 
   .toppick-wrapper > h2{
