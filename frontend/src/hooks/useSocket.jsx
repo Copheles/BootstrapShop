@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSocketConnected } from "../slices/authSlice";
 
 const URL =
-  process.env.NODE_ENV === "production" ? undefined : "http://localhost:5000";
+  process.env.NODE_ENV === "production" ? "https://bootstrapshop.onrender.com" : "http://localhost:5000";
 
 export const useSocket = () => {
   const { userInfo } = useSelector((state) => state.auth);
