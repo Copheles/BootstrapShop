@@ -14,16 +14,20 @@ import {
   setRating,
   setSort,
 } from "./slices/filterSlice";
+import { useSocket } from "./hooks/useSocket";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  useSocket();
+
   useEffect(() => {
     // Check if the URL contains the query parameter 'redirect=/products'
     const isExcludedRoute =
       location.pathname === "/products" ||
-      location.search.includes("redirect=/products") || location.search.includes("redirect=/brand");
+      location.search.includes("redirect=/products") ||
+      location.search.includes("redirect=/brand");
 
     // Dispatch action to update Redux state with the current route
     if (!isExcludedRoute) {
@@ -35,6 +39,7 @@ function App() {
       dispatch(setCategories(""));
     }
   }, [location.pathname, dispatch, location.search]);
+
 
   return (
     <>

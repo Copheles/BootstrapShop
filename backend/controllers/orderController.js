@@ -1,14 +1,15 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Order from './../models/orderModel.js';
 import Product from './../models/productModel.js'
+import { getUserSocketId, io } from '../socket/socket.js';
+import User from '../models/userModel.js';
+
 
 // @desc Create new order
 // @route POST /api/orders
 // @access Private
 const addOrderItems = asyncHandler(async (req, res) => {
   const {orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice} = req.body;
-
-  // console.log("OrdetItems ", orderItems)
 
   if(orderItems && orderItems.length === 0){
     res.status(400)
@@ -23,22 +24,28 @@ const addOrderItems = asyncHandler(async (req, res) => {
       if (product) {
         let prevStock = product.countInStock;
         // Update stock quantities and soldCount
-        product.countInStock = product.countInStock - quantity;
-        if(product.countInStock < 0){
-          product.countInStock = prevStock;
+        if(product.countInStock - quantity  < 0){
+
           res.status(401)
           throw new Error(`${prevStock === 0 ? `${product.name} is out of stock now`: `${product.name} is only ${prevStock} left` }`)
         }
-        // console.log('hello')
+        product.countInStock = product.countInStock - quantity;
         product.soldAmount = product.soldAmount + quantity;
     
-        // console.log("Stock: ",product.countInStock);
-        // console.log("SoldAmount: ", product.soldAmount)
+        
         // Save the updated product
         await product.save();
-        // console.log(`Product with ID ${productId} updated successfully.`);
+
+        console.log("io", io);
+
+        io.emit('changeAmount', {
+          productId: productId,
+          qty: quantity
+        });
+
       } else {
-        // console.log(`Product with ID ${productId} not found.`);
+        res.status(404)
+          throw new Error('product not found')
       }
     }));
     const order = new Order({
@@ -60,8 +67,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     res.status(201).json(createdOrder)
   }
-
-  
 })
 
 // @desc Get logged in user orders
@@ -111,7 +116,15 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       email_address: req.body.email_address
     };
     const updatedOrder = await order.save();
-    console.log("Order updated successfully.");
+    const adminUser = await User.findOne({
+      isAdmin: true
+    })
+    
+    const orderedUserSocketId = getUserSocketId(adminUser.name)
+
+    io.to(orderedUserSocketId).emit("setPaid")
+
+
     res.status(200).json(updatedOrder);
   } else {
     console.error('Order not found');
@@ -123,13 +136,18 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @route PUT /api/orders/:id/delivered
 // @access Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
+  const order = await Order.findById(req.params.id).populate('user');
 
   if(order){
     order.isDelivered = true;
     order.deliveredAt = Date.now();
 
     const updatedOrder = await order.save();
+
+    const orderedUserSocketId = getUserSocketId(order.user.name)
+
+    io.to(orderedUserSocketId).emit("setDelivery")
+
     res.status(200).json(updatedOrder)
   }else{
     res.status(404)

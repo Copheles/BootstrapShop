@@ -1,29 +1,67 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+// useSocket.js
+import { useEffect, useRef } from "react";
 import { io } from "socket.io-client";
+import { useSelector, useDispatch } from "react-redux";
+import { setSocketConnected } from "../slices/authSlice";
 
 const URL =
   process.env.NODE_ENV === "production" ? undefined : "http://localhost:5000";
 
 export const useSocket = () => {
   const { userInfo } = useSelector((state) => state.auth);
-  const [socket, setSocket] = useState(null);
-  console.log("socket", socket);
+  const dispatch = useDispatch();
+  const newSocketRef = useRef(null);
 
   useEffect(() => {
-    // Establish Socket.IO connection when the component mounts
-    const newSocket = io(URL);
+    if (userInfo) {
+      // Establish socket connection
+      newSocketRef.current = io(URL, {
+        query: {
+          username: userInfo.name,
+        },
+      });
 
-    console.log(newSocket);
+      // Set the socket connection status
+      dispatch(setSocketConnected(true));
 
-    // Set the socket state
-    setSocket(newSocket);
+      return () => {
+        // Close socket connection when component unmounts
+        newSocketRef.current.close();
+        dispatch(setSocketConnected(false));
+      };
+    } else {
+      // Close socket connection if no user info
+      if (newSocketRef.current) {
+        newSocketRef.current.close();
+        dispatch(setSocketConnected(false));
+      }
+    }
+  }, [userInfo, dispatch]);
 
-    // Clean up the socket connection when the component unmounts
-    return () => {
-      newSocket.disconnect();
+  // Function to emit a custom event
+  const emitEvent = (eventName, data) => {
+    if (newSocketRef.current) {
+      newSocketRef.current.emit(eventName, data);
+    } else {
+      console.error("Socket not initialized.");
+    }
+  };
+
+  // Function to listen for a specific event
+  const listenToEvent = (eventName, callback) => {
+    if (newSocketRef.current) {
+      newSocketRef.current.on(eventName, callback);
+    } else {
+      console.error("Socket not initialized.");
+    }
+  };
+
+    // Cleanup function to remove all event listeners
+    const cleanupListeners = () => {
+      if (newSocketRef.current) {
+        newSocketRef.current.removeAllListeners();
+      }
     };
-  }, [userInfo]);
 
-  return socket;
+  return { emitEvent, listenToEvent, cleanupListeners };
 };

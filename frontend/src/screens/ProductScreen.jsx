@@ -17,7 +17,7 @@ import {
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -33,8 +33,10 @@ import {
   FaRegSmile,
 } from "react-icons/fa";
 import { setBrand, setCategory } from "../slices/filterSlice";
+import { useSocket } from "../hooks/useSocket";
 
 const ProductScreen = () => {
+  const { listenToEvent, emitEvent, cleanupListeners } = useSocket();
   const { id: productId } = useParams();
 
   const dispatch = useDispatch();
@@ -45,7 +47,13 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const { data: product, error, isLoading } = useGetProductQuery(productId);
+  const {
+    data: product,
+    error,
+    refetch,
+    isLoading,
+  } = useGetProductQuery(productId);
+
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
 
@@ -122,6 +130,16 @@ const ProductScreen = () => {
       setComment("");
     }
   };
+
+  useEffect(() => {
+    listenToEvent("changeAmount", (data) => {
+      refetch();
+    });
+
+    return () => cleanupListeners()
+  }, [listenToEvent, refetch, cleanupListeners]);
+
+
 
   return (
     <>
@@ -200,13 +218,6 @@ const ProductScreen = () => {
                           {product.countInStock > 0 ? (
                             <>
                               <span className="instock-text">In Stock</span>
-                              <span className="items-count">
-                                (
-                                {product.countInStock >= 20
-                                  ? "20+"
-                                  : product.countInStock}
-                                )
-                              </span>
                             </>
                           ) : (
                             <span className="outofstock-text">
@@ -218,18 +229,28 @@ const ProductScreen = () => {
                     </Row>
                   </ListGroup.Item>
                   {product.countInStock > 0 && (
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Qty</Col>
-                        <Col>
-                          <ItemCountChange
-                            qty={qty}
-                            setQty={setQty}
-                            item={product}
-                          />
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
+                    <>
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Amount :</Col>
+                          <Col>
+                            <strong>{product.countInStock}</strong>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Qty</Col>
+                          <Col>
+                            <ItemCountChange
+                              qty={qty}
+                              setQty={setQty}
+                              item={product}
+                            />
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    </>
                   )}
                   <ListGroup.Item>
                     <Button

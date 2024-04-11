@@ -19,13 +19,12 @@ const HomeScreen = () => {
   });
 
   const { data: FeaturedProduct} = useGetFeaturedProductQuery()
-
-  console.log(FeaturedProduct);
   const recentlyViewedProducts = JSON.parse(
     localStorage.getItem("recentlyViewed")
   );
 
   const { data: CategorieAndBrands } = useGetBrandsAndCategoriesQuery();
+
 
   return (
     <>

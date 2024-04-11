@@ -11,12 +11,14 @@ import { clearCartItems } from "../slices/cartSlice";
 import Meta from "../components/Meta";
 
 const PlaceOrderScreen = () => {
+
   const [createOrder, { isLoading }] = useCreaetOrderMutation();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
+  
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {
@@ -38,6 +40,8 @@ const PlaceOrderScreen = () => {
         totalPrice: cart.totalPrice,
       }).unwrap();
 
+      dispatch(clearCartItems())
+
       navigate(`/order/${res._id}`);
     } catch (error) {
       console.log("error", error);
@@ -45,8 +49,10 @@ const PlaceOrderScreen = () => {
 
       toast.error(error.data.message);
       dispatch(clearCartItems());
-    }
+    } 
   };
+
+
 
   return (
     <>

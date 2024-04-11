@@ -3,7 +3,7 @@ const advancedFilter = (model, populate, selectFields) => async (req, res, next)
   let queryObj;
 
   const reqQuery = { ...req.query };
-  console.log('The whole req.query', req.query)
+  // console.log('The whole req.query', req.query)
 
   // Fields to exclude
   const removeFields = ['select', 'sort', 'pageNumber', 'limit', 'keyword', 'rating', 'brand', 'category'];
@@ -35,7 +35,7 @@ const advancedFilter = (model, populate, selectFields) => async (req, res, next)
 
 
 
-  console.log(queryObj)
+  // console.log(queryObj)
   // Construct the query
   query = model.find(queryObj);
 

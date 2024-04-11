@@ -18,9 +18,9 @@ import CopyButton from "../components/CopyButton";
 import { useSocket } from "../hooks/useSocket";
 
 const OrderScreen = () => {
-  const { id: orderId } = useParams();
-  const socket = useSocket();
+  const { listenToEvent, cleanupListeners } = useSocket();
 
+  const { id: orderId } = useParams();
   const { userInfo } = useSelector((state) => state.auth);
 
   const {
@@ -85,12 +85,21 @@ const OrderScreen = () => {
         return orderId;
       });
   };
-  console.log(socket);
 
   useEffect(() => {
-    if (socket === null) return;
-    socket.emit("hi", { name: userInfo.name });
-  }, [socket, userInfo.name]);
+    listenToEvent("setDelivery", () => {
+      refetch();
+    });
+
+    return () => cleanupListeners();
+  }, [listenToEvent, refetch, cleanupListeners]);
+
+  useEffect(() => {
+    listenToEvent("setPaid", () => {
+      refetch();
+    });
+    return () => cleanupListeners();
+  }, [listenToEvent, refetch, cleanupListeners]);
 
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {

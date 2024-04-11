@@ -1,10 +1,9 @@
 import path from 'path';
 import express from 'express';
-import http from 'http'
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
-import { Server } from 'socket.io'; 
+import { app, server} from './socket/socket.js'
 
 // Routes
 import productRoutes from './routes/productRoutes.js';
@@ -21,29 +20,11 @@ connectDB() // Connect to MongoDb
 
 const port = process.env.PORT || 5000;
 
-const app = express();
-const httpServer = http.createServer(app)
-global.io = new Server(httpServer,{
-  cors: {
-    origin: ['http://localhost:3000'],
-  }
-})
 
 // Body Parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 app.use(cookieParser())
-
-// Socket.IO connection handling
-io.on('connection', (socket) => {
-  console.log('New socket connection:', socket.id);
-
-  // Handle events here
-  socket.on('hi', (data) => {
-    console.log(data.name)
-    socket.emit('Welcome', 'Welcome from scoket')
-  });
-});
 
 
 app.get('/api/config/paypal', (req, res) => {
@@ -77,4 +58,4 @@ app.use(notFound);
 app.use(errorHandler)
 
 
-httpServer.listen(port, () => console.log(`Server running on port:${port}`))
+server.listen(port, () => console.log(`Server running on port:${port}`))

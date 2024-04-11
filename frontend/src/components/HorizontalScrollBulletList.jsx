@@ -8,8 +8,6 @@ const HorizontalScrollBulletList = ({ items }) => {
   if (items && items.length > 0) {
     data = ['All',...items];
   }
-  console.log(data);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
