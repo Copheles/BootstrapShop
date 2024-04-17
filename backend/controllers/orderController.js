@@ -40,7 +40,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
         io.emit('changeAmount', {
           productId: productId,
-          qty: quantity
         });
 
       } else {

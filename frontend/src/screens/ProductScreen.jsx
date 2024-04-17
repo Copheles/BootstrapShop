@@ -133,13 +133,13 @@ const ProductScreen = () => {
 
   useEffect(() => {
     listenToEvent("changeAmount", (data) => {
-      refetch();
+      if (data.productId === productId) {
+        refetch();
+      }
     });
 
-    return () => cleanupListeners()
-  }, [listenToEvent, refetch, cleanupListeners]);
-
-
+    return () => cleanupListeners();
+  }, [listenToEvent, refetch, cleanupListeners, productId]);
 
   return (
     <>
