@@ -121,13 +121,25 @@ main {
 
 .bullet-box {
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .bullet-item {
   /* color: rgba(11, 11, 11, 0.962); */
   color: rgba(61, 59, 59, 0.839);
   background-color: white;
+  border: 1px solid gray;
+  border-radius: 18px;
+  padding: 3px 13px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.bullet-item-placeholder{
+  color: white;
+  background-color: black;
   border: 1px solid gray;
   border-radius: 18px;
   padding: 3px 13px;
@@ -681,6 +693,14 @@ td {
   text-align: end;
 }
 
+.carousel-placeholder{
+  height: 510px;
+}
+
+.bullet-item-placeholder{
+  width: 58px;
+  height: 30px;
+}
 
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
@@ -756,6 +776,14 @@ td {
     border-radius: 18px;
     padding: 3px 13px;
     font-size: 14px;
+  }
+
+  .bullet-item-placeholder {
+    border-radius: 18px;
+    padding: 3px 13px;
+    font-size: 14px;
+    width: 56px;
+    height: 29;
   }
 
   .questionmark-badge {
@@ -836,6 +864,15 @@ td {
     padding: 3px 13px;
     font-size: 12px;
   }
+
+  .bullet-item-placeholder {
+    border-radius: 18px;
+    padding: 3px 13px;
+    font-size: 12px;
+    width: 52px;
+    height: 26px;
+  }
+
   .questionmark-badge {
     font-size: 11px;
   }
@@ -876,6 +913,8 @@ td {
   .noti-date {
     font-size: 10px;
   }
+
+  
 }
 
 @media (max-width: 576px) {
@@ -975,6 +1014,14 @@ td {
     font-size: 11px;
   }
 
+  .bullet-item-placeholder {
+    border-radius: 18px;
+    padding: 3px 13px;
+    font-size: 11px;
+    height: 24px;
+    width: 50px;
+  }
+
   .questionmark-badge {
     font-size: 10px;
   }
@@ -994,6 +1041,10 @@ td {
 
   .toppick-wrapper > h2 {
     font-size: 12px;
+  }
+
+  .carousel-placeholder{
+    height: 365px;
   }
 
 }

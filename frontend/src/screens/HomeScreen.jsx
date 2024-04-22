@@ -10,26 +10,32 @@ import HorizontalScrollBulletList from "../components/HorizontalScrollBulletList
 import TopPickProduct from "../components/TopPickProduct";
 
 const HomeScreen = () => {
-  const { data: LatestProducts } = useGetProductsQuery({
-    sort: "-createdAt",
-  });
+  const { data: LatestProducts, isLoading: latestProductsLoading } =
+    useGetProductsQuery({
+      sort: "-createdAt",
+    });
 
-  const { data: PopularProducts } = useGetProductsQuery({
-    sort: "-soldAmount",
-  });
+  const { data: PopularProducts, isLoading: popularProductsLoading } =
+    useGetProductsQuery({
+      sort: "-soldAmount",
+    });
 
-  const { data: FeaturedProduct} = useGetFeaturedProductQuery()
+  const { data: FeaturedProduct, isLoading: featuredProductsLoading } =
+    useGetFeaturedProductQuery();
   const recentlyViewedProducts = JSON.parse(
     localStorage.getItem("recentlyViewed")
   );
 
-  const { data: CategorieAndBrands } = useGetBrandsAndCategoriesQuery();
-
+  const { data: CategorieAndBrands, isLoading: categoriesAndBrandsLoading } =
+    useGetBrandsAndCategoriesQuery();
 
   return (
     <>
       <ProductCarousel />
-      <HorizontalScrollBulletList items={CategorieAndBrands?.brands} />
+      <HorizontalScrollBulletList
+        items={CategorieAndBrands?.brands}
+        isLoading={categoriesAndBrandsLoading}
+      />
 
       {recentlyViewedProducts !== null && (
         <HorizontalScrollList
@@ -38,22 +44,26 @@ const HomeScreen = () => {
           data={recentlyViewedProducts.reverse()}
         />
       )}
+
       <HorizontalScrollList
         data={LatestProducts?.products}
         listTitle="latest products"
         seeMore={{ title: "see more", link: "/products" }}
+        isLoading={latestProductsLoading}
       />
-      {
-        FeaturedProduct && (
-          <TopPickProduct product={FeaturedProduct} />
-        )
-      }
+      {FeaturedProduct && (
+        <TopPickProduct
+          product={FeaturedProduct}
+          isLoading={featuredProductsLoading}
+        />
+      )}
       <HorizontalScrollList
         data={PopularProducts?.products}
         listTitle="Most Popular"
         seeMore={{ title: "see more", link: "/products" }}
         onClickData="-soldAmount"
         toolTipText="Our 'Most Popular' products are the items that have sold the most."
+        isLoading={popularProductsLoading}
       />
 
       <Meta />

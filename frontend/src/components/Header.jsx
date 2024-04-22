@@ -73,9 +73,8 @@ const Header = () => {
   };
 
   useEffect(() => {
-
     listenToEvent("setDelivery", (data) => {
-      console.log('delivery')
+      console.log("delivery");
       if (userInfo) {
         if (data.userId === userInfo._id) {
           refetch();
@@ -94,7 +93,6 @@ const Header = () => {
       }
     });
 
-
     return () => cleanupListeners();
   }, [cleanupListeners, listenToEvent, refetch, userInfo, dispatch]);
 
@@ -112,36 +110,38 @@ const Header = () => {
               </span>
             </Navbar.Brand>
           </LinkContainer>
-          <div className="d-flex align-items-center gap-2">
-            <LinkContainer to="/cart" className="cart-1 mx-1">
-              <Nav.Link>
-                <FaShoppingCart
-                  className="cart-btn"
-                  onClick={handleLinkClick}
-                />
-                {cartItems.length > 0 && (
-                  <Badge pill bg="info" className="mx-auto">
-                    {cartItems.reduce((acc, item) => acc + item.qty, 0)}
-                  </Badge>
-                )}
-              </Nav.Link>
-            </LinkContainer>
-            {userInfo && (
-              <LinkContainer
-                to="/notifications"
-                className="cart-1 mx-1"
-                onClick={handleClickNoti}
-              >
+          <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center">
+              <LinkContainer to="/cart" className="cart-1 mx-1">
                 <Nav.Link>
-                  <FaBell className="cart-btn" onClick={handleLinkClick} />
-                  {data && data.notiCount > 0 && (
+                  <FaShoppingCart
+                    className="cart-btn"
+                    onClick={handleLinkClick}
+                  />
+                  {cartItems.length > 0 && (
                     <Badge pill bg="info" className="mx-auto">
-                      {data.notiCount}
+                      {cartItems.reduce((acc, item) => acc + item.qty, 0)}
                     </Badge>
                   )}
                 </Nav.Link>
               </LinkContainer>
-            )}
+              {userInfo && (
+                <LinkContainer
+                  to="/notifications"
+                  className="cart-1 mx-1"
+                  onClick={handleClickNoti}
+                >
+                  <Nav.Link>
+                    <FaBell className="cart-btn" onClick={handleLinkClick} />
+                    {data && data.notiCount > 0 && (
+                      <Badge pill bg="info" className="mx-auto">
+                        {data.notiCount}
+                      </Badge>
+                    )}
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+            </div>
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
               onClick={() => setExpanded(!expanded)}

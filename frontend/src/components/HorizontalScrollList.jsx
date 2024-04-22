@@ -1,9 +1,15 @@
 import React from "react";
-import { Card, Badge, OverlayTrigger, Tooltip } from "react-bootstrap";
+import {
+  Card,
+  Badge,
+  OverlayTrigger,
+  Tooltip,
+  Placeholder,
+} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import recentlyViewedToLocalStorage from "../utils/recentlyViewedToLocalStorage";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { setSort } from "../slices/filterSlice";
 
 const HorizontalScrollList = ({
@@ -11,10 +17,11 @@ const HorizontalScrollList = ({
   listTitle = "",
   seeMore = null,
   toolTipText = "",
-  onClickData = ""
+  onClickData = "",
+  isLoading,
 }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleClick = (item) => {
     recentlyViewedToLocalStorage(item);
@@ -29,12 +36,12 @@ const HorizontalScrollList = ({
   );
 
   const handleClickSeeMore = () => {
-    if(onClickData !== ""){
-      dispatch(setSort(onClickData))
+    if (onClickData !== "") {
+      dispatch(setSort(onClickData));
     }
 
     return;
-  }
+  };
 
   return (
     <>
@@ -58,32 +65,134 @@ const HorizontalScrollList = ({
           )}
         </h2>
         {seeMore !== null && (
-          <Link to={seeMore.link} id="see-more-link" onClick={handleClickSeeMore}>
+          <Link
+            to={seeMore.link}
+            id="see-more-link"
+            onClick={handleClickSeeMore}
+          >
             {seeMore.title}
             <MdKeyboardDoubleArrowRight className="see-more-icon" />
           </Link>
         )}
       </div>
       {/* _id, image, name, price */}
-      <div className="horizontal-scroll-container">
-        {data?.map((item) => (
-          <Card
-            key={item._id}
-            className="scroll-item card-with-aspect-ratio"
-            onClick={() => handleClick(item)}
-          >
-            <div className="aspect-ratio-wrapper">
-              <Card.Img variant="top" src={item.image} className="card-img" />
-            </div>
+      {isLoading ? (
+        <div className="horizontal-scroll-container">
+          <Card className="scroll-item card-with-aspect-ratio">
+            <Placeholder className="aspect-ratio-wrapper">
+              <Card.Img variant="top" className="card-img" />
+            </Placeholder>
             <Card.Body>
               <Card.Title className="custom_card_title">
-                <Link to="/">{item.name}</Link>
+                <Placeholder xs={10} />
               </Card.Title>
-              <Card.Text className="custom_card_text">${item.price}</Card.Text>
+              <Card.Text className="custom_card_text">
+                <Placeholder xs={5} />
+              </Card.Text>
             </Card.Body>
           </Card>
-        ))}
-      </div>
+          <Card className="scroll-item card-with-aspect-ratio">
+            <Placeholder className="aspect-ratio-wrapper">
+              <Card.Img variant="top" className="card-img" />
+            </Placeholder>
+            <Card.Body>
+              <Card.Title className="custom_card_title">
+                <Placeholder xs={10} />
+              </Card.Title>
+              <Card.Text className="custom_card_text">
+                <Placeholder xs={5} />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+          <Card className="scroll-item card-with-aspect-ratio">
+            <Placeholder className="aspect-ratio-wrapper">
+              <Card.Img variant="top" className="card-img" />
+            </Placeholder>
+            <Card.Body>
+              <Card.Title className="custom_card_title">
+                <Placeholder xs={10} />
+              </Card.Title>
+              <Card.Text className="custom_card_text">
+                <Placeholder xs={5} />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+          <Card className="scroll-item card-with-aspect-ratio">
+            <Placeholder className="aspect-ratio-wrapper">
+              <Card.Img variant="top" className="card-img" />
+            </Placeholder>
+            <Card.Body>
+              <Card.Title className="custom_card_title">
+                <Placeholder xs={10} />
+              </Card.Title>
+              <Card.Text className="custom_card_text">
+                <Placeholder xs={5} />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+          <Card className="scroll-item card-with-aspect-ratio">
+            <Placeholder className="aspect-ratio-wrapper">
+              <Card.Img variant="top" className="card-img" />
+            </Placeholder>
+            <Card.Body>
+              <Card.Title className="custom_card_title">
+                <Placeholder xs={10} />
+              </Card.Title>
+              <Card.Text className="custom_card_text">
+                <Placeholder xs={5} />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+          <Card className="scroll-item card-with-aspect-ratio">
+            <Placeholder className="aspect-ratio-wrapper">
+              <Card.Img variant="top" className="card-img" />
+            </Placeholder>
+            <Card.Body>
+              <Card.Title className="custom_card_title">
+                <Placeholder xs={10} />
+              </Card.Title>
+              <Card.Text className="custom_card_text">
+                <Placeholder xs={5} />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+          <Card className="scroll-item card-with-aspect-ratio">
+            <Placeholder className="aspect-ratio-wrapper">
+              <Card.Img variant="top" className="card-img" />
+            </Placeholder>
+            <Card.Body>
+              <Card.Title className="custom_card_title">
+                <Placeholder xs={10} />
+              </Card.Title>
+              <Card.Text className="custom_card_text">
+                <Placeholder xs={5} />
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
+      ) : (
+        <div className="horizontal-scroll-container">
+          {data?.map((item) => (
+            <Card
+              key={item._id}
+              className="scroll-item card-with-aspect-ratio"
+              onClick={() => handleClick(item)}
+            >
+              <div className="aspect-ratio-wrapper">
+                <Card.Img variant="top" src={item.image} className="card-img" />
+              </div>
+              <Card.Body>
+                <Card.Title className="custom_card_title">
+                  <Link to="/">{item.name}</Link>
+                </Card.Title>
+                <Card.Text className="custom_card_text">
+                  ${item.price}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+      )}
     </>
   );
 };
