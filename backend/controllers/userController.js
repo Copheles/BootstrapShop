@@ -26,8 +26,6 @@ const authUser = asyncHandler(async (req, res) => {
     res.status(401)
     throw new Error('Invalid email or password')
   }
-
-  res.send('auth user')
 })
 
 // @desc Register user
@@ -90,7 +88,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin
+      isAdmin: user.isAdmin,
+      notiCount: user.notiCount
     })
   }else{
     res.status(404)
@@ -108,6 +107,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if(user){
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.notiCount = (req.body.notiCount === 0 || req.body.notiCount)? req.body.notiCount : user.notiCount
 
     if(req.body.password){
       user.password = req.body.password;
@@ -119,7 +119,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin
+      isAdmin: updatedUser.isAdmin,
+      notiCount: updatedUser.notiCount
     })
   }else{
     res.status(404);

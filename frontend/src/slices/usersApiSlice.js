@@ -29,6 +29,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: ['User']
+    }),
+    getProfile: builder.query({
+      query: () => ({
+        url: `${USERS_URL}/profile`,
+      }),
+      invalidatesTags: ['User']
     }),
     getUsers: builder.query({
       query: ({ pageNumber }) => ({
@@ -70,6 +77,7 @@ export const {
   useRegisterMutation,
   useProfileMutation,
   useGetUsersQuery,
+  useGetProfileQuery,
   useDeleteUserMutation,
   useGetUserDetailsQuery,
   useUpdateUserMutation

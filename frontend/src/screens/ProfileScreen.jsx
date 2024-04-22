@@ -11,7 +11,7 @@ import { setCredentials } from "../slices/authSlice";
 import { useGetMyOrdersQuery } from "../slices/orderApiSlice";
 import Meta from "./../components/Meta";
 import PaginationCustom from "../components/PaginationCustom";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -19,7 +19,9 @@ const ProfileScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { pageNumber } = useParams();
+  const { pageNumber } = useSelector(
+    (state) => state.filter
+  );
 
   const dispatch = useDispatch();
 
@@ -170,7 +172,6 @@ const ProfileScreen = () => {
                   <PaginationCustom
                     page={data.page}
                     pages={data.pages}
-                    link="/profile/orders/page"
                   />
                 </>
               ) : (

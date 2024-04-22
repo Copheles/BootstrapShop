@@ -562,10 +562,9 @@ td {
 .toppick-leftbox,
 .toppick-rightbox {
   flex: 1;
-
 }
 
-.toppick-leftbox{
+.toppick-leftbox {
   display: flex;
 }
 
@@ -653,6 +652,33 @@ td {
   50% {
     opacity: 0;
   }
+}
+
+.noti-box {
+  padding: 10px 10px;
+  background-color: rgb(182, 203, 213);
+  margin: 1px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.read {
+  background-color: white;
+  border: 1px solid rgb(216, 213, 213);
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+.noti-text {
+  color: rgb(66, 65, 65);
+}
+
+.noti-date {
+  color: rgb(134, 132, 132);
+  font-weight: 400;
+  font-style: italic;
+  text-align: end;
 }
 
 @media (max-width: 991px) {
@@ -819,14 +845,13 @@ td {
     border-radius: 20px 0 0 20px;
   }
 
-  .toppick-wrapper{
+  .toppick-wrapper {
     text-align: left;
   }
 
-  .toppick-wrapper > span{
+  .toppick-wrapper > span {
     font-size: 12px;
   }
-
 
   .toppick-wrapper > h2 {
     font-size: 15px;
@@ -838,6 +863,14 @@ td {
   .btn-buy-now {
     margin-top: 6px;
     padding: 8px 16px;
+    font-size: 10px;
+  }
+
+  .noti-text {
+    font-size: 11px;
+  }
+  
+  .noti-date {
     font-size: 10px;
   }
 }
@@ -943,20 +976,20 @@ td {
     font-size: 10px;
   }
 
-  .toppick-wrapper > span{
+  .toppick-wrapper > span {
     font-size: 10px;
     font-weight: 500;
   }
 
-  .toppick-leftbox{
+  .toppick-leftbox {
     flex: 1;
   }
 
-  .toppick-rightbox{
+  .toppick-rightbox {
     flex: 1;
   }
 
-  .toppick-wrapper > h2{
+  .toppick-wrapper > h2 {
     font-size: 12px;
   }
 

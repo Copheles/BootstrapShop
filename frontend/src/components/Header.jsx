@@ -6,10 +6,14 @@ import {
   NavDropdown,
   Button,
 } from "react-bootstrap";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaBell } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useLogoutMutation } from "../slices/usersApiSlice";
+import {
+  useGetProfileQuery,
+  useLogoutMutation,
+  useProfileMutation,
+} from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { FaShopify } from "react-icons/fa6";
@@ -19,13 +23,20 @@ import { GiTempleGate } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BsList, BsX } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { resetCart } from "../slices/cartSlice";
+import { useSocket } from "../hooks/useSocket";
+import { apiSlice } from "../slices/apiSlice";
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
+  const { listenToEvent, cleanupListeners } = useSocket();
+
+  const { data, refetch } = useGetProfileQuery();
+  console.log("NotiCount: ", data?.notiCount);
+  const [updateProfile] = useProfileMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,6 +65,39 @@ const Header = () => {
     }
   };
 
+  const handleClickNoti = async () => {
+    await updateProfile({
+      notiCount: 0,
+    });
+    refetch();
+  };
+
+  useEffect(() => {
+
+    listenToEvent("setDelivery", (data) => {
+      console.log('delivery')
+      if (userInfo) {
+        if (data.userId === userInfo._id) {
+          refetch();
+          dispatch(apiSlice.util.invalidateTags(["Notifications"]));
+        }
+      }
+    });
+
+    listenToEvent("setPaid", (data) => {
+      console.log("paid");
+      if (userInfo) {
+        if (data.userId === userInfo._id) {
+          refetch();
+          dispatch(apiSlice.util.invalidateTags(["Notifications"]));
+        }
+      }
+    });
+
+
+    return () => cleanupListeners();
+  }, [cleanupListeners, listenToEvent, refetch, userInfo, dispatch]);
+
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
@@ -69,7 +113,7 @@ const Header = () => {
             </Navbar.Brand>
           </LinkContainer>
           <div className="d-flex align-items-center gap-2">
-            <LinkContainer to="/cart" className="cart-1">
+            <LinkContainer to="/cart" className="cart-1 mx-1">
               <Nav.Link>
                 <FaShoppingCart
                   className="cart-btn"
@@ -82,6 +126,22 @@ const Header = () => {
                 )}
               </Nav.Link>
             </LinkContainer>
+            {userInfo && (
+              <LinkContainer
+                to="/notifications"
+                className="cart-1 mx-1"
+                onClick={handleClickNoti}
+              >
+                <Nav.Link>
+                  <FaBell className="cart-btn" onClick={handleLinkClick} />
+                  {data && data.notiCount > 0 && (
+                    <Badge pill bg="info" className="mx-auto">
+                      {data.notiCount}
+                    </Badge>
+                  )}
+                </Nav.Link>
+              </LinkContainer>
+            )}
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
               onClick={() => setExpanded(!expanded)}
@@ -108,6 +168,22 @@ const Header = () => {
                   )}
                 </Nav.Link>
               </LinkContainer>
+              {userInfo && (
+                <LinkContainer
+                  to="/notifications"
+                  className="cart-2"
+                  onClick={handleClickNoti}
+                >
+                  <Nav.Link>
+                    <FaBell className="cart-btn" onClick={handleLinkClick} />
+                    {data && data.notiCount > 0 && (
+                      <Badge pill bg="info" className="mx-auto">
+                        {data.notiCount}
+                      </Badge>
+                    )}
+                  </Nav.Link>
+                </LinkContainer>
+              )}
               {userInfo ? (
                 <NavDropdown
                   title={userInfo.name}

@@ -3,6 +3,7 @@ import Order from './../models/orderModel.js';
 import Product from './../models/productModel.js'
 import { getUserSocketId, io } from '../socket/socket.js';
 import User from '../models/userModel.js';
+import Notification from '../models/notificationModel.js'
 
 
 // @desc Create new order
@@ -35,8 +36,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
         
         // Save the updated product
         await product.save();
-
-        console.log("io", io);
 
         io.emit('changeAmount', {
           productId: productId,
@@ -118,10 +117,27 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     const adminUser = await User.findOne({
       isAdmin: true
     })
+
+    const notification = new Notification({
+      userId: adminUser._id,
+      orderId: order._id,
+      message: `Order id:(${order._id}) has been paid.`,
+    })
+
+    if(adminUser){
+      adminUser.notiCount = adminUser.notiCount + 1
+
+      await adminUser.save()
+    }
+
+    await notification.save()
     
     const orderedUserSocketId = getUserSocketId(adminUser.name)
+    console.log(orderedUserSocketId);
 
-    io.to(orderedUserSocketId).emit("setPaid")
+    io.to(orderedUserSocketId).emit("setPaid", {
+      userId: adminUser._id
+    })
 
 
     res.status(200).json(updatedOrder);
@@ -143,9 +159,28 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 
     const updatedOrder = await order.save();
 
+    const notification = new Notification({
+      userId: order.user._id,
+      orderId: order._id,
+      message: `Your order ${order._id} has been delivered.`,
+    })
+
+    const user = await User.findById(order.user._id)
+
+    if(user){
+      user.notiCount = user.notiCount + 1
+
+      await user.save()
+    }
+
+    await notification.save()
+
     const orderedUserSocketId = getUserSocketId(order.user.name)
 
-    io.to(orderedUserSocketId).emit("setDelivery")
+
+    io.to(orderedUserSocketId).emit("setDelivery", {
+      userId: order.user._id
+    })
 
     res.status(200).json(updatedOrder)
   }else{

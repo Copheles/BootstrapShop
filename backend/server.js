@@ -9,6 +9,7 @@ import { app, server} from './socket/socket.js'
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import notificationRoutes from './routes/notificationRoutes.js'
 
 // Error Handler
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
@@ -34,6 +35,7 @@ app.get('/api/config/paypal', (req, res) => {
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/notifications', notificationRoutes)
 
 
 const __dirname = path.resolve(); // Set __dirname to current directory

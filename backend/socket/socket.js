@@ -40,5 +40,4 @@ io.on('connection', (socket) => {
 
 });
 
-console.log(io);
 export { app, io, server};

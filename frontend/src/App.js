@@ -14,13 +14,12 @@ import {
   setRating,
   setSort,
 } from "./slices/filterSlice";
-import { useSocket } from "./hooks/useSocket";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  useSocket();
+  
 
   useEffect(() => {
     // Check if the URL contains the query parameter 'redirect=/products'
@@ -39,7 +38,6 @@ function App() {
       dispatch(setCategories(""));
     }
   }, [location.pathname, dispatch, location.search]);
-
 
   return (
     <>

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -16,12 +16,14 @@ import Meta from "../components/Meta";
 import { changeTimeFormat } from "../utils/timesFormat";
 import CopyButton from "../components/CopyButton";
 import { useSocket } from "../hooks/useSocket";
+import { apiSlice } from "../slices/apiSlice";
 
 const OrderScreen = () => {
   const { listenToEvent, cleanupListeners } = useSocket();
 
   const { id: orderId } = useParams();
   const { userInfo } = useSelector((state) => state.auth);
+  const { notiCount } = useSelector((state) => state.notification);
 
   const {
     data: order,
@@ -29,6 +31,8 @@ const OrderScreen = () => {
     isLoading,
     error,
   } = useGetOrderDetailsQuery(orderId);
+
+  const dispatch = useDispatch();
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
@@ -57,7 +61,6 @@ const OrderScreen = () => {
     return actions.order.capture().then(async function (details) {
       try {
         const res = await payOrder({ orderId, details }).unwrap();
-        console.log("res, ", res);
         refetch();
         toast.success(res);
       } catch (error) {
@@ -87,12 +90,15 @@ const OrderScreen = () => {
   };
 
   useEffect(() => {
-    listenToEvent("setDelivery", () => {
-      refetch();
+    listenToEvent("setDelivery", (data) => {
+      if (data.userId === userInfo._id) {
+        refetch();
+        dispatch(apiSlice.util.invalidateTags(["Notifications"]));
+      }
     });
 
     return () => cleanupListeners();
-  }, [listenToEvent, refetch, cleanupListeners]);
+  }, [listenToEvent, refetch, cleanupListeners, dispatch, notiCount, userInfo]);
 
   useEffect(() => {
     listenToEvent("setPaid", () => {
