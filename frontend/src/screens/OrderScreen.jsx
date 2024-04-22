@@ -226,19 +226,19 @@ const OrderScreen = () => {
                 <h2>Order Summary</h2>
               </ListGroup.Item>
               <ListGroup.Item>
-                <Row className="order_summary_text">
+                <Row className="order_summary_text mb-1">
                   <Col>Items</Col>
                   <Col>${order.itemsPrice}</Col>
                 </Row>
-                <Row className="order_summary_text">
+                <Row className="order_summary_text mb-1">
                   <Col>Shipping</Col>
                   <Col>${order.shippingPrice}</Col>
                 </Row>
-                <Row className="order_summary_text">
+                <Row className="order_summary_text mb-1">
                   <Col>Tax</Col>
                   <Col>${order.taxPrice}</Col>
                 </Row>
-                <Row className="text_total">
+                <Row className="text_total mb-3">
                   <Col>Total</Col>
                   <Col>${order.totalPrice}</Col>
                 </Row>

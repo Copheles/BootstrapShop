@@ -681,6 +681,7 @@ td {
   text-align: end;
 }
 
+
 @media (max-width: 991px) {
   .card-with-aspect-ratio {
     width: 18%; /* Adjust width for medium screens */
@@ -723,6 +724,8 @@ td {
 
   .cart-1 {
     display: block;
+    width: 39px;
+    height: 24px;
   }
 
   .cart-2 {
