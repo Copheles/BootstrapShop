@@ -59,10 +59,10 @@ function App() {
   }, [cleanupListeners, listenToEvent, refetch, userInfo, dispatch]);
 
   useEffect(() => {
-    if (userData) {
+    if (userData && userInfo) {
       dispatch(setCredentials(userData));
     }
-  }, [dispatch, userData, refetch, listenToEvent]);
+  }, [dispatch, userData, refetch, listenToEvent, userInfo]);
 
   useEffect(() => {
     // Check if the URL contains the query parameter 'redirect=/products'

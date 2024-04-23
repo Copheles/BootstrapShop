@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userInfo: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
-    : localStorage.getItem("userInfo") === undefined ? null : null,
+    : localStorage.getItem("userInfo") === undefined
+    ? null
+    : null,
   isSocketConnected: false,
 };
 
@@ -12,12 +14,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      console.log('setCredential called ', action.payload);
-      if(action.payload === undefined){
-        action.payload = null
+      console.log("setCredential called ", action.payload);
+      if (action.payload === undefined) {
+        action.payload = null;
       }
       state.userInfo = action.payload;
-      
+
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
     setSocketConnected(state, action) {
