@@ -55,13 +55,14 @@ function App() {
       }
     });
 
-   
     return () => cleanupListeners();
   }, [cleanupListeners, listenToEvent, refetch, userInfo, dispatch]);
 
   useEffect(() => {
-    dispatch(setCredentials(userData));
-  }, [dispatch, userData, refetch, listenToEvent])
+    if (userData) {
+      dispatch(setCredentials(userData));
+    }
+  }, [dispatch, userData, refetch, listenToEvent]);
 
   useEffect(() => {
     // Check if the URL contains the query parameter 'redirect=/products'

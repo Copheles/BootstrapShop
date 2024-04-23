@@ -13,7 +13,11 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       console.log('setCredential called ', action.payload);
+      if(action.payload === undefined){
+        action.payload = null
+      }
       state.userInfo = action.payload;
+      
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
     setSocketConnected(state, action) {
