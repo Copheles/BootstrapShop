@@ -35,7 +35,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `${USERS_URL}/profile`,
       }),
-      invalidatesTags: ['User']
+      providesTags: ['User']
     }),
     getUsers: builder.query({
       query: ({ pageNumber }) => ({

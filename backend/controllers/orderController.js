@@ -60,8 +60,31 @@ const addOrderItems = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice
     })
-    console.log('order', order)
     const createdOrder = await order.save()
+    const adminUser = await User.findOne({
+      isAdmin: true
+    })
+
+    if(adminUser){
+      adminUser.notiCount = adminUser.notiCount + 1
+
+      await adminUser.save()
+    }
+
+    const notification = new Notification({
+      userId: adminUser._id,
+      orderId: createdOrder._id,
+      message: `${req.user._id} has been ordered Order id:(${createdOrder._id}).`,
+    })
+
+
+    await notification.save()
+    
+    const orderedUserSocketId = getUserSocketId(adminUser.name)
+
+    io.to(orderedUserSocketId).emit("setOrder", {
+      userId: adminUser._id
+    })
 
     res.status(201).json(createdOrder)
   }

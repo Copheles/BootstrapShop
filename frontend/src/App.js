@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
   setBrands,
@@ -14,12 +14,54 @@ import {
   setRating,
   setSort,
 } from "./slices/filterSlice";
+import { useSocket } from "./hooks/useSocket";
+import { useGetProfileQuery } from "./slices/usersApiSlice";
+import { setCredentials } from "./slices/authSlice";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const { userInfo } = useSelector((state) => state.auth);
+  const { listenToEvent, cleanupListeners } = useSocket();
 
-  
+  const { data: userData, refetch } = useGetProfileQuery();
+  console.log("getProfileData: ", userData);
+
+  useEffect(() => {
+    listenToEvent("setDelivery", (data) => {
+      console.log("delivery");
+      if (userInfo) {
+        if (data.userId === userInfo._id) {
+          refetch();
+        }
+      }
+    });
+
+    listenToEvent("setPaid", (data) => {
+      console.log("paid");
+      if (userInfo) {
+        if (data.userId === userInfo._id) {
+          refetch();
+        }
+      }
+    });
+
+    listenToEvent("setOrder", (data) => {
+      console.log("ordered");
+      if (userInfo) {
+        if (data.userId === userInfo._id) {
+          refetch();
+        }
+      }
+    });
+
+   
+    return () => cleanupListeners();
+  }, [cleanupListeners, listenToEvent, refetch, userInfo, dispatch]);
+
+  useEffect(() => {
+    dispatch(setCredentials(userData));
+  }, [dispatch, userData, refetch, listenToEvent])
 
   useEffect(() => {
     // Check if the URL contains the query parameter 'redirect=/products'
