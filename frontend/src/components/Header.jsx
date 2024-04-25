@@ -6,12 +6,11 @@ import {
   NavDropdown,
   Button,
 } from "react-bootstrap";
-import { FaShoppingCart, FaBell } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import {
   useLogoutMutation,
-  useProfileMutation,
 } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -24,13 +23,12 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { BsList, BsX } from "react-icons/bs";
 import { useState } from "react";
 import { resetCart } from "../slices/cartSlice";
+import NotificationIcon from "./NotificationIcon";
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
-
-  const [updateProfile] = useProfileMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,12 +57,6 @@ const Header = () => {
     }
   };
 
-  const handleClickNoti = async () => {
-    await updateProfile({
-      notiCount: 0,
-    });
-    console.log('clicknoti called');
-  };
 
   return (
     <header>
@@ -96,20 +88,7 @@ const Header = () => {
                 </Nav.Link>
               </LinkContainer>
               {userInfo && (
-                <LinkContainer
-                  to="/notifications"
-                  className="cart-1 mx-1"
-                  onClick={handleClickNoti}
-                >
-                  <Nav.Link>
-                    <FaBell className="cart-btn" onClick={handleLinkClick} />
-                    {userInfo && userInfo.notiCount > 0 && (
-                      <Badge pill bg="info" className="mx-auto">
-                        {userInfo.notiCount}
-                      </Badge>
-                    )}
-                  </Nav.Link>
-                </LinkContainer>
+                <NotificationIcon handleLinkClick={handleLinkClick} cart={1} />
               )}
             </div>
             <Navbar.Toggle
@@ -139,20 +118,8 @@ const Header = () => {
                 </Nav.Link>
               </LinkContainer>
               {userInfo && (
-                <LinkContainer
-                  to="/notifications"
-                  className="cart-2"
-                  onClick={handleClickNoti}
-                >
-                  <Nav.Link>
-                    <FaBell className="cart-btn" onClick={handleLinkClick} />
-                    {userInfo && userInfo.notiCount > 0 && (
-                      <Badge pill bg="info" className="mx-auto">
-                        {userInfo.notiCount}
-                      </Badge>
-                    )}
-                  </Nav.Link>
-                </LinkContainer>
+                <NotificationIcon handleLinkClick={handleLinkClick} cart={2}/>
+                
               )}
               {userInfo ? (
                 <NavDropdown

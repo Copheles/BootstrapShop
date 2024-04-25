@@ -3,10 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userInfo: localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
-    : localStorage.getItem("userInfo") === undefined
-    ? null
     : null,
   isSocketConnected: false,
+  notiCount: 0
 };
 
 const authSlice = createSlice({
@@ -14,13 +13,13 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      console.log("setCredential called ", action.payload);
-      if (action.payload === undefined) {
-        action.payload = null;
-      }
       state.userInfo = action.payload;
-
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
+    },
+
+    setNotiCount: (state, action)=> {
+      state.notiCount = action.payload
+      localStorage.setItem("notiCount", JSON.stringify(action.payload))
     },
     setSocketConnected(state, action) {
       state.isSocketConnected = action.payload;
@@ -32,6 +31,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, logout, setSocketConnected } = authSlice.actions;
+export const { setCredentials, logout, setSocketConnected, setNotiCount } = authSlice.actions;
 
 export default authSlice.reducer;

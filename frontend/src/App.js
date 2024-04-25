@@ -14,25 +14,43 @@ import {
   setRating,
   setSort,
 } from "./slices/filterSlice";
+import { setNotiCount } from "./slices/authSlice";
 import { useSocket } from "./hooks/useSocket";
-import { useGetProfileQuery } from "./slices/usersApiSlice";
-import { setCredentials } from "./slices/authSlice";
+import { orderApiSlice } from "./slices/orderApiSlice";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, notiCount } = useSelector((state) => state.auth);
   const { listenToEvent, cleanupListeners } = useSocket();
 
-  const { data: userData, refetch } = useGetProfileQuery();
-  console.log("getProfileData: ", userData);
-
   useEffect(() => {
+    listenToEvent("setOrder", (data) => {
+      console.log("ordered");
+      if (userInfo) {
+        if (data.userId === userInfo._id) {
+          dispatch(setNotiCount(notiCount + 1));
+        }
+      }
+    });
     listenToEvent("setDelivery", (data) => {
       console.log("delivery");
       if (userInfo) {
         if (data.userId === userInfo._id) {
-          refetch();
+          dispatch(setNotiCount(notiCount + 1));
+          dispatch(
+            orderApiSlice.util.updateQueryData(
+              "getOrderDetails",
+              data.orderId,
+              (existingOrder) => {
+                return {
+                  ...existingOrder,
+                  isDelivered: true, // Update the isDelivered property to indicate delivery
+                  deliveredAt: data.serverDeliveredAt, // Use the server's timestamp for deliveredAt
+                };
+              }
+            )
+          );
         }
       }
     });
@@ -41,28 +59,25 @@ function App() {
       console.log("paid");
       if (userInfo) {
         if (data.userId === userInfo._id) {
-          refetch();
+          dispatch(setNotiCount(notiCount + 1));
+          dispatch(
+            orderApiSlice.util.updateQueryData(
+              "getOrderDetails",
+              data.orderId,
+              (existingOrder) => {
+                return {
+                  ...existingOrder,
+                  isPaid: true, // Update the isPaid property to indicate payment
+                  paidAt: data.serverPaidAt, // Use the server's timestamp for paidAt
+                };
+              }
+            )
+          );
         }
       }
     });
-
-    listenToEvent("setOrder", (data) => {
-      console.log("ordered");
-      if (userInfo) {
-        if (data.userId === userInfo._id) {
-          refetch();
-        }
-      }
-    });
-
     return () => cleanupListeners();
-  }, [cleanupListeners, listenToEvent, refetch, userInfo, dispatch]);
-
-  useEffect(() => {
-    if (userData && userInfo) {
-      dispatch(setCredentials(userData));
-    }
-  }, [dispatch, userData, refetch, listenToEvent, userInfo]);
+  }, []);
 
   useEffect(() => {
     // Check if the URL contains the query parameter 'redirect=/products'

@@ -13,7 +13,9 @@ export const useSocket = () => {
   const dispatch = useDispatch();
 
   const initializeSocket = () => {
+    console.log('socket initialize');
     if (!socketInstance && userInfo) {
+
       // Establish socket connection only if not already initialized
       socketInstance = io(URL, {
         query: {
@@ -53,6 +55,7 @@ export const useSocket = () => {
   // Function to listen for a specific event
   const listenToEvent = (eventName, callback) => {
     if (!socketInstance) {
+      console.log('socket');
       initializeSocket(); // Initialize socket if not already initialized
     }
   

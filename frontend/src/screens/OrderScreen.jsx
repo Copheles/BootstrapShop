@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, ListGroup, Image, Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -15,24 +15,16 @@ import {
 import Meta from "../components/Meta";
 import { changeTimeFormat } from "../utils/timesFormat";
 import CopyButton from "../components/CopyButton";
-import { useSocket } from "../hooks/useSocket";
-import { apiSlice } from "../slices/apiSlice";
 
 const OrderScreen = () => {
-  const { listenToEvent, cleanupListeners } = useSocket();
-
   const { id: orderId } = useParams();
   const { userInfo } = useSelector((state) => state.auth);
-  const { notiCount } = useSelector((state) => state.notification);
-
   const {
     data: order,
     refetch,
     isLoading,
     error,
   } = useGetOrderDetailsQuery(orderId);
-
-  const dispatch = useDispatch();
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
@@ -90,22 +82,32 @@ const OrderScreen = () => {
   };
 
   useEffect(() => {
-    listenToEvent("setDelivery", (data) => {
-      if (data.userId === userInfo._id) {
-        refetch();
-        dispatch(apiSlice.util.invalidateTags(["Notifications"]));
-      }
-    });
+    refetch();
+  }, [refetch]);
 
-    return () => cleanupListeners();
-  }, [listenToEvent, refetch, cleanupListeners, dispatch, notiCount, userInfo]);
+  // useEffect(() => {
+  //   listenToEvent("setOrder", (data) => {
+  //     console.log("ordered");
+  //     if (userInfo) {
+  //       if (data.userId === userInfo._id) {
+  //         dispatch(setNotiCount(notiCount + 1));
+  //       }
+  //     }
+  //   });
+  //   return () => cleanupListeners();
+  // }, [listenToEvent, refetch, cleanupListeners, dispatch, notiCount, userInfo]);
 
-  useEffect(() => {
-    listenToEvent("setPaid", () => {
-      refetch();
-    });
-    return () => cleanupListeners();
-  }, [listenToEvent, refetch, cleanupListeners]);
+  // useEffect(() => {
+  //   listenToEvent("setPaid", (data) => {
+  //     console.log("paid");
+  //     if (userInfo) {
+  //       if (data.userId === userInfo._id) {
+  //         refetch();
+  //       }
+  //     }
+  //   });
+  //   return () => cleanupListeners();
+  // }, [listenToEvent, refetch, cleanupListeners, dispatch, notiCount, userInfo]);
 
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {

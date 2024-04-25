@@ -33,10 +33,8 @@ import {
   FaRegSmile,
 } from "react-icons/fa";
 import { setBrand, setCategory } from "../slices/filterSlice";
-import { useSocket } from "../hooks/useSocket";
 
 const ProductScreen = () => {
-  const { listenToEvent, emitEvent, cleanupListeners } = useSocket();
   const { id: productId } = useParams();
 
   const dispatch = useDispatch();
@@ -131,15 +129,6 @@ const ProductScreen = () => {
     }
   };
 
-  useEffect(() => {
-    listenToEvent("changeAmount", (data) => {
-      if (data.productId === productId) {
-        refetch();
-      }
-    });
-
-    return () => cleanupListeners();
-  }, [listenToEvent, refetch, cleanupListeners, productId]);
 
   return (
     <>

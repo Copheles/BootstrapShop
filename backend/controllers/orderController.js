@@ -82,6 +82,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
     
     const orderedUserSocketId = getUserSocketId(adminUser.name)
 
+    // console.log("orderedUserSocketId: ", orderedUserSocketId);
+
     io.to(orderedUserSocketId).emit("setOrder", {
       userId: adminUser._id
     })
@@ -156,10 +158,12 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     await notification.save()
     
     const orderedUserSocketId = getUserSocketId(adminUser.name)
-    console.log(orderedUserSocketId);
+    // console.log(orderedUserSocketId);
 
     io.to(orderedUserSocketId).emit("setPaid", {
-      userId: adminUser._id
+      userId: adminUser._id,
+      serverIsPaid: updatedOrder.isPaid,
+      paidAt: updatedOrder.paidAt
     })
 
 
@@ -200,9 +204,13 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 
     const orderedUserSocketId = getUserSocketId(order.user.name)
 
+    console.log("orderedUserSocketId: ", orderedUserSocketId);
+
 
     io.to(orderedUserSocketId).emit("setDelivery", {
-      userId: order.user._id
+      userId: order.user._id,
+      orderId: order._id,
+      serverDeliveredAt: updatedOrder.deliveredAt
     })
 
     res.status(200).json(updatedOrder)
