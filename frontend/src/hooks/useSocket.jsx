@@ -21,27 +21,34 @@ export const useSocket = () => {
         query: {
           username: userInfo.name,
         },
+        reconnection: true, // Enable reconnection
+        reconnectionAttempts: Infinity, // Attempt to reconnect infinitely
       });
 
       // Set the socket connection status
       dispatch(setSocketConnected(true));
 
-      // Close socket connection when the application unmounts
-      window.addEventListener("beforeunload", () => {
-        socketInstance.disconnect();
-        socketInstance = null;
-        dispatch(setSocketConnected(false));
-      });
+      // Close socket connection and reset instance when the component unmounts
+      return () => {
+        if (socketInstance) {
+          socketInstance.disconnect();
+          socketInstance = null;
+          dispatch(setSocketConnected(false));
+        }
+      };
     }
   };
 
   useEffect(() => {
-    initializeSocket();
+    const cleanupSocket = initializeSocket(); // Initialize socket and obtain cleanup function
 
+    // Cleanup function returned from initializeSocket will be called on unmount
     return () => {
-      // No cleanup required since socket connection persists
+      if (cleanupSocket) {
+        cleanupSocket(); // Call the cleanup function to disconnect the socket
+      }
     };
-  }, []);
+  }, [userInfo]); // Re-run effect if userInfo changes
 
   // Function to emit a custom event
   const emitEvent = (eventName, data) => {
@@ -55,7 +62,6 @@ export const useSocket = () => {
   // Function to listen for a specific event
   const listenToEvent = (eventName, callback) => {
     if (!socketInstance) {
-      console.log('socket');
       initializeSocket(); // Initialize socket if not already initialized
     }
   
