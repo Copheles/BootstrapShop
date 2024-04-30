@@ -1,7 +1,15 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import {
+  Button,
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Card,
+  Spinner,
+} from "react-bootstrap";
 import { toast } from "react-toastify";
 import CheckOutSteps from "../components/CheckOutSteps";
 import Message from "../components/Message";
@@ -11,14 +19,12 @@ import { clearCartItems } from "../slices/cartSlice";
 import Meta from "../components/Meta";
 
 const PlaceOrderScreen = () => {
-
   const [createOrder, { isLoading }] = useCreaetOrderMutation();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-  
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {
@@ -40,7 +46,7 @@ const PlaceOrderScreen = () => {
         totalPrice: cart.totalPrice,
       }).unwrap();
 
-      dispatch(clearCartItems())
+      dispatch(clearCartItems());
 
       navigate(`/order/${res._id}`);
     } catch (error) {
@@ -49,10 +55,8 @@ const PlaceOrderScreen = () => {
 
       toast.error(error.data.message);
       dispatch(clearCartItems());
-    } 
+    }
   };
-
-
 
   return (
     <>
@@ -157,12 +161,11 @@ const PlaceOrderScreen = () => {
                   type="button"
                   variant="dark"
                   className="btn-block"
-                  disabled={cart.cartItems.length === 0}
+                  disabled={cart.cartItems.length === 0 || isLoading}
                   onClick={placeOrderHandler}
                 >
-                  Place Order
+                  {isLoading ? <Spinner size="sm" /> : "Place Order"}
                 </Button>
-                {isLoading && <Loader />}
               </ListGroup.Item>
             </ListGroup>
           </Card>
