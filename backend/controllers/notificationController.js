@@ -5,11 +5,18 @@ import Notification from './../models/notificationModel.js';
 // @route GET /api/notifications
 // @access Private
 const getAllNotifications = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
+  const pageSize = 8;
+  const page = Number(req.query.pageNumber) || 1;
+  
+  const userId = req.user._id;
 
-  const notifications = await Notification.find({ userId  }).sort('-createdAt')
+  const count = await Notification.countDocuments({ userId });
 
-  res.status(200).json(notifications)
+  const notifications = await Notification.find({ userId }).limit(pageSize).skip(pageSize * (page - 1)).sort({createdAt: -1});
+
+  res.status(200).json({notifications, page, pages: Math.ceil(count / pageSize)})
+
+  
 })  
 
 

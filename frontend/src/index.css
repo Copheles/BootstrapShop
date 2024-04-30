@@ -24,6 +24,12 @@ h2 {
   color: #47494a;
 }
 
+h4 {
+  text-transform: capitalize;
+  font-size: 19px;
+  color: #4a4c4d;
+}
+
 a {
   color: #343a40;
   text-decoration: none;
@@ -137,7 +143,7 @@ main {
   transition: all 0.4s ease;
 }
 
-.bullet-item-placeholder{
+.bullet-item-placeholder {
   color: white;
   background-color: black;
   border: 1px solid gray;
@@ -667,23 +673,50 @@ td {
 }
 
 .noti-box {
-  padding: 10px 10px;
-  background-color: rgb(182, 203, 213);
+  display: flex;
+  gap: 5px;
+  background-color: rgb(195, 221, 233);
   margin: 1px;
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+  max-height: 105px;
 }
 
 .read {
   background-color: white;
   border: 1px solid rgb(216, 213, 213);
   box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+}
 
+.noti-type-icon-box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  border-radius: 50%;
+}
+
+.noti-type-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.noti-text-box {
+  width: 100%;
+  height: 100%;
+  flex: 15;
+ 
+  padding-left: 10px;
+  padding-top: 7px;
+  padding-bottom: 5px;
+  padding-right: 7px;
 }
 
 .noti-text {
-  color: rgb(66, 65, 65);
+  color: rgb(42, 41, 41);
+  font-weight: 400;
 }
 
 .noti-date {
@@ -693,11 +726,11 @@ td {
   text-align: end;
 }
 
-.carousel-placeholder{
+.carousel-placeholder {
   height: 510px;
 }
 
-.bullet-item-placeholder{
+.bullet-item-placeholder {
   width: 58px;
   height: 30px;
 }
@@ -715,6 +748,10 @@ td {
   }
   h2 {
     font-size: 24px;
+  }
+
+  h4 {
+    font-size: 18px;
   }
 
   .carousel-caption {
@@ -808,6 +845,10 @@ td {
   }
   h2 {
     font-size: 20px;
+  }
+
+  h4 {
+    font-size: 17px;
   }
   .carousel-caption {
     font-size: 16px;
@@ -909,12 +950,10 @@ td {
   .noti-text {
     font-size: 11px;
   }
-  
+
   .noti-date {
     font-size: 10px;
   }
-
-  
 }
 
 @media (max-width: 576px) {
@@ -932,6 +971,10 @@ td {
   h2 {
     font-size: 17px;
     text-transform: capitalize;
+  }
+
+  h4 {
+    font-size: 12px;
   }
 
   .carousel-caption {
@@ -1043,10 +1086,18 @@ td {
     font-size: 12px;
   }
 
-  .carousel-placeholder{
+  .carousel-placeholder {
     height: 365px;
   }
 
+  .noti-text-box {
+    flex: 7;
+    padding-left: 10px;
+  }
+
+  .noti-text{
+    font-size: 10px;
+  }
 }
 
 .card-body {

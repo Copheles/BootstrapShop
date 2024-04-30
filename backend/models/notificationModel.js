@@ -6,10 +6,28 @@ const NotificationSchema = new mongoose.Schema({
     ref: 'User', // Reference to the User model
     required: true
   },
+  type: {
+    type: String,
+    enum: ['order', 'product'], // Define possible notification types
+    required: true
+  },
+  notiType: {
+    type: String,
+    required: true
+  },
   orderId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Order', // Reference to the Order model
-    required: true
+    ref: 'Order',
+    required: function() {
+      return this.type === 'order'; // Required if notification type is 'order'
+    }
+  },
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product',
+    required: function() {
+      return this.type === 'product'; // Required if notification type is 'product'
+    }
   },
   message: {
     type: String,
@@ -19,14 +37,10 @@ const NotificationSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  notiCount: {
-    type: Number,
-    default: 0
-  }
 }, {
   timestamps: true
-})
+});
 
+const Notification = mongoose.model("Notification", NotificationSchema);
 
-const Notification = mongoose.model("Notification", NotificationSchema)
-export default Notification
+export default Notification;

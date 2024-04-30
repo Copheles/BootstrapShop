@@ -73,6 +73,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     const notification = new Notification({
       userId: adminUser._id,
+      type: "order",
+      notiType: "createOrder",
       orderId: createdOrder._id,
       message: `${req.user._id} has been ordered Order id:(${createdOrder._id}).`,
     })
@@ -145,6 +147,8 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 
     const notification = new Notification({
       userId: adminUser._id,
+      type: 'order',
+      notiType: "paidOrder",
       orderId: order._id,
       message: `Order id:(${order._id}) has been paid.`,
     })
@@ -188,6 +192,8 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 
     const notification = new Notification({
       userId: order.user._id,
+      type: 'order',
+      notiType: "deliveredOrder",
       orderId: order._id,
       message: `Your order ${order._id} has been delivered.`,
     })
