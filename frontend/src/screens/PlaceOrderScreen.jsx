@@ -13,7 +13,6 @@ import {
 import { toast } from "react-toastify";
 import CheckOutSteps from "../components/CheckOutSteps";
 import Message from "../components/Message";
-import Loader from "../components/Loader";
 import { useCreaetOrderMutation } from "../slices/orderApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
 import Meta from "../components/Meta";
@@ -109,8 +108,8 @@ const PlaceOrderScreen = () => {
                         </Col>
                         <Col xs={12} sm={12} md={4}>
                           <span className="price_text">
-                            {item.qty} <strong>x</strong> ${item.price} = $
-                            {item.qty * item.price}
+                            {item.qty} <strong>x</strong> ${(item.price - (item.price * (item.discountPercent/100))).toFixed(2)} = $
+                            {(item.qty * (item.price - (item.price * (item.discountPercent/100)))).toFixed(2)}
                           </span>
                         </Col>
                       </Row>

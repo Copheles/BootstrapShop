@@ -12,7 +12,12 @@ const getAllNotifications = asyncHandler(async (req, res) => {
 
   const count = await Notification.countDocuments({ userId });
 
-  const notifications = await Notification.find({ userId }).limit(pageSize).skip(pageSize * (page - 1)).sort({createdAt: -1});
+  const notifications = await Notification.find({
+    $or: [
+      { userId: userId },   // Match notifications with specific userId
+      { isAll: true }       // Match notifications where isAll is true
+    ]
+  }).limit(pageSize).skip(pageSize * (page - 1)).sort({createdAt: -1});
 
   res.status(200).json({notifications, page, pages: Math.ceil(count / pageSize)})
 

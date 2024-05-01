@@ -65,7 +65,14 @@ const CartScreen = () => {
                       </Link>
                     </Col>
                     <Col xs={6} sm={6} md={1}>
-                      <span className="price_text">${cartItem.price}</span>
+                      <span className="price_text">
+                        <strong style={{ fontWeight: 500 }}>
+                          {(
+                            cartItem.price -
+                            cartItem.price * (cartItem.discountPercent / 100)
+                          ).toFixed(2)}
+                        </strong>
+                      </span>
                     </Col>
                     <Col xs={6} sm={6} md={3}>
                       <ButtonGroup>
@@ -134,7 +141,14 @@ const CartScreen = () => {
                   <span className="text_total">
                     ${" "}
                     {cartItems
-                      .reduce((acc, item) => acc + item.qty * item.price, 0)
+                      .reduce(
+                        (acc, item) =>
+                          acc +
+                          item.qty *
+                            (item.price -
+                              item.price * (item.discountPercent / 100)),
+                        0
+                      )
                       .toFixed(2)}
                   </span>
                 </ListGroup.Item>

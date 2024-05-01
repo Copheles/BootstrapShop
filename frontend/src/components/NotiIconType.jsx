@@ -3,29 +3,23 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { FaBoxOpen } from "react-icons/fa";
 import { GiMoneyStack } from "react-icons/gi";
+import { MdDiscount } from "react-icons/md";
 
 const NotiIconType = ({ type }) => {
   let icon;
 
   switch (type) {
     case "deliveredOrder":
-      icon = (
-        <TbTruckDelivery
-          className="noti-type-icon"
-        />
-      );
+      icon = <TbTruckDelivery className="noti-type-icon" />;
       break;
     case "createOrder":
-      icon = (
-        <FaBoxOpen className="noti-type-icon" />
-      );
+      icon = <FaBoxOpen className="noti-type-icon" />;
       break;
     case "paidOrder":
-      icon = (
-        <GiMoneyStack
-          className="noti-type-icon"
-        />
-      );
+      icon = <GiMoneyStack className="noti-type-icon" />;
+      break;
+    case "ProductDiscount":
+      icon = <MdDiscount className="noti-type-icon" />;
       break;
     default:
       icon = (

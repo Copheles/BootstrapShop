@@ -19,6 +19,7 @@ const HorizontalScrollList = ({
   toolTipText = "",
   onClickData = "",
   isLoading,
+  recentViewed = false,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -185,9 +186,24 @@ const HorizontalScrollList = ({
                 <Card.Title className="custom_card_title">
                   <Link to="/">{item.name}</Link>
                 </Card.Title>
-                <Card.Text className="custom_card_text">
-                  ${item.price}
-                </Card.Text>
+                {!recentViewed && (
+                  <Card.Text className="custom_card_text">
+                    {item.discountPercent > 0 ? (
+                      <p
+                        className="custom_card_text"
+                        style={{ fontWeight: 500 }}
+                      >
+                        {(
+                          item.price -
+                          item.price * (item.discountPercent / 100)
+                        ).toFixed(2)}
+                        <span className="discountPrice">{item.price}</span>
+                      </p>
+                    ) : (
+                      <p className="custom_card_text">{item.price}</p>
+                    )}
+                  </Card.Text>
+                )}
               </Card.Body>
             </Card>
           ))}

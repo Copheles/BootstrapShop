@@ -1,6 +1,9 @@
 import fs from 'fs';
 import asyncHandler from '../middleware/asyncHandler.js';
 import Product from '../models/productModel.js';
+import Notification from '../models/notificationModel.js';
+import { io } from '../socket/socket.js';
+import User from './../models/userModel.js';
 
 // @desc Fetch all products
 // @route GET /api/products
@@ -81,9 +84,7 @@ const imageUpload = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
 
-  const { name, price, description, brand, category, countInStock, isFeatured } = req.body;
-
-  console.log(req.body)
+  const { name, price, description, brand, category, countInStock, isFeatured, discountPercent } = req.body;
 
   const product = await Product.findById(req.params.id)
   if(product){
@@ -94,8 +95,29 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.category = category;
     product.countInStock = countInStock;
     product.isFeatured = isFeatured
+    product.discountPercent = discountPercent
 
     const updatedProduct = await product.save();
+    if(discountPercent > 0){
+      const notification = new Notification({
+        userId: req.user._id,
+        isAll: true,
+        type: "product",
+        notiType: "ProductDiscount",
+        productId: product._id,
+        message: `${product.name} has promotion(${discountPercent}% off).`,
+      })
+
+      await notification.save()
+      await User.updateMany(
+        {_id : { $ne: req.user._id}}, // Empty filter ({}), meaning update all documents in the collection
+        { $inc: { notiCount: 1 } } // Use $inc operator to increment noticeCount by 1
+      );
+      io.emit('productDiscount', {
+        productId: product._id
+      })
+    }
+
     res.json(updatedProduct);
   }else{
     res.status(404);

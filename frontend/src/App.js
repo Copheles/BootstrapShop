@@ -76,6 +76,13 @@ function App() {
         }
       }
     });
+
+    listenToEvent("productDiscount", (data) => {
+      console.log('discount ');
+      if(userInfo){
+        dispatch(setNotiCount(notiCount + 1))
+      }
+    })
     return () => cleanupListeners();
   }, []);
 

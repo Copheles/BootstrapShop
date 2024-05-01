@@ -177,6 +177,7 @@ main {
 /* Card  */
 .card-with-aspect-ratio {
   display: flex;
+  position: relative;
   flex-direction: column;
   border-radius: 5px;
   height: 100%;
@@ -210,6 +211,13 @@ main {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.discountPrice{
+  color: peru;
+  margin-left: 5px;
+  text-decoration: line-through;
+  font-weight: 500;
 }
 
 td {

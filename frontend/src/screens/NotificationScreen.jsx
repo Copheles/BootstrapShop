@@ -63,9 +63,14 @@ const NotificationScreen = () => {
     }
   }, [data]);
 
-  const handleClick = (orderId, notiId) => {
+  const handleClick = (orderId, notiId, productId) => {
     notiRead(notiId);
-    navigate(`/order/${orderId}`);
+    if (orderId) {
+      navigate(`/order/${orderId}`);
+    }
+    if (productId) {
+      navigate(`/products/${productId}`);
+    }
   };
 
   const loadMoreNotifications = () => {
@@ -135,7 +140,9 @@ const NotificationScreen = () => {
                 <div
                   className={`noti-box ${noti.read ? "read" : null}`}
                   key={noti._id}
-                  onClick={() => handleClick(noti.orderId, noti._id)}
+                  onClick={() =>
+                    handleClick(noti.orderId, noti._id, noti.productId)
+                  }
                 >
                   <NotiIconType type={noti.notiType} />
                   <div className="noti-text-box">

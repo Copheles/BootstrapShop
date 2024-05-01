@@ -3,7 +3,7 @@ const recentlyViewedToLocalStorage = (item) => {
     localStorage.getItem("recentlyViewed")
   );
 
-  const { _id, image, name, price } = item;
+  const { _id, image, name, price, discountPercent } = item;
 
   if (recentlyViewedProducts === null) {
     localStorage.setItem(
@@ -19,7 +19,7 @@ const recentlyViewedToLocalStorage = (item) => {
       (item) => item._id !== _id
     );
     console.log(filterViewedItems);
-    filterViewedItems.push({ _id, image, name, price });
+    filterViewedItems.push({ _id, image, name, price, discountPercent });
     localStorage.setItem("recentlyViewed", JSON.stringify(filterViewedItems));
   }
 };

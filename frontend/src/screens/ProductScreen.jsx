@@ -8,6 +8,7 @@ import {
   Card,
   Button,
   Form,
+  Alert,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
 import {
@@ -16,7 +17,7 @@ import {
 } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { MdDiscount, MdOutlineKeyboardBackspace } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -129,7 +130,6 @@ const ProductScreen = () => {
     }
   };
 
-
   return (
     <>
       <Meta title={product?.name} />
@@ -168,6 +168,16 @@ const ProductScreen = () => {
                     clsName="date-text"
                   />
                 </ListGroup.Item>
+                {product.discountPercent > 0 && (
+                  <ListGroup.Item>
+                    <Alert variant="warning">
+                      <strong>
+                        <MdDiscount className="icons" />
+                        {product.discountPercent}% off on this product
+                      </strong>
+                    </Alert>
+                  </ListGroup.Item>
+                )}
                 <ListGroup.Item onClick={() => handleBrandClick(product.brand)}>
                   <strong>Brand: </strong>{" "}
                   <span className="product-text cursor-pointer hover-line-effect">
@@ -195,7 +205,19 @@ const ProductScreen = () => {
                     <Row>
                       <Col>Price:</Col>
                       <Col>
-                        <strong>${product.price}</strong>
+                        {product.discountPercent > 0 ? (
+                          <strong style={{ fontWeight: 500 }}>
+                            {(
+                              product.price -
+                              product.price * (product.discountPercent / 100)
+                            ).toFixed(2)}
+                            <span className="discountPrice">
+                              {product.price}
+                            </span>
+                          </strong>
+                        ) : (
+                          <p className="custom_card_text">{product.price}</p>
+                        )}
                       </Col>
                     </Row>
                   </ListGroup.Item>

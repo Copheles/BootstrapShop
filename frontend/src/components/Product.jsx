@@ -2,14 +2,14 @@ import { Card, CardBody } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
 import recentlyViewedToLocalStorage from "../utils/recentlyViewedToLocalStorage";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { setPageNumber } from "../slices/filterSlice";
 
 const Product = ({ product }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleClick = (item) => {
-    dispatch(setPageNumber(1))
-    recentlyViewedToLocalStorage(item)
+    dispatch(setPageNumber(1));
+    recentlyViewedToLocalStorage(item);
   };
 
   return (
@@ -39,7 +39,16 @@ const Product = ({ product }) => {
           />
         </Card.Text>
         <Card.Text as="h5" className="custom_card_text">
-          ${product.price}
+          {product.discountPercent > 0 ? (
+            <p className="custom_card_text" style={{ fontWeight: 500 }}>
+              {(product.price - product.price * (product.discountPercent / 100)).toFixed(
+                2
+              )}
+              <span className="discountPrice">{product.price}</span>
+            </p>
+          ) : (
+            <p className="custom_card_text">{product.price}</p>
+          )}
         </Card.Text>
       </CardBody>
     </Card>

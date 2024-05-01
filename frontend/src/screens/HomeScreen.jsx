@@ -42,6 +42,7 @@ const HomeScreen = () => {
           listTitle="Recently Viewed"
           toolTipText="You recently viewed these products"
           data={recentlyViewedProducts.reverse()}
+          recentViewed={true}
         />
       )}
 

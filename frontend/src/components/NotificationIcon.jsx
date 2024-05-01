@@ -58,6 +58,16 @@ const NotificationIcon = ({ handleLinkClick, cart }) => {
         }
       }
     });
+
+    listenToEvent("productDiscount", (data) => {
+      console.log('discount ');
+      if(userInfo){
+        console.log('true');
+        refetch()
+        dispatch(setNotiCount(notiCount + 1))
+      }
+    })
+
     return () => cleanupListeners();
   }, [dispatch, cleanupListeners, listenToEvent, refetch, notiCount, userInfo]);
   //

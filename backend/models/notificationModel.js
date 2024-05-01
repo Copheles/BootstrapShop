@@ -4,7 +4,11 @@ const NotificationSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model
-    required: true
+    required: true,
+  },
+  isAll: {
+    type: Boolean,
+    default: false,
   },
   type: {
     type: String,

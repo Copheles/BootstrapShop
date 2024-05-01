@@ -2,9 +2,12 @@ export const addDecimals = (num) => (Math.round(num * 100) / 100).toFixed(2);
 
 export const updateCart = (state) => {
   // Calculate item price
-
+  // (
+  //   product.price -
+  //   product.price * (product.discountPercent / 100)
+  // ).toFixed(2)}
   state.itemsPrice = addDecimals(
-    state.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    state.cartItems.reduce((acc, item) => acc + (item.price - (item.price * (item.discountPercent/100))) * item.qty, 0)
   );
 
   // Calculate shipping price (If order is over $100 then free, else $10 shpping)
