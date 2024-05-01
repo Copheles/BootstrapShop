@@ -80,6 +80,7 @@ const NotificationScreen = () => {
     }
   };
 
+  console.log(pageNumber < (data?.pages || 1) && notiList.length > 0);
   return (
     <>
       <Meta title="Notifications" />
@@ -161,7 +162,7 @@ const NotificationScreen = () => {
               ))}
           </div>
           <div className="d-flex flex-row-reverse">
-            {data && pageNumber < (data.pages || 1) && notiList.length > 0 && (
+            {pageNumber < (data?.pages || 1) && notiList.length > 0 && (
               <Button
                 className="btn-sm mt-3"
                 onClick={loadMoreNotifications}

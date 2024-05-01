@@ -9,8 +9,13 @@ const getAllNotifications = asyncHandler(async (req, res) => {
   const page = Number(req.query.pageNumber) || 1;
   
   const { userId } = req.params;
-
-  const count = await Notification.countDocuments({ userId });
+  
+  const count = await Notification.countDocuments({
+    $or: [
+      { userId: userId }, // Match notifications with specific userId
+      { isAll: true }     // Match notifications where isAll is true
+    ]
+  });
 
   const notifications = await Notification.find({
     $or: [
