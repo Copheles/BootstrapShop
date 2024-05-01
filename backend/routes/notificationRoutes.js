@@ -6,7 +6,7 @@ import { getAllNotifications, updateNotiToRead } from '../controllers/notificati
 
 const router = express.Router()
 
-router.route('/').get(protect, getAllNotifications)
+router.route('/:userId').get(protect, getAllNotifications)
 
 router.route('/read/:id').put(protect, updateNotiToRead)
 

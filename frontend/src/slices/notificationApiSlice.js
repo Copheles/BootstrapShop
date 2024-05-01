@@ -4,11 +4,11 @@ import { NOTIFICATION_URL } from "./../constants";
 export const notificationApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUserNotification: builder.query({
-      query: (pageNumber) => ({
-        url: `${NOTIFICATION_URL}`,
+      query: ({ pageNumber, userId }) => ({
+        url: `${NOTIFICATION_URL}/${userId}`,
         params: {
-          pageNumber
-        }
+          pageNumber,
+        },
       }),
       providesTags: ["Notifications"],
       keepUnusedDataFor: 60,
@@ -18,9 +18,10 @@ export const notificationApiSlice = apiSlice.injectEndpoints({
         url: `${NOTIFICATION_URL}/read/${id}`,
         method: "PUT",
       }),
-      invalidatesTags: ["Notifications"]
+      invalidatesTags: ["Notifications"],
     }),
   }),
 });
 
-export const { useGetUserNotificationQuery, useUpdateNotiToReadMutation } = notificationApiSlice;
+export const { useGetUserNotificationQuery, useUpdateNotiToReadMutation } =
+  notificationApiSlice;

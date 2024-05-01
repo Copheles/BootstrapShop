@@ -8,7 +8,7 @@ const getAllNotifications = asyncHandler(async (req, res) => {
   const pageSize = 8;
   const page = Number(req.query.pageNumber) || 1;
   
-  const userId = req.user._id;
+  const { userId } = req.params;
 
   const count = await Notification.countDocuments({ userId });
 
