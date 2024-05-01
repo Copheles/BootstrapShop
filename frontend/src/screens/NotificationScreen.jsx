@@ -10,24 +10,39 @@ import { Button, Placeholder, Spinner } from "react-bootstrap";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import NotiIconType from "../components/NotiIconType";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TbTruckDelivery } from "react-icons/tb";
+import { useProfileMutation } from "../slices/usersApiSlice";
+import { setNotiCount } from "../slices/authSlice";
 
 const NotificationScreen = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [notiList, setNotiList] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, notiCount } = useSelector((state) => state.auth);
 
-  const { data, isLoading } = useGetUserNotificationQuery({
+  const { data, isLoading, refetch } = useGetUserNotificationQuery({
     pageNumber,
     userId: userInfo._id,
   });
 
+  const dispatch = useDispatch();
+  const [updateProfile] = useProfileMutation();
+
   const [notiRead] = useUpdateNotiToReadMutation();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Refetch notifications whenever the component mounts or userInfo changes
+    setNotiList([]);
+    refetch();
+    updateProfile({
+      notiCount: 0,
+    });
+    dispatch(setNotiCount(0));
+  }, [userInfo._id, refetch, notiCount, dispatch, updateProfile]);
 
   useEffect(() => {
     if (data) {
@@ -37,7 +52,7 @@ const NotificationScreen = () => {
     } else {
       setNotiList([]);
     }
-  }, [data, userInfo._id]);
+  }, [data]);
 
   const handleClick = (orderId, notiId) => {
     notiRead(notiId);
@@ -130,7 +145,7 @@ const NotificationScreen = () => {
               ))}
           </div>
           <div className="d-flex flex-row-reverse">
-            {data && pageNumber < (data.pages || 1) && (
+            {data && pageNumber < (data.pages || 1) && notiList.length > 0 && (
               <Button
                 className="btn-sm mt-3"
                 onClick={loadMoreNotifications}
