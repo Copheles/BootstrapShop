@@ -11,7 +11,6 @@ export const notificationApiSlice = apiSlice.injectEndpoints({
         },
       }),
       providesTags: ["Notifications"],
-      keepUnusedDataFor: 60,
     }),
     updateNotiToRead: builder.mutation({
       query: (id) => ({

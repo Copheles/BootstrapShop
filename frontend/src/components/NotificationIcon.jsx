@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setNotiCount } from "../slices/authSlice";
 import { useSocket } from "../hooks/useSocket";
+import { notificationApiSlice } from "../slices/notificationApiSlice";
 
 const NotificationIcon = ({ handleLinkClick, cart }) => {
   const { userInfo, notiCount } = useSelector((state) => state.auth);
@@ -24,6 +25,7 @@ const NotificationIcon = ({ handleLinkClick, cart }) => {
       notiCount: 0,
     });
     dispatch(setNotiCount(0));
+    dispatch(notificationApiSlice.util.invalidateTags(["Notifications"]));
   };
 
   useEffect(() => {

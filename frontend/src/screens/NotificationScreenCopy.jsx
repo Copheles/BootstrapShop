@@ -36,6 +36,13 @@ const NotificationScreen = () => {
 
   useEffect(() => {
     // Refetch notifications whenever the component mounts or userInfo changes
+    if (pageNumber === 1) {
+      refetch({ pageNumber, userId: userInfo._id });
+    }
+  }, [pageNumber, userInfo._id, refetch]);
+
+  useEffect(() => {
+    // Refetch notifications whenever the component mounts or userInfo changes
     if (pageNumber < 2 && notiCount > 0) {
       setNotiList([]);
       refetch();
@@ -43,14 +50,7 @@ const NotificationScreen = () => {
         notiCount: 0,
       });
       dispatch(setNotiCount(0));
-    } else if (pageNumber > 1 && notiCount === 0) {
-      setNotiList([]);
-      setPageNumber(1);
-      refetch({
-        pageNumber: 1,
-        userId: userInfo._id,
-      });
-    }
+    } 
   }, [userInfo._id, refetch, notiCount, dispatch, updateProfile]);
 
   useEffect(() => {
