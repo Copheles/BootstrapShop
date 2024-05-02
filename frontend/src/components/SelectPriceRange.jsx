@@ -11,10 +11,10 @@ const SelectPriceRange = () => {
   };
 
   useEffect(() => {
-    if (maxPrice > 0) {
+    if (maxPrice > 0 && price === 0)  {
       dispatch(setPrice(maxPrice));
     }
-  }, [dispatch, maxPrice]);
+  }, [dispatch, maxPrice, price]);
 
   return (
     <div>

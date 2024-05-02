@@ -14,6 +14,7 @@ import {
   setMaxPrice,
   setRating,
   setSort,
+  setPrice,
 } from "./slices/filterSlice";
 import { setNotiCount } from "./slices/authSlice";
 import { useSocket } from "./hooks/useSocket";
@@ -109,7 +110,7 @@ function App() {
       dispatch(setBrands(""));
       dispatch(setKeyword(""));
       dispatch(setCategories(""));
-      dispatch(setMaxPrice(Math.ceil(data?.maxPrice)));
+      dispatch(setPrice(Math.ceil(data?.maxPrice)));
     }
   }, [location.pathname, dispatch, location.search]);
 
