@@ -13,7 +13,6 @@ export const useSocket = () => {
   const dispatch = useDispatch();
 
   const initializeSocket = () => {
-    console.log('socket initialize');
     if (!socketInstance && userInfo) {
 
       // Establish socket connection only if not already initialized

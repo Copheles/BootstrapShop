@@ -105,6 +105,7 @@ const updateProduct = asyncHandler(async (req, res) => {
         type: "product",
         notiType: "ProductDiscount",
         productId: product._id,
+        productImg: product.image,
         message: `${product.name} has promotion(${discountPercent}% off).`,
       })
 

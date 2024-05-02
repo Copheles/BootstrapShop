@@ -37,6 +37,7 @@ const NotificationScreen = () => {
   useEffect(() => {
     // Refetch notifications whenever the component mounts or userInfo changes
     if (pageNumber < 2 && notiCount > 0) {
+      console.log("1");
       setNotiList([]);
       refetch();
       updateProfile({
@@ -44,21 +45,31 @@ const NotificationScreen = () => {
       });
       dispatch(setNotiCount(0));
     } else if (pageNumber > 1 && notiCount === 0) {
+      console.log("2");
       setNotiList([]);
       setPageNumber(1);
+      updateProfile({
+        notiCount: 0,
+      });
       refetch({
         pageNumber: 1,
         userId: userInfo._id,
       });
-    }
+    } 
   }, [userInfo._id, refetch, notiCount, dispatch, updateProfile]);
 
   useEffect(() => {
     if (data) {
+      console.log("3");
       // Update notiList based on the received data
-      setNotiList((prevNotiList) => [...prevNotiList, ...data.notifications]);
+      if (pageNumber > 1) {
+        setNotiList((prevNotiList) => [...prevNotiList, ...data.notifications]);
+      } else {
+        setNotiList([...data.notifications]);
+      }
       setLoading(false);
     } else {
+      console.log("4");
       setNotiList([]);
     }
   }, [data]);
@@ -79,8 +90,6 @@ const NotificationScreen = () => {
       setPageNumber((prev) => prev + 1);
     }
   };
-
-  console.log(pageNumber < (data?.pages || 1) && notiList.length > 0);
   return (
     <>
       <Meta title="Notifications" />
@@ -145,7 +154,10 @@ const NotificationScreen = () => {
                     handleClick(noti.orderId, noti._id, noti.productId)
                   }
                 >
-                  <NotiIconType type={noti.notiType} />
+                  <NotiIconType
+                    type={noti.notiType}
+                    productImg={noti.productImg}
+                  />
                   <div className="noti-text-box">
                     <h4 className="d-flex gap-1 align-items-center">
                       <IoIosCheckmarkCircle

@@ -33,6 +33,12 @@ const NotificationSchema = new mongoose.Schema({
       return this.type === 'product'; // Required if notification type is 'product'
     }
   },
+  productImg: {
+    type: String,
+    required: function() {
+      return this.type === 'product'; // Required if notification type is 'product'
+    }
+  },
   message: {
     type: String,
     required: true

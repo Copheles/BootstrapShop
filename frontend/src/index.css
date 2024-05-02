@@ -601,6 +601,12 @@ td {
   border-radius: 20px 0 0 20px;
 }
 
+
+.toppick-leftbox-noti img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 .toppick-rightbox {
   padding: 20px;
   display: flex;
@@ -703,7 +709,6 @@ td {
   justify-content: center;
   align-items: center;
   padding-left: 10px;
-  border-radius: 50%;
 }
 
 .noti-type-icon {

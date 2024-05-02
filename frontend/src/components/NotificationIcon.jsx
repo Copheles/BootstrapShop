@@ -6,11 +6,12 @@ import { LinkContainer } from "react-router-bootstrap";
 import {
   useGetUserNotiCountQuery,
   useProfileMutation,
+  // useProfileMutation,
 } from "../slices/usersApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotiCount } from "../slices/authSlice";
 import { useSocket } from "../hooks/useSocket";
-import { notificationApiSlice } from "../slices/notificationApiSlice";
+// import { notificationApiSlice } from "../slices/notificationApiSlice";
 
 const NotificationIcon = ({ handleLinkClick, cart }) => {
   const { userInfo, notiCount } = useSelector((state) => state.auth);
@@ -21,11 +22,10 @@ const NotificationIcon = ({ handleLinkClick, cart }) => {
   const { listenToEvent, cleanupListeners } = useSocket();
 
   const handleClickNoti = async () => {
-    await updateProfile({
-      notiCount: 0,
-    });
-    dispatch(setNotiCount(0));
-    dispatch(notificationApiSlice.util.invalidateTags(["Notifications"]));
+    updateProfile({
+      notiCount: 0
+    })
+    dispatch(setNotiCount(0))
   };
 
   useEffect(() => {
@@ -60,13 +60,11 @@ const NotificationIcon = ({ handleLinkClick, cart }) => {
     });
 
     listenToEvent("productDiscount", (data) => {
-      console.log('discount ');
-      if(userInfo){
-        console.log('true');
-        refetch()
-        dispatch(setNotiCount(notiCount + 1))
+      if (userInfo) {
+        refetch();
+        dispatch(setNotiCount(notiCount + 1));
       }
-    })
+    });
 
     return () => cleanupListeners();
   }, [dispatch, cleanupListeners, listenToEvent, refetch, notiCount, userInfo]);

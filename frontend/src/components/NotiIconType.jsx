@@ -5,7 +5,7 @@ import { FaBoxOpen } from "react-icons/fa";
 import { GiMoneyStack } from "react-icons/gi";
 import { MdDiscount } from "react-icons/md";
 
-const NotiIconType = ({ type }) => {
+const NotiIconType = ({ type, productImg }) => {
   let icon;
 
   switch (type) {
@@ -18,8 +18,18 @@ const NotiIconType = ({ type }) => {
     case "paidOrder":
       icon = <GiMoneyStack className="noti-type-icon" />;
       break;
-    case "ProductDiscount":
+    case "ProductDiscount1":
       icon = <MdDiscount className="noti-type-icon" />;
+      break;
+    case "ProductDiscount":
+      icon = (
+        <div className="toppick-leftbox-noti">
+          <img
+            src={productImg}
+            alt="discount product"
+          />
+        </div>
+      );
       break;
     default:
       icon = (
