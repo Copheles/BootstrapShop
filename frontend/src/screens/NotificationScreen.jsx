@@ -80,7 +80,7 @@ const NotificationScreen = () => {
       navigate(`/order/${orderId}`);
     }
     if (productId) {
-      navigate(`/products/${productId}`);
+      navigate(`/products/${productId}?redirect=/notifications`);
     }
   };
 

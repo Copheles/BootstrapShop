@@ -18,7 +18,7 @@ import {
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { MdDiscount, MdOutlineKeyboardBackspace } from "react-icons/md";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -49,7 +49,6 @@ const ProductScreen = () => {
   const {
     data: product,
     error,
-    refetch,
     isLoading,
   } = useGetProductQuery(productId);
 
