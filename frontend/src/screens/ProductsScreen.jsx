@@ -20,20 +20,22 @@ const ProductsScreen = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { keyword, pageNumber, rating, brands, category, sort } = useSelector(
-    (state) => state.filter
-  );
+  const { keyword, pageNumber, rating, brands, category, sort, price, maxPrice } =
+    useSelector((state) => state.filter);
 
   const filterAmount = getFilterListAmount({
     keyword,
     rating,
     brands,
     category,
+    price,
+    maxPrice
   });
 
   const dispatch = useDispatch();
 
-  const showClearFiler = !(keyword || rating || brands || category) && true;
+  const showClearFiler =
+    !(keyword || rating || brands || category || price < maxPrice) && true;
 
   const { data, error, isLoading } = useGetProductsQuery({
     keyword,
@@ -42,8 +44,9 @@ const ProductsScreen = () => {
     brands,
     category,
     sort,
+    price,
+    maxPrice
   });
-
 
   if (isLoading) {
     return <Loader />;
@@ -93,7 +96,7 @@ const ProductsScreen = () => {
                   </Button>
                   {filterAmount > 0 && (
                     <div className="filter-amount">
-                      <span>{filterAmount > 9 ? "9+": filterAmount}</span>
+                      <span>{filterAmount > 9 ? "9+" : filterAmount}</span>
                     </div>
                   )}
                 </div>

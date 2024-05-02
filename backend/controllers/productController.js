@@ -224,5 +224,21 @@ const getFeaturedProduct = asyncHandler(async (req, res) => {
   }
 })
 
+const getMaxPrice = asyncHandler(async (req, res ) => {
+  const result = await Product.aggregate([
+    { $group: { _id: null, maxPrice: { $max: '$price' } } }
+  ]);
 
-export { getAllProducts, getProductById, createProduct,imageUpload, updateProduct, deleteProduct, createProductReview ,getTopProducts, getBrandsAndCategories, getFeaturedProduct}
+  if (result.length > 0) {
+    return res.status(200).json({
+      maxPrice: result[0].maxPrice
+    })
+  } else {
+    return res.status(404).json({
+      maxPrice: 0
+    })
+  }
+})
+
+
+export { getAllProducts, getProductById, createProduct,imageUpload, updateProduct, deleteProduct, createProductReview ,getTopProducts, getBrandsAndCategories, getFeaturedProduct, getMaxPrice}

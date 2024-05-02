@@ -4,17 +4,35 @@ import { apiSlice } from "./apiSlice";
 export const productApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
-      query: ({ keyword, pageNumber, rating, brands, category, sort }) => ({
-        url: PRODUCTS_URL,
-        params: {
+      query: ({
+        keyword,
+        pageNumber,
+        rating,
+        brands,
+        category,
+        sort,
+        price,
+      }) => {
+        const params = {
           keyword,
           pageNumber,
           rating,
           brand: brands,
           category,
           sort,
-        },
-      }),
+        };
+
+        // Add price[gte] parameter if price is provided and greater than or equal to 90
+        if (price) {
+          params["price[gte]"] = 0;
+          params["price[lte]"] = parseInt(price);
+        }
+
+        return {
+          url: PRODUCTS_URL,
+          params,
+        };
+      },
       providesTags: ["Products"],
       keepUnusedDataFor: 60,
     }),
@@ -86,10 +104,15 @@ export const productApiSlice = apiSlice.injectEndpoints({
     }),
     getFeaturedProduct: builder.query({
       query: () => ({
-        url: `${PRODUCTS_URL}/getFeaturedProduct`
+        url: `${PRODUCTS_URL}/getFeaturedProduct`,
       }),
-      keepUnusedDataFor: 60
-    })
+      keepUnusedDataFor: 60,
+    }),
+    getProductMaxPrice: builder.query({
+      query: () => ({
+        url: `${PRODUCTS_URL}/getMaxPrice`,
+      }),
+    }),
   }),
 });
 
@@ -103,5 +126,6 @@ export const {
   useGetTopProductsQuery,
   useImageUploadMutation,
   useGetBrandsAndCategoriesQuery,
-  useGetFeaturedProductQuery
+  useGetFeaturedProductQuery,
+  useGetProductMaxPriceQuery
 } = productApiSlice;

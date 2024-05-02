@@ -10,6 +10,8 @@ const initialState = {
   pageNumber: "",
   keyword: "",
   sort: "-createdAt",
+  price: 0,
+  maxPrice: 0
 };
 
 const filterSlice = createSlice({
@@ -48,12 +50,19 @@ const filterSlice = createSlice({
     setCategory: (state, action) => {
       state.category = action.payload
     },
+    setPrice: (state, action) => {
+      state.price = action.payload
+    },
+    setMaxPrice: (state, action) => {
+      state.maxPrice = action.payload
+    },
     clearAll: (state) => {
       state.brands = "";
       state.rating = "";
       state.keyword = "";
       state.pageNumber = 1;
       state.category = ""
+      state.price = state.maxPrice
     },
   },
 });
@@ -65,6 +74,8 @@ export const {
   setBrand,
   setCategories,
   setCategory,
+  setPrice,
+  setMaxPrice,
   setKeyword,
   setPageNumber,
   clearAll,

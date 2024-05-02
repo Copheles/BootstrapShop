@@ -11,18 +11,26 @@ import {
   setCategories,
   setKeyword,
   setPageNumber,
+  setMaxPrice,
   setRating,
   setSort,
 } from "./slices/filterSlice";
 import { setNotiCount } from "./slices/authSlice";
 import { useSocket } from "./hooks/useSocket";
 import { orderApiSlice } from "./slices/orderApiSlice";
+import { useGetProductMaxPriceQuery } from "./slices/productsApiSlice";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
   const { userInfo, notiCount } = useSelector((state) => state.auth);
   const { listenToEvent, cleanupListeners } = useSocket();
+
+  const { data } = useGetProductMaxPriceQuery();
+
+  useEffect(() => {
+    dispatch(setMaxPrice(Math.ceil(data?.maxPrice)));
+  }, [data, dispatch]);
 
   useEffect(() => {
     listenToEvent("setOrder", (data) => {
@@ -78,11 +86,11 @@ function App() {
     });
 
     listenToEvent("productDiscount", (data) => {
-      console.log('discount ');
-      if(userInfo){
-        dispatch(setNotiCount(notiCount + 1))
+      console.log("discount ");
+      if (userInfo) {
+        dispatch(setNotiCount(notiCount + 1));
       }
-    })
+    });
     return () => cleanupListeners();
   }, []);
 
@@ -101,6 +109,7 @@ function App() {
       dispatch(setBrands(""));
       dispatch(setKeyword(""));
       dispatch(setCategories(""));
+      dispatch(setMaxPrice(Math.ceil(data?.maxPrice)));
     }
   }, [location.pathname, dispatch, location.search]);
 

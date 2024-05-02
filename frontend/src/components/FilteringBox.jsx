@@ -9,6 +9,7 @@ import {
 } from "../slices/filterSlice";
 import { useGetBrandsAndCategoriesQuery } from "../slices/productsApiSlice";
 import SelectMultipleData from "./SelectMultipleData";
+import SelectPriceRange from "./SelectPriceRange";
 
 const FilteringBox = () => {
   const dispatch = useDispatch();
@@ -29,10 +30,16 @@ const FilteringBox = () => {
 
   return (
     <>
-      <Accordion defaultActiveKey={["1", "2"]} alwaysOpen>
+      <Accordion defaultActiveKey={["1", "2", "3"]} alwaysOpen>
         {data && data.brands && data.categories && (
           <>
             <Accordion.Item eventKey="1">
+              <Accordion.Header>Price</Accordion.Header>
+              <Accordion.Body>
+                <SelectPriceRange />
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
               <Accordion.Header>Rating</Accordion.Header>
               <Accordion.Body>
                 <SelectRating
@@ -42,7 +49,7 @@ const FilteringBox = () => {
                 />
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="2">
+            <Accordion.Item eventKey="3">
               <Accordion.Header>Brands</Accordion.Header>
               <Accordion.Body>
                 <SelectMultipleData
@@ -53,7 +60,7 @@ const FilteringBox = () => {
                 />
               </Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item eventKey="3">
+            <Accordion.Item eventKey="4">
               <Accordion.Header>Categories</Accordion.Header>
               <Accordion.Body>
                 <SelectMultipleData
