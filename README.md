@@ -23,3 +23,5 @@ Fully Featured Ecommerce Website with notifications system and advanced filterin
 ![image](https://github.com/Copheles/BootstrapShop/assets/61428497/3b233bf8-6ec6-4db7-a537-7e49415bfdf2)
 
 ![image](https://github.com/Copheles/BootstrapShop/assets/61428497/fdfd7962-9095-4c05-a832-9b81475e66e7)
+
+![image](https://github.com/Copheles/BootstrapShop/assets/61428497/a93cbcda-cd01-4d25-a2fa-905e76774bc6)
