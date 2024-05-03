@@ -70,12 +70,12 @@ const ProductsScreen = () => {
   if (isLoading) {
     return (
       <Placeholder animation="glow">
-        <Placeholder xs={12} className="mb-4" style={{ height: "30px" }} />
+        <Placeholder xs={12} className="mb-5" style={{ height: "30px" }} />
 
-        <Placeholder animation="glow" className="d-flex">
-          <Placeholder xs={1} style={{ height: "20px", marginRight: '30px' }} />
-          <Placeholder xs={4} style={{ height: "20px" }} />
-          <Placeholder xs={3} style={{ height: "20px", marginLeft: 'auto' }} />
+        <Placeholder animation="glow" className="d-flex align-items-center">
+          <Placeholder xs={1} style={{ height: "40px", marginRight: '10px' }} />
+          <Placeholder xs={5} style={{ height: "30px" }} />
+          <Placeholder xs={2} style={{ height: "20px", marginLeft: 'auto' }} />
         </Placeholder>
 
         <Row>
