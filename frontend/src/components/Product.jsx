@@ -22,7 +22,7 @@ const Product = ({ product }) => {
           <Card.Img variant="top" src={product.image} className="card-img" />
         </div>
       </Link>
-      <CardBody>
+      <Card.Body>
         <Link
           to={`/products/${product._id}?redirect=/products`}
           onClick={() => handleClick(product)}
@@ -50,7 +50,7 @@ const Product = ({ product }) => {
             <p className="custom_card_text">{product.price}</p>
           )}
         </Card.Text>
-      </CardBody>
+      </Card.Body>
     </Card>
   );
 };

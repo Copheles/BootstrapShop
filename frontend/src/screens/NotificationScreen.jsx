@@ -4,7 +4,7 @@ import {
   useGetUserNotificationQuery,
   useUpdateNotiToReadMutation,
 } from "../slices/notificationApiSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import timeAgo from "../utils/timeAgo";
 import { Button, Placeholder, Spinner } from "react-bootstrap";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TbTruckDelivery } from "react-icons/tb";
 import { useProfileMutation } from "../slices/usersApiSlice";
 import { setNotiCount } from "../slices/authSlice";
+import Message from "../components/Message";
 
 const NotificationScreen = () => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -55,7 +56,7 @@ const NotificationScreen = () => {
         pageNumber: 1,
         userId: userInfo._id,
       });
-    } 
+    }
   }, [userInfo._id, refetch, notiCount, dispatch, updateProfile]);
 
   useEffect(() => {
@@ -93,7 +94,7 @@ const NotificationScreen = () => {
   return (
     <>
       <Meta title="Notifications" />
-      <h2>Notifications</h2>
+      <h2 style={{ marginBottom: "20px" }}>Notifications</h2>
       {isLoading ? (
         <div className="mt-3 rounded">
           {Array.from({ length: 8 }, (_, index) => index).map((i) => (
@@ -142,6 +143,10 @@ const NotificationScreen = () => {
             </Placeholder>
           ))}
         </div>
+      ) : data.notifications.length === 0 && data.pages === 0 ? (
+        <Message variant="primary">
+          No Notifications. <Link to="/products">Go Back</Link>
+        </Message>
       ) : (
         <>
           <div className="mt-3">

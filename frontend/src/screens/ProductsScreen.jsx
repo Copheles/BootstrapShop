@@ -1,4 +1,11 @@
-import { Button, Col, Row, Offcanvas } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Row,
+  Offcanvas,
+  Placeholder,
+  Card,
+} from "react-bootstrap";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
@@ -20,8 +27,16 @@ const ProductsScreen = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { keyword, pageNumber, rating, brands, category, sort, price, maxPrice } =
-    useSelector((state) => state.filter);
+  const {
+    keyword,
+    pageNumber,
+    rating,
+    brands,
+    category,
+    sort,
+    price,
+    maxPrice,
+  } = useSelector((state) => state.filter);
 
   const filterAmount = getFilterListAmount({
     keyword,
@@ -29,7 +44,7 @@ const ProductsScreen = () => {
     brands,
     category,
     price,
-    maxPrice
+    maxPrice,
   });
 
   const dispatch = useDispatch();
@@ -45,11 +60,51 @@ const ProductsScreen = () => {
     category,
     sort,
     price,
-    maxPrice
+    maxPrice,
   });
 
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
+
   if (isLoading) {
-    return <Loader />;
+    return (
+      <Placeholder animation="glow">
+        <Placeholder xs={12} className="mb-4" style={{ height: "30px" }} />
+
+        <Placeholder animation="glow" className="d-flex">
+          <Placeholder xs={1} style={{ height: "20px", marginRight: '30px' }} />
+          <Placeholder xs={4} style={{ height: "20px" }} />
+          <Placeholder xs={3} style={{ height: "20px", marginLeft: 'auto' }} />
+        </Placeholder>
+
+        <Row>
+          {[0, 1, 2, 3, 4, 5, 6, 7].map((d) => (
+            <Col xs={6} sm={6} md={6} lg={4} xl={3} key={d}>
+              <Card
+                className="my-3 p-3 rounded border-0"
+                style={{ height: "100%" }}
+              >
+                <Placeholder>
+                  <div className="aspect-ratio-wrapper">
+                    <Card.Img variant="top" className="card-img" />
+                  </div>
+                </Placeholder>
+                <Card.Body>
+                  <Placeholder as={Card.Title} animation="glow">
+                    <Placeholder xs={10} />
+                  </Placeholder>
+                  <Placeholder as={Card.Text} animation="glow">
+                    <Placeholder xs={7} /> <Placeholder xs={4} />{" "}
+                    <Placeholder xs={4} /> <Placeholder xs={6} />{" "}
+                  </Placeholder>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Placeholder>
+    );
   }
 
   if (error) {

@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../slices/cartSlice";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi2";
 import Meta from "../components/Meta";
-import { useEffect } from "react";
 
 const CartScreen = () => {
   const navigate = useNavigate();
@@ -34,8 +33,6 @@ const CartScreen = () => {
     navigate("/login?redirect=/shipping");
   };
 
-  useEffect(() => {}, []);
-
   return (
     <>
       <Meta title="Cart Details" />
@@ -43,9 +40,11 @@ const CartScreen = () => {
         <Col lg={8}>
           <h2 style={{ marginBottom: "20px" }}>Shopping Cart</h2>
           {cartItems.length === 0 ? (
-            <Message variant="primary">
-              Your cart is empty. <Link to="/products">Go Back</Link>
-            </Message>
+            <>
+              <Message variant="primary">
+                Your cart is empty. <Link to="/products">Go Back</Link>
+              </Message>
+            </>
           ) : (
             <ListGroup variant="flush">
               {cartItems.map((cartItem) => (
