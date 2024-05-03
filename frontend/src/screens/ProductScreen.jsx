@@ -18,7 +18,7 @@ import {
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { MdDiscount, MdOutlineKeyboardBackspace } from "react-icons/md";
-import {  useState } from "react";
+import { useState } from "react";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -46,11 +46,7 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const {
-    data: product,
-    error,
-    isLoading,
-  } = useGetProductQuery(productId);
+  const { data: product, error, isLoading } = useGetProductQuery(productId);
 
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
@@ -167,27 +163,29 @@ const ProductScreen = () => {
                     clsName="date-text"
                   />
                 </ListGroup.Item>
-                {product.discountPercent > 0 && (
-                  <ListGroup.Item>
+                <ListGroup.Item>
+                  {product.discountPercent > 0 && (
                     <Alert variant="warning">
                       <strong>
                         <MdDiscount className="icons" />
                         {product.discountPercent}% off on this product
                       </strong>
                     </Alert>
-                  </ListGroup.Item>
-                )}
-                <ListGroup.Item onClick={() => handleBrandClick(product.brand)}>
+                  )}
                   <strong>Brand: </strong>{" "}
-                  <span className="product-text cursor-pointer hover-line-effect">
+                  <span
+                    className="product-text cursor-pointer hover-line-effect"
+                    onClick={() => handleBrandClick(product.brand)}
+                  >
                     {product.brand}
                   </span>
                 </ListGroup.Item>
-                <ListGroup.Item
-                  onClick={() => handleCategoryClick(product.category)}
-                >
+                <ListGroup.Item>
                   <strong>Category: </strong>{" "}
-                  <span className="product-text cursor-pointer hover-line-effect">
+                  <span
+                    className="product-text cursor-pointer hover-line-effect"
+                    onClick={() => handleCategoryClick(product.category)}
+                  >
                     {product.category}
                   </span>
                 </ListGroup.Item>

@@ -99,17 +99,22 @@ const updateProduct = asyncHandler(async (req, res) => {
 
     const updatedProduct = await product.save();
     if(discountPercent > 0){
-      const notification = new Notification({
-        userId: req.user._id,
-        isAll: true,
-        type: "product",
-        notiType: "ProductDiscount",
-        productId: product._id,
-        productImg: product.image,
-        message: `${product.name} has promotion(${discountPercent}% off).`,
-      })
+      const allUsers = await User.find({ _id: { $ne: req.user._id } }, '_id');
 
-      await notification.save()
+
+      const notifications = allUsers.map(user => {
+        return new Notification({
+          userId: user._id,
+          type: "product",
+          notiType: "ProductDiscount",
+          productId: product._id,
+          productImg: product.image,
+          message: `${product.name} has promotion (${discountPercent}% off).`,
+        });
+      });
+  
+      // Save all notifications to the database
+      await Notification.insertMany(notifications);
       await User.updateMany(
         {_id : { $ne: req.user._id}}, // Empty filter ({}), meaning update all documents in the collection
         { $inc: { notiCount: 1 } } // Use $inc operator to increment noticeCount by 1

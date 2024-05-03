@@ -6,10 +6,6 @@ const NotificationSchema = new mongoose.Schema({
     ref: 'User', // Reference to the User model
     required: true,
   },
-  isAll: {
-    type: Boolean,
-    default: false,
-  },
   type: {
     type: String,
     enum: ['order', 'product'], // Define possible notification types
