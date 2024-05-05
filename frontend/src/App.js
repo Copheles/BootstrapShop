@@ -24,6 +24,7 @@ import { useGetProductMaxPriceQuery } from "./slices/productsApiSlice";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const { maxPrice } = useSelector((state) => state.filter);
   const { userInfo, notiCount } = useSelector((state) => state.auth);
   const { listenToEvent, cleanupListeners } = useSocket();
 
@@ -31,7 +32,10 @@ function App() {
 
   useEffect(() => {
     dispatch(setMaxPrice(Math.ceil(data?.maxPrice)));
-  }, [data, dispatch]);
+    if (maxPrice > 0) {
+      dispatch(setPrice(maxPrice));
+    }
+  }, [data, dispatch, maxPrice]);
 
   useEffect(() => {
     listenToEvent("setOrder", (data) => {
