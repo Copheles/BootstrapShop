@@ -1,6 +1,14 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Button, Card, Spinner } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Button,
+  Card,
+  Spinner,
+} from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
@@ -38,6 +46,23 @@ const OrderScreen = () => {
   } = useGetPayPalClientIdQuery();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+  const generateUniqueId = () => {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+  };
+
+  const handlePayTest = async () => {
+    try {
+      const res = await payOrder({
+        orderId,
+        details: { id: generateUniqueId(), status: "Completed" },
+      }).unwrap();
+      refetch();
+      toast.success(res);
+    } catch (error) {
+      toast.error(error?.data.message || error.error);
+    }
+  };
 
   const deliverOrderHandler = async () => {
     try {
@@ -263,13 +288,28 @@ const OrderScreen = () => {
                         Test Pay Order
                       </Button> */}
 
-                      {userInfo && !userInfo.isAdmin && (
-                        <PayPalButtons
-                          createOrder={createOrder}
-                          onApprove={onApprove}
-                          onError={onError}
-                        />
-                      )}
+                      {userInfo &&
+                        !userInfo.isAdmin &&
+                        order.paymentMethod === "PayPal" && (
+                          <PayPalButtons
+                            createOrder={createOrder}
+                            onApprove={onApprove}
+                            onError={onError}
+                          />
+                        )}
+
+                      {userInfo &&
+                        !userInfo.isAdmin &&
+                        order.paymentMethod === "Test" && (
+                          <Button
+                            type="button"
+                            className="btn btn-block"
+                            variant="dark"
+                            onClick={handlePayTest}
+                          >
+                            Test Pay
+                          </Button>
+                        )}
                     </div>
                   )}
                 </ListGroup.Item>
@@ -287,8 +327,11 @@ const OrderScreen = () => {
                       variant="dark"
                       disabled={loadingDeliver}
                     >
-                       {loadingDeliver ? <Spinner size="sm" /> : "Mark As Delivered"}
-                      
+                      {loadingDeliver ? (
+                        <Spinner size="sm" />
+                      ) : (
+                        "Mark As Delivered"
+                      )}
                     </Button>
                   </ListGroup.Item>
                 )}

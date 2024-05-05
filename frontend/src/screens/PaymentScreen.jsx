@@ -46,9 +46,7 @@ const PaymentScreen = () => {
           <Col>
             <Form onSubmit={submitHandler}>
               <Form.Group>
-                <Form.Label as="legend">
-                  <FaCcPaypal size={30} /> Select Method{" "}
-                </Form.Label>
+                <Form.Label as="legend">Select Method</Form.Label>
                 <Col>
                   <Form.Check
                     type="radio"
@@ -57,7 +55,19 @@ const PaymentScreen = () => {
                     id="PayPal"
                     name="paymentMethod"
                     value="PayPal"
-                    checked
+                    checked={paymentMethod === "PayPal"}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
+                  ></Form.Check>
+                </Col>
+                <Col>
+                  <Form.Check
+                    type="radio"
+                    className="my-2"
+                    label="Test Payment"
+                    id="test"
+                    name="test"
+                    value="Test"
+                    checked={paymentMethod === "Test"}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   ></Form.Check>
                 </Col>
