@@ -8,7 +8,6 @@ import {
 } from "react-bootstrap";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
-import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Meta from "../components/Meta";
 import SearchBox from "../components/SearchBox";
@@ -20,7 +19,6 @@ import SelectData from "../components/SelectData";
 import { useState } from "react";
 import { clearAll } from "../slices/filterSlice";
 import getFilterListAmount from "../utils/getFIlterListAmount";
-import { Link } from "react-router-dom";
 
 const ProductsScreen = () => {
   const [show, setShow] = useState(false);

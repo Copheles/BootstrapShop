@@ -5,13 +5,14 @@ import { setPrice } from "../slices/filterSlice";
 const SelectPriceRange = () => {
   const { price, maxPrice } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
+  console.log('price: ', price);
 
   const handleChangeSlider = (e) => {
     dispatch(setPrice(e.target.value));
   };
 
   useEffect(() => {
-    if (maxPrice > 0 && price === 0)  {
+    if (maxPrice > 0)  {
       dispatch(setPrice(maxPrice));
     }
   }, [dispatch, maxPrice, price]);

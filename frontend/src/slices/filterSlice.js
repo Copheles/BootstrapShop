@@ -11,7 +11,7 @@ const initialState = {
   keyword: "",
   sort: "-createdAt",
   price: 0,
-  maxPrice: 0
+  maxPrice: 0,
 };
 
 const filterSlice = createSlice({
@@ -37,8 +37,8 @@ const filterSlice = createSlice({
       state.brands = formatMultipleSelectInput(state.brands, action.payload);
       state.pageNumber = 1;
     },
-    setBrand: (state, action ) => {
-      state.brands = action.payload
+    setBrand: (state, action) => {
+      state.brands = action.payload;
     },
     setCategories: (state, action) => {
       state.category = formatMultipleSelectInput(
@@ -48,21 +48,29 @@ const filterSlice = createSlice({
       state.pageNumber = 1;
     },
     setCategory: (state, action) => {
-      state.category = action.payload
+      state.category = action.payload;
     },
     setPrice: (state, action) => {
-      state.price = action.payload
+      if (action.payload === null) {
+        state.price = 0;
+      } else {
+        state.price = action.payload;
+      }
     },
     setMaxPrice: (state, action) => {
-      state.maxPrice = action.payload
+      if (action.payload === null) {
+        state.maxPrice = 0;
+      } else {
+        state.maxPrice = action.payload;
+      }
     },
     clearAll: (state) => {
       state.brands = "";
       state.rating = "";
       state.keyword = "";
       state.pageNumber = 1;
-      state.category = ""
-      state.price = state.maxPrice
+      state.category = "";
+      state.price = state.maxPrice;
     },
   },
 });
