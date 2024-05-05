@@ -34,6 +34,14 @@ const RegisterScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    if(name.length < 3){
+      toast.error("name must be atleast 3 characters")
+      return
+    }
+    if(password.length < 6){
+      toast.error("password must be at least 6 characters")
+      return 
+    }
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;

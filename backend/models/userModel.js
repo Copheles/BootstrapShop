@@ -1,21 +1,29 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs';
+import validator from 'validator'
 
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    unique: true
+    required: [true, 'Please provide name'],
+    minlength: 3,
+    maxlength: 20,
+    trim: true
   },
   email: {
     type: String,
-    required: true,
-    unique: true
+    required: [true, 'Please provide email'],
+    validate: {
+      validator: validator.isEmail,
+      message: 'Please provide valid email'
+    },
+    unique: [true, 'Email is already in use'],
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 6,
   },
   isAdmin: {
     type: Boolean,
