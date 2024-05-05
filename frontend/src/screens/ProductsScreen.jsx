@@ -20,6 +20,7 @@ import SelectData from "../components/SelectData";
 import { useState } from "react";
 import { clearAll } from "../slices/filterSlice";
 import getFilterListAmount from "../utils/getFIlterListAmount";
+import { Link } from "react-router-dom";
 
 const ProductsScreen = () => {
   const [show, setShow] = useState(false);
@@ -73,9 +74,9 @@ const ProductsScreen = () => {
         <Placeholder xs={12} className="mb-5" style={{ height: "30px" }} />
 
         <Placeholder animation="glow" className="d-flex align-items-center">
-          <Placeholder xs={1} style={{ height: "40px", marginRight: '10px' }} />
+          <Placeholder xs={1} style={{ height: "40px", marginRight: "10px" }} />
           <Placeholder xs={5} style={{ height: "30px" }} />
-          <Placeholder xs={2} style={{ height: "20px", marginLeft: 'auto' }} />
+          <Placeholder xs={2} style={{ height: "20px", marginLeft: "auto" }} />
         </Placeholder>
 
         <Row>
@@ -112,6 +113,7 @@ const ProductsScreen = () => {
       <Message variant="danger">{error.data?.message || error.error}</Message>
     );
   }
+
   // Check if there are no products found
 
   // Render search results if available
@@ -175,14 +177,23 @@ const ProductsScreen = () => {
             )}
           </div>
 
-          <Row>
-            {data.products.map((product) => (
-              <Col xs={6} sm={6} md={6} lg={4} xl={3} key={product._id}>
-                <Product product={product} key={product._id} />
-              </Col>
-            ))}
-          </Row>
-          <PaginationCustom pages={data.pages} page={data.page} />
+          {data.products.length === 0 ? (
+            <Message variant="warning">
+              There are no products
+            </Message>
+          ) : (
+            <>
+              {" "}
+              <Row>
+                {data.products.map((product) => (
+                  <Col xs={6} sm={6} md={6} lg={4} xl={3} key={product._id}>
+                    <Product product={product} key={product._id} />
+                  </Col>
+                ))}
+              </Row>
+              <PaginationCustom pages={data.pages} page={data.page} />
+            </>
+          )}
         </Col>
       </Row>
     </>
