@@ -213,7 +213,7 @@ const ProductScreen = () => {
                             </span>
                           </strong>
                         ) : (
-                          <p className="custom_card_text">{product.price}</p>
+                          <strong style={{ fontWeight: 500}}>{product.price}</strong>
                         )}
                       </Col>
                     </Row>
@@ -242,7 +242,7 @@ const ProductScreen = () => {
                         <Row>
                           <Col>Amount :</Col>
                           <Col>
-                            <strong>{product.countInStock}</strong>
+                            <strong style={{ fontWeight: 500 }}>{product.countInStock}</strong>
                           </Col>
                         </Row>
                       </ListGroup.Item>
