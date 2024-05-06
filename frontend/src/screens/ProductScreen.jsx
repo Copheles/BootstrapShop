@@ -242,7 +242,7 @@ const ProductScreen = () => {
                         <Row>
                           <Col>Amount :</Col>
                           <Col>
-                            <strong>{product.countInStock}</strong>
+                            <strong style={{ fontWeight: 500 }}>{product.countInStock}</strong>
                           </Col>
                         </Row>
                       </ListGroup.Item>
