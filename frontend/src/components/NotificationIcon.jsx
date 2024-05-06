@@ -80,7 +80,7 @@ const NotificationIcon = ({ handleLinkClick, cart }) => {
         <FaBell className="cart-btn" onClick={handleLinkClick} />
         {data && data.notiCount > 0 && (
           <Badge pill bg="info" className="mx-auto">
-            {data.notiCount}
+            {data.notiCount > 9 ? 9 : data.notiCount}
           </Badge>
         )}
       </Nav.Link>
