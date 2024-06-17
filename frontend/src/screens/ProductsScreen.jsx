@@ -66,45 +66,45 @@ const ProductsScreen = () => {
   //   return <Loader />;
   // }
 
-  if (isLoading) {
-    return (
-      <Placeholder animation="glow">
-        <Placeholder xs={12} className="mb-5" style={{ height: "30px" }} />
+  // if (isLoading) {
+  //   return (
+  //     <Placeholder animation="glow">
+  //       <Placeholder xs={12} className="mb-5" style={{ height: "30px" }} />
 
-        <Placeholder animation="glow" className="d-flex align-items-center">
-          <Placeholder xs={1} style={{ height: "40px", marginRight: "10px" }} />
-          <Placeholder xs={5} style={{ height: "30px" }} />
-          <Placeholder xs={2} style={{ height: "20px", marginLeft: "auto" }} />
-        </Placeholder>
+  //       <Placeholder animation="glow" className="d-flex align-items-center">
+  //         <Placeholder xs={1} style={{ height: "40px", marginRight: "10px" }} />
+  //         <Placeholder xs={5} style={{ height: "30px" }} />
+  //         <Placeholder xs={2} style={{ height: "20px", marginLeft: "auto" }} />
+  //       </Placeholder>
 
-        <Row>
-          {[0, 1, 2, 3, 4, 5, 6, 7].map((d) => (
-            <Col xs={6} sm={6} md={6} lg={4} xl={3} key={d}>
-              <Card
-                className="my-3 p-3 rounded border-0"
-                style={{ height: "100%" }}
-              >
-                <Placeholder>
-                  <div className="aspect-ratio-wrapper">
-                    <Card.Img variant="top" className="card-img" />
-                  </div>
-                </Placeholder>
-                <Card.Body>
-                  <Placeholder as={Card.Title} animation="glow">
-                    <Placeholder xs={10} />
-                  </Placeholder>
-                  <Placeholder as={Card.Text} animation="glow">
-                    <Placeholder xs={7} /> <Placeholder xs={4} />{" "}
-                    <Placeholder xs={4} /> <Placeholder xs={6} />{" "}
-                  </Placeholder>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Placeholder>
-    );
-  }
+  //       <Row>
+  //         {[0, 1, 2, 3, 4, 5, 6, 7].map((d) => (
+  //           <Col xs={6} sm={6} md={6} lg={4} xl={3} key={d}>
+  //             <Card
+  //               className="my-3 p-3 rounded border-0"
+  //               style={{ height: "100%" }}
+  //             >
+  //               <Placeholder>
+  //                 <div className="aspect-ratio-wrapper">
+  //                   <Card.Img variant="top" className="card-img" />
+  //                 </div>
+  //               </Placeholder>
+  //               <Card.Body>
+  //                 <Placeholder as={Card.Title} animation="glow">
+  //                   <Placeholder xs={10} />
+  //                 </Placeholder>
+  //                 <Placeholder as={Card.Text} animation="glow">
+  //                   <Placeholder xs={7} /> <Placeholder xs={4} />{" "}
+  //                   <Placeholder xs={4} /> <Placeholder xs={6} />{" "}
+  //                 </Placeholder>
+  //               </Card.Body>
+  //             </Card>
+  //           </Col>
+  //         ))}
+  //       </Row>
+  //     </Placeholder>
+  //   );
+  // }
 
   if (error) {
     return (
@@ -121,10 +121,11 @@ const ProductsScreen = () => {
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
-            <h2>
-              {" "}
-              {`${data.total} ${data.total <= 1 ? "result" : "results"}`}
-            </h2>
+            {!isLoading && (
+              <h2>
+                {`${data.total} ${data.total <= 1 ? "result" : "results"}`}
+              </h2>
+            )}
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
@@ -136,63 +137,114 @@ const ProductsScreen = () => {
         <Col lg={3} className="filter-box">
           <FilteringBox />
         </Col>
-        <Col lg={9}>
-          <SearchBox />
-          <div className="filter-container">
-            <div className="wrapper">
-              <div className="top-box">
-                <div className="filter-amount-box">
-                  <Button
-                    variant="outline-dark"
-                    onClick={handleShow}
-                    className="filter-button btn-sm"
+        {!isLoading ? (
+          <Col lg={9}>
+            <SearchBox />
+            <div className="filter-container">
+              <div className="wrapper">
+                <div className="top-box">
+                  <div className="filter-amount-box">
+                    <Button
+                      variant="outline-dark"
+                      onClick={handleShow}
+                      className="filter-button btn-sm"
+                    >
+                      <IoFilterOutline />
+                    </Button>
+                    {filterAmount > 0 && (
+                      <div className="filter-amount">
+                        <span>{filterAmount > 9 ? "9+" : filterAmount}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="bottom-box">
+                    <SelectData />
+                  </div>
+                </div>
+                {!showClearFiler && (
+                  <button
+                    className="filter-btn"
+                    onClick={() => dispatch(clearAll())}
                   >
-                    <IoFilterOutline />
-                  </Button>
-                  {filterAmount > 0 && (
-                    <div className="filter-amount">
-                      <span>{filterAmount > 9 ? "9+" : filterAmount}</span>
-                    </div>
-                  )}
-                </div>
-                <div className="bottom-box">
-                  <SelectData />
-                </div>
+                    Clear filters
+                  </button>
+                )}
               </div>
-              {!showClearFiler && (
-                <button
-                  className="filter-btn"
-                  onClick={() => dispatch(clearAll())}
-                >
-                  Clear filters
-                </button>
+              {data && (
+                <p className="results-text">{`${data.total} ${
+                  data.total <= 1 ? "result" : "results"
+                }`}</p>
               )}
             </div>
-            {data && (
-              <p className="results-text">{`${data.total} ${
-                data.total <= 1 ? "result" : "results"
-              }`}</p>
-            )}
-          </div>
 
-          {data.products.length === 0 ? (
-            <Message variant="warning">
-              There are no products
-            </Message>
-          ) : (
-            <>
-              {" "}
+            {data.products.length === 0 ? (
+              <Message variant="warning">There are no products</Message>
+            ) : (
+              <>
+                {" "}
+                <Row>
+                  {data.products.map((product) => (
+                    <Col xs={6} sm={6} md={6} lg={4} xl={3} key={product._id}>
+                      <Product product={product} key={product._id} />
+                    </Col>
+                  ))}
+                </Row>
+                <PaginationCustom pages={data.pages} page={data.page} />
+              </>
+            )}
+          </Col>
+        ) : (
+          <Col lg={9}>
+            <Placeholder animation="glow">
+              <Placeholder
+                xs={12}
+                className="mb-5"
+                style={{ height: "30px" }}
+              />
+
+              <Placeholder
+                animation="glow"
+                className="d-flex align-items-center"
+              >
+                <Placeholder
+                  xs={1}
+                  style={{ height: "40px", marginRight: "10px" }}
+                />
+                <Placeholder xs={5} style={{ height: "30px" }} />
+                <Placeholder
+                  xs={2}
+                  style={{ height: "20px", marginLeft: "auto" }}
+                />
+              </Placeholder>
+
               <Row>
-                {data.products.map((product) => (
-                  <Col xs={6} sm={6} md={6} lg={4} xl={3} key={product._id}>
-                    <Product product={product} key={product._id} />
+                {[0, 1, 2, 3, 4, 5, 6, 7].map((d) => (
+                  <Col xs={6} sm={6} md={6} lg={4} xl={3} key={d}>
+                    <Card
+                      className="my-3 p-3 rounded border-0"
+                      style={{ height: "100%" }}
+                    >
+                      <Placeholder>
+                        <div className="aspect-ratio-wrapper">
+                          <Card.Img variant="top" className="card-img" />
+                        </div>
+                      </Placeholder>
+                      <Card.Body>
+                        <Placeholder as={Card.Title} animation="glow">
+                          <Placeholder xs={10} />
+                        </Placeholder>
+                        <Placeholder as={Card.Text} animation="glow">
+                          <Placeholder xs={7} /> <Placeholder xs={4} />{" "}
+                          <Placeholder xs={4} /> <Placeholder xs={6} />{" "}
+                        </Placeholder>
+                      </Card.Body>
+                    </Card>
                   </Col>
                 ))}
               </Row>
-              <PaginationCustom pages={data.pages} page={data.page} />
-            </>
-          )}
-        </Col>
+            </Placeholder>
+          </Col>
+        )}
       </Row>
     </>
   );
