@@ -8,9 +8,13 @@ import User from '../models/userModel.js';
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
-  // Read the jwt from the cookie from request;
+  // Read the jwt from the cookie from request
+  token = req.cookies.jwt;
 
-  token = req.cookies.jwt
+  // Fallback: read from Authorization Bearer header (for mobile clients)
+  if (!token && req.headers.authorization?.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
 
   if(token){
     try {

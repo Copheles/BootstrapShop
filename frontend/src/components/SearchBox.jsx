@@ -34,17 +34,17 @@ const SearchBox = () => {
     <>
       <Form onSubmit={submitHandler} className="d-flex mb-4">
         <InputGroup>
+          <InputGroup.Text id="basic-addon2">
+            <FaSearch />
+          </InputGroup.Text>
           <Form.Control
-            type="text"
+            type="search"
             name="q"
             onChange={handleChangeSearch}
             value={searchText}
             placeholder="Search Products..."
             className="mr-sm-2 ml-sm-5"
           />
-          <InputGroup.Text id="basic-addon2">
-            <FaSearch />
-          </InputGroup.Text>
         </InputGroup>
       </Form>
     </>

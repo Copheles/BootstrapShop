@@ -18,7 +18,7 @@ import {
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { MdDiscount, MdOutlineKeyboardBackspace } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -34,10 +34,11 @@ import {
   FaRegSmile,
 } from "react-icons/fa";
 import { setBrand, setCategory } from "../slices/filterSlice";
+import { useSocket } from "../hooks/useSocket";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
-
+  const { listenToEvent, cleanupListeners } = useSocket();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,7 +47,12 @@ const ProductScreen = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  const { data: product, error, isLoading } = useGetProductQuery(productId);
+  const {
+    data: product,
+    error,
+    isLoading,
+    refetch,
+  } = useGetProductQuery(productId);
 
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
@@ -125,6 +131,15 @@ const ProductScreen = () => {
     }
   };
 
+  useEffect(() => {
+    listenToEvent("changeAmount", (data) => {
+      if (data.productId === productId) {
+        refetch();
+      }
+    });
+    return () => cleanupListeners();
+  }, [productId, refetch, listenToEvent, cleanupListeners]);
+
   return (
     <>
       <Meta title={product?.name} />
@@ -164,14 +179,14 @@ const ProductScreen = () => {
                   />
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  {product.discountPercent > 0 && (
+                  {/* {product.discountPercent > 0 && (
                     <Alert variant="warning">
                       <strong>
                         <MdDiscount className="icons" />
                         {product.discountPercent}% off on this product
                       </strong>
                     </Alert>
-                  )}
+                  )} */}
                   <strong>Brand: </strong>{" "}
                   <span
                     className="product-text cursor-pointer hover-line-effect"
@@ -213,7 +228,9 @@ const ProductScreen = () => {
                             </span>
                           </strong>
                         ) : (
-                          <strong style={{ fontWeight: 500}}>{product.price}</strong>
+                          <strong style={{ fontWeight: 500 }}>
+                            {product.price}
+                          </strong>
                         )}
                       </Col>
                     </Row>
@@ -242,7 +259,9 @@ const ProductScreen = () => {
                         <Row>
                           <Col>Amount :</Col>
                           <Col>
-                            <strong style={{ fontWeight: 500 }}>{product.countInStock}</strong>
+                            <strong style={{ fontWeight: 500 }}>
+                              {product.countInStock}
+                            </strong>
                           </Col>
                         </Row>
                       </ListGroup.Item>

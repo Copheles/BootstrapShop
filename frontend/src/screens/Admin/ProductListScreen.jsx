@@ -27,6 +27,7 @@ import PaginationCustom from "../../components/PaginationCustom";
 import AutoComplete from "../../components/AutoComplete";
 import { useSelector } from "react-redux";
 import EmptyRows from "../../components/EmptyRows";
+import { useEffect } from "react";
 
 const ProductListScreen = () => {
   const [name, setName] = useState("");
@@ -101,6 +102,31 @@ const ProductListScreen = () => {
       Create a product
     </Tooltip>
   );
+
+  function disableBackButton() {
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, null, window.location.href);
+    };
+  }
+
+  function enableBackButton() {
+    window.onpopstate = null;
+  }
+
+  useEffect(() => {
+    console.log("show", show);
+    if (show) {
+      disableBackButton();
+    } else {
+      enableBackButton();
+    }
+
+    return () => {
+      // Cleanup to avoid memory leaks
+      enableBackButton();
+    };
+  }, [show]);
 
   return (
     <>

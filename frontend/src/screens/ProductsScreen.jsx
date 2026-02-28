@@ -108,7 +108,7 @@ const ProductsScreen = () => {
 
   if (error) {
     return (
-      <Message variant="danger">{error.data?.message || error.error}</Message>
+      <Message variant="danger" >{error.data?.message || error.error}</Message>
     );
   }
 
@@ -117,7 +117,7 @@ const ProductsScreen = () => {
   // Render search results if available
   return (
     <>
-      <Meta />
+      <Meta title='Bootstrap Shop | Products' />
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>

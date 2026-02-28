@@ -213,7 +213,7 @@ main {
   text-overflow: ellipsis;
 }
 
-.discountPrice{
+.discountPrice {
   color: peru;
   margin-left: 5px;
   text-decoration: line-through;
@@ -601,7 +601,6 @@ td {
   border-radius: 20px 0 0 20px;
 }
 
-
 .toppick-leftbox-noti img {
   display: block;
   width: 100%;
@@ -720,7 +719,7 @@ td {
   width: 100%;
   height: 100%;
   flex: 15;
- 
+
   padding-left: 10px;
   padding-top: 7px;
   padding-bottom: 5px;
@@ -1108,7 +1107,7 @@ td {
     padding-left: 10px;
   }
 
-  .noti-text{
+  .noti-text {
     font-size: 10px;
   }
 }
@@ -1116,3 +1115,22 @@ td {
 .card-body {
   padding: 10px 4px;
 }
+@keyframes notification-pulse {
+  0% {
+    transform: translate(50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(50%, -50%) scale(1.3);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.pulse-animation {
+  animation: notification-pulse 1.5s infinite;
+}
+
